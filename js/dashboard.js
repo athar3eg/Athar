@@ -56,7 +56,7 @@ function toggleTheme() {
 }
 
 async function logout() {
-  await supabase.auth.signOut();
+  await sb.auth.signOut();
   window.location.href = "index.html";
 }
 
@@ -66,7 +66,7 @@ async function loadToday() {
   const dayOfWeek = now.getDay();
   const nowMinutes = now.getHours() * 60 + now.getMinutes();
 
-  const { data: fixed, error } = await supabase
+  const { data: fixed, error } = await sb
     .from("fixed_schedule")
     .select("*, subjects(name, color)")
     .eq("user_id", me.id)
@@ -135,7 +135,7 @@ function computeNowAction(fixed, nowMinutes) {
 
 // ---------- Subjects ----------
 async function loadSubjects() {
-  const { data, error } = await supabase
+  const { data, error } = await sb
     .from("subjects")
     .select("*")
     .eq("user_id", me.id)

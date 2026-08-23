@@ -197,7 +197,7 @@ async function saveEverything() {
     const energy_level = document.getElementById("energyLevel").value;
     const preferred_session_minutes = parseInt(document.getElementById("sessionMinutes").value) || 50;
 
-    await withTimeout(supabase.from("profiles").update({
+    await withTimeout(sb.from("profiles").update({
       wake_time, sleep_time, energy_level, preferred_session_minutes,
       onboarding_completed: true, updated_at: new Date().toISOString()
     }).eq("id", currentUser.id));
@@ -208,7 +208,7 @@ async function saveEverything() {
       const name = document.querySelector(`#${sid} .subj-name`)?.value.trim();
       if (!name) continue;
       const priority = parseInt(document.querySelector(`#${sid} .subj-priority`)?.value) || 2;
-      const { data, error } = await supabase.from("subjects")
+      const { data, error } = await sb.from("subjects")
         .insert({ user_id: currentUser.id, name, priority })
         .select().single();
       if (!error) subjectIdMap[sid] = data.id;
@@ -220,7 +220,7 @@ async function saveEverything() {
       if (!name) continue;
       const localSubjId = document.querySelector(`#${tid} .teach-subject`)?.value;
       const channel_url = document.querySelector(`#${tid} .teach-url`)?.value.trim() || null;
-      await supabase.from("teachers").insert({
+      await sb.from("teachers").insert({
         user_id: currentUser.id,
         subject_id: subjectIdMap[localSubjId] || null,
         name, channel_url
@@ -236,7 +236,7 @@ async function saveEverything() {
       const end_time = document.querySelector(`#${fid} .sched-end`)?.value;
       const days = [...document.querySelectorAll(`#${fid} .day-pill.selected`)].map(el => parseInt(el.dataset.day));
       for (const day_of_week of days) {
-        await supabase.from("fixed_schedule").insert({
+        await sb.from("fixed_schedule").insert({
           user_id: currentUser.id,
           subject_id: subjectIdMap[localSubjId] || null,
           title, day_of_week, start_time, end_time, block_kind: "class"

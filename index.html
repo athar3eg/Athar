@@ -133,7 +133,7 @@ function showReset() {
 // لو المستخدم داخل بالفعل، وديه على المكان الصح
 (async function checkSession() {
   try {
-    const { data: { session } } = await withTimeout(supabase.auth.getSession(), 8000);
+    const { data: { session } } = await withTimeout(sb.auth.getSession(), 8000);
     if (session) {
       const profile = await withTimeout(getMyProfile(session.user.id), 8000);
       window.location.href = (profile && profile.onboarding_completed) ? "dashboard.html" : "onboarding.html";
@@ -155,7 +155,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     const email = document.getElementById("loginEmail").value.trim();
     const password = document.getElementById("loginPassword").value;
 
-    const { data, error } = await withTimeout(supabase.auth.signInWithPassword({ email, password }));
+    const { data, error } = await withTimeout(sb.auth.signInWithPassword({ email, password }));
 
     if (error) {
       showError(error.message.includes("Invalid") ? "البريد أو كلمة المرور غلط" : error.message);
@@ -185,7 +185,7 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
     const email = document.getElementById("signupEmail").value.trim();
     const password = document.getElementById("signupPassword").value;
 
-    const { data, error } = await withTimeout(supabase.auth.signUp({
+    const { data, error } = await withTimeout(sb.auth.signUp({
       email, password,
       options: { data: { full_name: name } }
     }));
@@ -221,7 +221,7 @@ document.getElementById("resetForm").addEventListener("submit", async (e) => {
 
   try {
     const email = document.getElementById("resetEmail").value.trim();
-    const { error } = await withTimeout(supabase.auth.resetPasswordForEmail(email, {
+    const { error } = await withTimeout(sb.auth.resetPasswordForEmail(email, {
       redirectTo: window.location.origin + window.location.pathname.replace("index.html", "") + "reset-password.html"
     }));
 
