@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>مِدار — العقل الثاني للطالب</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<div class="auth-wrap">
+  <div class="brand">
+    <div class="logo">🧠</div>
+    <h1>مِدار</h1>
+    <p>العقل الثاني للطالب</p>
+  </div>
+
+  <div class="card">
+    <div id="errorMsg" class="error-msg"></div>
+
+    <!-- تسجيل الدخول -->
+    <form id="loginForm">
+      <div class="field">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="loginEmail" required placeholder="example@mail.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label>كلمة المرور</label>
+        <input type="password" id="loginPassword" required placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn btn-primary" id="loginBtn">دخول</button>
+      <div class="switch-link">مالكش حساب؟ <b onclick="showSignup()">إنشاء حساب</b></div>
+      <div class="switch-link"><b onclick="showReset()" style="font-size:12.5px">نسيت كلمة المرور؟</b></div>
+    </form>
+
+    <!-- إنشاء حساب -->
+    <form id="signupForm" style="display:none">
+      <div class="field">
+        <label>الاسم</label>
+        <input type="text" id="signupName" required placeholder="اسمك">
+      </div>
+      <div class="field">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="signupEmail" required placeholder="example@mail.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label>كلمة المرور</label>
+        <input type="password" id="signupPassword" required minlength="6" placeholder="6 أحرف على الأقل" autocomplete="new-password">
+      </div>
+      <button type="submit" class="btn btn-primary" id="signupBtn">إنشاء حساب</button>
+      <div class="switch-link">عندك حساب؟ <b onclick="showLogin()">تسجيل الدخول</b></div>
+    </form>
+
+    <!-- استعادة كلمة المرور -->
+    <form id="resetForm" style="display:none">
+      <div class="field">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="resetEmail" required placeholder="example@mail.com">
+      </div>
+      <button type="submit" class="btn btn-primary" id="resetBtn">إرسال رابط الاستعادة</button>
+      <div class="switch-link"><b onclick="showLogin()">رجوع لتسجيل الدخول</b></div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/supabase-client.js"></script>
+<script>
+const errorMsg = document.getElementById("errorMsg");
+const toast = document.getElementById("toast");
+
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 2500);
+}
+function showError(msg) {
+  errorMsg.textContent = msg;
+  errorMsg.style.display = "block";
+}
+function hideError() { errorMsg.style.display = "none"; }
+
+function showLogin() {
+  hideError();
+  document.getElementById("loginForm").style.display = "block";
+  document.getElementById("signupForm").style.display = "none";
+  document.getElementById("resetForm").style.display = "none";
+}
+function showSignup() {
+  hideError();
+  document.getElementById("loginForm").style.display = "none";
+  document.getElementById("signupForm").style.display = "block";
+  document.getElementById("resetForm").style.display = "none";
+}
+function showReset() {
+  hideError();
+  document.getElementById("loginForm").style.display = "none";
+  document.getElementById("signupForm").style.display = "none";
+  document.getElementById("resetForm").style.display = "block";
+}
+
+// لو المستخدم داخل بالفعل، وديه على المكان الصح
+(async function checkSession() {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session) {
+    const profile = await getMyProfile(session.user.id);
+    window.location.href = (profile && profile.onboarding_completed) ? "dashboard.html" : "onboarding.html";
+  }
+})();
+
+// تسجيل الدخول
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  hideError();
+  const btn = document.getElementById("loginBtn");
+  btn.disabled = true; btn.textContent = "جاري الدخول...";
+
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
+
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+  btn.disabled = false; btn.textContent = "دخول";
+
+  if (error) {
+    showError(error.message.includes("Invalid") ? "البريد أو كلمة المرور غلط" : error.message);
+    return;
+  }
+
+  const profile = await getMyProfile(data.user.id);
+  window.location.href = (profile && profile.onboarding_completed) ? "dashboard.html" : "onboarding.html";
+});
+
+// إنشاء حساب
+document.getElementById("signupForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  hideError();
+  const btn = document.getElementById("signupBtn");
+  btn.disabled = true; btn.textContent = "جاري الإنشاء...";
+
+  const name = document.getElementById("signupName").value.trim();
+  const email = document.getElementById("signupEmail").value.trim();
+  const password = document.getElementById("signupPassword").value;
+
+  const { data, error } = await supabase.auth.signUp({
+    email, password,
+    options: { data: { full_name: name } }
+  });
+
+  btn.disabled = false; btn.textContent = "إنشاء حساب";
+
+  if (error) {
+    showError(error.message.includes("already registered") ? "الإيميل ده مسجل قبل كده" : error.message);
+    return;
+  }
+
+  // لو الإيميل محتاج تأكيد، هيبقى مفيش session لسه
+  if (!data.session) {
+    showToast("اتبعتلك رابط تأكيد على إيميلك ✉️");
+    showLogin();
+    return;
+  }
+
+  window.location.href = "onboarding.html";
+});
+
+// استعادة كلمة المرور
+document.getElementById("resetForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  hideError();
+  const btn = document.getElementById("resetBtn");
+  btn.disabled = true; btn.textContent = "جاري الإرسال...";
+
+  const email = document.getElementById("resetEmail").value.trim();
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin + window.location.pathname.replace("index.html", "") + "reset-password.html"
+  });
+
+  btn.disabled = false; btn.textContent = "إرسال رابط الاستعادة";
+
+  if (error) { showError(error.message); return; }
+  showToast("اتبعتلك رابط استعادة كلمة المرور ✉️");
+  showLogin();
+});
+</script>
+</body>
+</html>

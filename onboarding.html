@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>إعداد عقلك الدراسي — مِدار</title>
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<div class="container" style="padding-top:28px">
+  <div class="brand" style="margin-bottom:18px">
+    <div class="logo" style="width:44px;height:44px;font-size:20px">🧠</div>
+    <h1 style="font-size:17px">إعداد عقلك الدراسي</h1>
+  </div>
+
+  <div class="progress-bar"><div class="fill" id="progressFill" style="width:16%"></div></div>
+
+  <!-- Step 1: النوم والطاقة -->
+  <div class="step active" data-step="1">
+    <h2>معاد نومك وصحيانك؟</h2>
+    <p class="desc">عشان مِدار يبني جدولك حوالين وقت راحتك مش عكسه.</p>
+    <div class="field">
+      <label>بتصحى الساعة</label>
+      <input type="time" id="wakeTime" value="07:00">
+    </div>
+    <div class="field">
+      <label>بتنام الساعة</label>
+      <input type="time" id="sleepTime" value="23:00">
+    </div>
+    <div class="field">
+      <label>مستوى طاقتك غالبًا</label>
+      <select id="energyLevel">
+        <option value="high">عالي</option>
+        <option value="medium" selected>متوسط</option>
+        <option value="low">منخفض</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>مدة جلسة المذاكرة المفضلة (دقيقة)</label>
+      <input type="number" id="sessionMinutes" value="50" min="15" max="180">
+    </div>
+  </div>
+
+  <!-- Step 2: المواد -->
+  <div class="step" data-step="2">
+    <h2>موادك الدراسية</h2>
+    <p class="desc">ضيف كل مادة بتذاكرها، وحدد أولويتها.</p>
+    <div class="repeat-list" id="subjectsList"></div>
+    <button type="button" class="btn btn-ghost btn-sm" onclick="addSubjectRow()">+ إضافة مادة</button>
+  </div>
+
+  <!-- Step 3: المدرسين -->
+  <div class="step" data-step="3">
+    <h2>مدرسينك المفضلين</h2>
+    <p class="desc">اختياري — يساعد مِدار يلقيلك الشرح المناسب بسرعة (ممكن تتخطاها دلوقتي).</p>
+    <div class="repeat-list" id="teachersList"></div>
+    <button type="button" class="btn btn-ghost btn-sm" onclick="addTeacherRow()">+ إضافة مدرس</button>
+  </div>
+
+  <!-- Step 4: الجدول الثابت -->
+  <div class="step" data-step="4">
+    <h2>جدولك الثابت</h2>
+    <p class="desc">الحصص والدروس والمواعيد الثابتة كل أسبوع.</p>
+    <div class="repeat-list" id="scheduleList"></div>
+    <button type="button" class="btn btn-ghost btn-sm" onclick="addScheduleRow()">+ إضافة موعد ثابت</button>
+  </div>
+
+  <!-- Step 5: تأكيد -->
+  <div class="step" data-step="5">
+    <h2>تمام، خلصنا 🎉</h2>
+    <p class="desc">هيتم حفظ كل ده وهيبدأ مِدار يبني يومك.</p>
+    <div class="list-card" id="summaryCard" style="padding:16px"></div>
+  </div>
+
+  <div class="nav-buttons">
+    <button type="button" class="btn btn-ghost" id="backBtn" onclick="prevStep()" style="display:none">رجوع</button>
+    <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextStep()">التالي</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/supabase-client.js"></script>
+<script src="js/onboarding.js"></script>
+</body>
+</html>
