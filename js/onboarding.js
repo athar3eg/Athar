@@ -17,11 +17,30 @@ function showToast(msg) {
   setTimeout(() => toast.classList.remove("show"), 2200);
 }
 
+function withTimeout(promise, ms = 15000) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error("الاتصال بطيء جدًا — تأكد من الإنترنت وحاول تاني")), ms))
+  ]);
+}
+
+window.addEventListener("unhandledrejection", (e) => {
+  console.error("Unhandled rejection:", e.reason);
+  const btn = document.getElementById("nextBtn");
+  if (btn) { btn.disabled = false; btn.textContent = currentStep === TOTAL_STEPS ? "احفظ وابدأ 🚀" : "التالي"; }
+  showToast(e.reason?.message || "حصل خطأ، حاول تاني");
+});
+
 (async function init() {
-  currentUser = await requireAuth();
-  if (!currentUser) return;
-  addSubjectRow();
-  addScheduleRow();
+  try {
+    currentUser = await withTimeout(requireAuth(), 10000);
+    if (!currentUser) return;
+    addSubjectRow();
+    addScheduleRow();
+  } catch (err) {
+    console.error("Init error:", err);
+    showToast(err.message || "حصل خطأ في تحميل الصفحة");
+  }
 })();
 
 // ---------- Subjects ----------
@@ -178,10 +197,10 @@ async function saveEverything() {
     const energy_level = document.getElementById("energyLevel").value;
     const preferred_session_minutes = parseInt(document.getElementById("sessionMinutes").value) || 50;
 
-    await supabase.from("profiles").update({
+    await withTimeout(supabase.from("profiles").update({
       wake_time, sleep_time, energy_level, preferred_session_minutes,
       onboarding_completed: true, updated_at: new Date().toISOString()
-    }).eq("id", currentUser.id);
+    }).eq("id", currentUser.id));
 
     // 2) Subjects — save and map local id -> real db id
     const subjectIdMap = {};

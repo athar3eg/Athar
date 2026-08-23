@@ -5,14 +5,30 @@ const DAY_NAMES = ["الأحد", "الاتنين", "التلات", "الأربع
 
 let me = null;
 
-(async function init() {
-  me = await requireAuth();
-  if (!me) return;
+function withTimeout(promise, ms = 15000) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error("الاتصال بطيء جدًا — تأكد من الإنترنت وحاول تاني")), ms))
+  ]);
+}
 
-  applyTheme();
-  setGreeting();
-  await loadToday();
-  await loadSubjects();
+window.addEventListener("unhandledrejection", (e) => {
+  console.error("Unhandled rejection:", e.reason);
+});
+
+(async function init() {
+  try {
+    me = await withTimeout(requireAuth(), 10000);
+    if (!me) return;
+
+    applyTheme();
+    setGreeting();
+    await withTimeout(loadToday());
+    await withTimeout(loadSubjects());
+  } catch (err) {
+    console.error("Dashboard init error:", err);
+    document.getElementById("todayList").innerHTML = `<div class="empty-state">حصل خطأ في التحميل — ${err.message}</div>`;
+  }
 })();
 
 function setGreeting() {

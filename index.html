@@ -71,6 +71,35 @@
 const errorMsg = document.getElementById("errorMsg");
 const toast = document.getElementById("toast");
 
+// يمسك أي خطأ غير متوقع بدل ما يسيب الزرار عالق للأبد
+window.addEventListener("error", (e) => {
+  console.error("Global error:", e.error || e.message);
+  resetAllButtons();
+  showError("حصل خطأ غير متوقع: " + (e.message || "جرب تاني"));
+});
+window.addEventListener("unhandledrejection", (e) => {
+  console.error("Unhandled rejection:", e.reason);
+  resetAllButtons();
+  showError("حصل خطأ في الاتصال: " + (e.reason?.message || e.reason || "جرب تاني"));
+});
+
+function resetAllButtons() {
+  const loginBtn = document.getElementById("loginBtn");
+  const signupBtn = document.getElementById("signupBtn");
+  const resetBtn = document.getElementById("resetBtn");
+  if (loginBtn) { loginBtn.disabled = false; loginBtn.textContent = "دخول"; }
+  if (signupBtn) { signupBtn.disabled = false; signupBtn.textContent = "إنشاء حساب"; }
+  if (resetBtn) { resetBtn.disabled = false; resetBtn.textContent = "إرسال رابط الاستعادة"; }
+}
+
+// يحط سقف زمني لأي طلب — لو الاتصال بطيء أوي، يظهر خطأ واضح بدل ما يعلق للأبد
+function withTimeout(promise, ms = 15000) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error("الاتصال بطيء جدًا — تأكد من الإنترنت وحاول تاني")), ms))
+  ]);
+}
+
 function showToast(msg) {
   toast.textContent = msg;
   toast.classList.add("show");
@@ -103,10 +132,15 @@ function showReset() {
 
 // لو المستخدم داخل بالفعل، وديه على المكان الصح
 (async function checkSession() {
-  const { data: { session } } = await supabase.auth.getSession();
-  if (session) {
-    const profile = await getMyProfile(session.user.id);
-    window.location.href = (profile && profile.onboarding_completed) ? "dashboard.html" : "onboarding.html";
+  try {
+    const { data: { session } } = await withTimeout(supabase.auth.getSession(), 8000);
+    if (session) {
+      const profile = await withTimeout(getMyProfile(session.user.id), 8000);
+      window.location.href = (profile && profile.onboarding_completed) ? "dashboard.html" : "onboarding.html";
+    }
+  } catch (err) {
+    console.error("checkSession error:", err);
+    // متعلقش الصفحة — سيب المستخدم يدخل بياناته عادي
   }
 })();
 
@@ -117,20 +151,26 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   const btn = document.getElementById("loginBtn");
   btn.disabled = true; btn.textContent = "جاري الدخول...";
 
-  const email = document.getElementById("loginEmail").value.trim();
-  const password = document.getElementById("loginPassword").value;
+  try {
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
 
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await withTimeout(supabase.auth.signInWithPassword({ email, password }));
 
-  btn.disabled = false; btn.textContent = "دخول";
+    if (error) {
+      showError(error.message.includes("Invalid") ? "البريد أو كلمة المرور غلط" : error.message);
+      return;
+    }
 
-  if (error) {
-    showError(error.message.includes("Invalid") ? "البريد أو كلمة المرور غلط" : error.message);
-    return;
+    const profile = await withTimeout(getMyProfile(data.user.id));
+    window.location.href = (profile && profile.onboarding_completed) ? "dashboard.html" : "onboarding.html";
+
+  } catch (err) {
+    console.error("Login error:", err);
+    showError(err.message || "حصل خطأ، حاول تاني");
+  } finally {
+    btn.disabled = false; btn.textContent = "دخول";
   }
-
-  const profile = await getMyProfile(data.user.id);
-  window.location.href = (profile && profile.onboarding_completed) ? "dashboard.html" : "onboarding.html";
 });
 
 // إنشاء حساب
@@ -140,30 +180,36 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
   const btn = document.getElementById("signupBtn");
   btn.disabled = true; btn.textContent = "جاري الإنشاء...";
 
-  const name = document.getElementById("signupName").value.trim();
-  const email = document.getElementById("signupEmail").value.trim();
-  const password = document.getElementById("signupPassword").value;
+  try {
+    const name = document.getElementById("signupName").value.trim();
+    const email = document.getElementById("signupEmail").value.trim();
+    const password = document.getElementById("signupPassword").value;
 
-  const { data, error } = await supabase.auth.signUp({
-    email, password,
-    options: { data: { full_name: name } }
-  });
+    const { data, error } = await withTimeout(supabase.auth.signUp({
+      email, password,
+      options: { data: { full_name: name } }
+    }));
 
-  btn.disabled = false; btn.textContent = "إنشاء حساب";
+    if (error) {
+      showError(error.message.includes("already registered") ? "الإيميل ده مسجل قبل كده" : error.message);
+      return;
+    }
 
-  if (error) {
-    showError(error.message.includes("already registered") ? "الإيميل ده مسجل قبل كده" : error.message);
-    return;
+    // لو الإيميل محتاج تأكيد، هيبقى مفيش session لسه
+    if (!data.session) {
+      showToast("اتبعتلك رابط تأكيد على إيميلك ✉️");
+      showLogin();
+      return;
+    }
+
+    window.location.href = "onboarding.html";
+
+  } catch (err) {
+    console.error("Signup error:", err);
+    showError(err.message || "حصل خطأ، حاول تاني");
+  } finally {
+    btn.disabled = false; btn.textContent = "إنشاء حساب";
   }
-
-  // لو الإيميل محتاج تأكيد، هيبقى مفيش session لسه
-  if (!data.session) {
-    showToast("اتبعتلك رابط تأكيد على إيميلك ✉️");
-    showLogin();
-    return;
-  }
-
-  window.location.href = "onboarding.html";
 });
 
 // استعادة كلمة المرور
@@ -173,16 +219,22 @@ document.getElementById("resetForm").addEventListener("submit", async (e) => {
   const btn = document.getElementById("resetBtn");
   btn.disabled = true; btn.textContent = "جاري الإرسال...";
 
-  const email = document.getElementById("resetEmail").value.trim();
-  const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.origin + window.location.pathname.replace("index.html", "") + "reset-password.html"
-  });
+  try {
+    const email = document.getElementById("resetEmail").value.trim();
+    const { error } = await withTimeout(supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + window.location.pathname.replace("index.html", "") + "reset-password.html"
+    }));
 
-  btn.disabled = false; btn.textContent = "إرسال رابط الاستعادة";
+    if (error) { showError(error.message); return; }
+    showToast("اتبعتلك رابط استعادة كلمة المرور ✉️");
+    showLogin();
 
-  if (error) { showError(error.message); return; }
-  showToast("اتبعتلك رابط استعادة كلمة المرور ✉️");
-  showLogin();
+  } catch (err) {
+    console.error("Reset error:", err);
+    showError(err.message || "حصل خطأ، حاول تاني");
+  } finally {
+    btn.disabled = false; btn.textContent = "إرسال رابط الاستعادة";
+  }
 });
 </script>
 </body>
