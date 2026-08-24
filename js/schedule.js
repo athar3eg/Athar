@@ -82,7 +82,7 @@ async function loadFixedForDay(day) {
   }
   listEl.innerHTML = data.map(b => `
     <div class="row">
-      <div class="dot" style="background:${b.subjects?.color || "var(--accent)"}"></div>
+      <div class="dot" style="background:color-mix(in srgb, ${b.subjects?.color || "#0077cc"} 20%, transparent); color:${b.subjects?.color || "#0077cc"}">📘</div>
       <div class="content">
         <div class="title">${b.title}</div>
         <div class="meta">${b.subjects?.name || ""}</div>

@@ -88,7 +88,7 @@ async function loadSubjects() {
   }
   listEl.innerHTML = data.map(s => `
     <div class="row">
-      <div class="dot" style="background:${s.color}"></div>
+      <div class="dot" style="background:color-mix(in srgb, ${s.color} 20%, transparent); color:${s.color}">📖</div>
       <div class="content"><div class="title">${s.name}</div></div>
       <button class="modal-close" onclick="deleteSubject('${s.id}')">🗑️</button>
     </div>`).join("");

@@ -197,52 +197,63 @@ async function saveEverything() {
     const energy_level = document.getElementById("energyLevel").value;
     const preferred_session_minutes = parseInt(document.getElementById("sessionMinutes").value) || 50;
 
-    await withTimeout(sb.from("profiles").update({
+    const profileUpdate = withTimeout(sb.from("profiles").update({
       wake_time, sleep_time, energy_level, preferred_session_minutes,
       onboarding_completed: true, updated_at: new Date().toISOString()
     }).eq("id", currentUser.id));
 
-    // 2) Subjects — save and map local id -> real db id
-    const subjectIdMap = {};
-    for (const sid of subjectRows) {
-      const name = document.querySelector(`#${sid} .subj-name`)?.value.trim();
-      if (!name) continue;
-      const priority = parseInt(document.querySelector(`#${sid} .subj-priority`)?.value) || 2;
-      const { data, error } = await sb.from("subjects")
-        .insert({ user_id: currentUser.id, name, priority })
-        .select().single();
-      if (!error) subjectIdMap[sid] = data.id;
+    // 2) Subjects — طلب واحد بس لكل المواد مع بعض
+    const subjectsPayload = subjectRows
+      .map(sid => ({
+        sid,
+        name: document.querySelector(`#${sid} .subj-name`)?.value.trim(),
+        priority: parseInt(document.querySelector(`#${sid} .subj-priority`)?.value) || 2
+      }))
+      .filter(s => s.name);
+
+    let subjectIdMap = {};
+    if (subjectsPayload.length) {
+      const { data, error } = await withTimeout(sb.from("subjects")
+        .insert(subjectsPayload.map(s => ({ user_id: currentUser.id, name: s.name, priority: s.priority })))
+        .select());
+      if (!error && data) {
+        data.forEach((row, i) => { subjectIdMap[subjectsPayload[i].sid] = row.id; });
+      }
     }
 
-    // 3) Teachers
-    for (const tid of teacherRows) {
-      const name = document.querySelector(`#${tid} .teach-name`)?.value.trim();
-      if (!name) continue;
-      const localSubjId = document.querySelector(`#${tid} .teach-subject`)?.value;
-      const channel_url = document.querySelector(`#${tid} .teach-url`)?.value.trim() || null;
-      await sb.from("teachers").insert({
-        user_id: currentUser.id,
-        subject_id: subjectIdMap[localSubjId] || null,
-        name, channel_url
-      });
-    }
+    // 3) Teachers — طلب واحد لكل المدرسين مع بعض
+    const teachersPayload = teacherRows
+      .map(tid => ({
+        name: document.querySelector(`#${tid} .teach-name`)?.value.trim(),
+        subject_id: subjectIdMap[document.querySelector(`#${tid} .teach-subject`)?.value] || null,
+        channel_url: document.querySelector(`#${tid} .teach-url`)?.value.trim() || null
+      }))
+      .filter(t => t.name)
+      .map(t => ({ user_id: currentUser.id, ...t }));
 
-    // 4) Fixed schedule — one row per selected day
+    const teachersInsert = teachersPayload.length
+      ? withTimeout(sb.from("teachers").insert(teachersPayload))
+      : Promise.resolve();
+
+    // 4) Fixed schedule — طلب واحد لكل المواعيد (بكل أيامها) مع بعض
+    const fixedPayload = [];
     for (const fid of scheduleRows) {
       const title = document.querySelector(`#${fid} .sched-title`)?.value.trim();
       if (!title) continue;
-      const localSubjId = document.querySelector(`#${fid} .sched-subject`)?.value;
+      const subject_id = subjectIdMap[document.querySelector(`#${fid} .sched-subject`)?.value] || null;
       const start_time = document.querySelector(`#${fid} .sched-start`)?.value;
       const end_time = document.querySelector(`#${fid} .sched-end`)?.value;
       const days = [...document.querySelectorAll(`#${fid} .day-pill.selected`)].map(el => parseInt(el.dataset.day));
       for (const day_of_week of days) {
-        await sb.from("fixed_schedule").insert({
-          user_id: currentUser.id,
-          subject_id: subjectIdMap[localSubjId] || null,
-          title, day_of_week, start_time, end_time, block_kind: "class"
-        });
+        fixedPayload.push({ user_id: currentUser.id, subject_id, title, day_of_week, start_time, end_time, block_kind: "class" });
       }
     }
+    const fixedInsert = fixedPayload.length
+      ? withTimeout(sb.from("fixed_schedule").insert(fixedPayload))
+      : Promise.resolve();
+
+    // نبعت الطلبات التلاتة الباقية مع بعض في نفس الوقت بدل ما نستناهم واحد واحد
+    await Promise.all([profileUpdate, teachersInsert, fixedInsert]);
 
     showToast("تم الحفظ! 🎉");
     setTimeout(() => window.location.href = "dashboard.html", 700);

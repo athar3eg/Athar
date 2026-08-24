@@ -61,7 +61,7 @@ async function loadExams() {
     const urgent = daysLeft <= 5;
     return `
       <div class="row">
-        <div class="dot" style="background:${ex.subjects?.color || "var(--accent)"}"></div>
+        <div class="dot" style="background:color-mix(in srgb, ${ex.subjects?.color || "#0077cc"} 20%, transparent); color:${ex.subjects?.color || "#0077cc"}">🎯</div>
         <div class="content">
           <div class="title">${ex.title}</div>
           <div class="meta">${ex.subjects?.name || ""} · ${ex.exam_date}</div>

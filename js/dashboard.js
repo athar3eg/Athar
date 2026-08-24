@@ -36,9 +36,8 @@ window.addEventListener("unhandledrejection", (e) => {
 
     applyTheme();
     setGreeting();
-    await withTimeout(loadToday());
-    await withTimeout(loadTasksPreview());
-    await withTimeout(loadSubjects());
+    // الطلبات التلاتة دول مستقلين عن بعض، فبنبعتهم مع بعض بدل ما نستناهم واحد واحد (أسرع بكتير)
+    await withTimeout(Promise.all([loadToday(), loadTasksPreview(), loadSubjects()]));
   } catch (err) {
     console.error("Dashboard init error:", err);
     document.getElementById("todayList").innerHTML = `<div class="empty-state">حصل خطأ في التحميل — ${err.message}</div>`;
@@ -88,6 +87,7 @@ async function loadToday() {
     .order("start_time");
 
   const listEl = document.getElementById("todayList");
+  document.getElementById("statTodayCount").textContent = (fixed || []).length;
 
   if (error || !fixed || fixed.length === 0) {
     listEl.innerHTML = `<div class="empty-state">مفيش مواعيد ثابتة النهاردة 🌿</div>`;
@@ -97,10 +97,10 @@ async function loadToday() {
       const [eh, em] = b.end_time.split(":").map(Number);
       const startM = sh * 60 + sm, endM = eh * 60 + em;
       const isNow = nowMinutes >= startM && nowMinutes < endM;
-      const color = b.subjects?.color || "var(--accent)";
+      const color = b.subjects?.color || "#0077cc";
       return `
         <div class="row">
-          <div class="dot" style="background:${color}"></div>
+          <div class="dot" style="background:color-mix(in srgb, ${color} 20%, transparent); color:${color}">📘</div>
           <div class="content">
             <div class="title">${b.title}${isNow ? " 🔴 دلوقتي" : ""}</div>
             <div class="meta">${b.subjects?.name || ""}</div>
@@ -165,6 +165,7 @@ async function loadTasksPreview() {
     .limit(4);
 
   pendingTasks = data || [];
+  document.getElementById("statTasksCount").textContent = pendingTasks.length;
 
   if (error || pendingTasks.length === 0) {
     listEl.innerHTML = `<div class="empty-state">مفيش مهام مستحقة النهاردة 🌿</div>`;
@@ -208,7 +209,7 @@ async function loadSubjects() {
     const [label, cls] = badgeMap[s.risk_level] || badgeMap.stable;
     return `
       <div class="row">
-        <div class="dot" style="background:${s.color}"></div>
+        <div class="dot" style="background:color-mix(in srgb, ${s.color} 20%, transparent); color:${s.color}">📖</div>
         <div class="content">
           <div class="title">${s.name}</div>
           <div class="meta">مستوى الإتقان: ${Math.round(s.mastery_percentage)}%</div>
