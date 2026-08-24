@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>مِدار — الامتحانات</title>
+<link rel="stylesheet" href="css/style.css?v=5">
+<script src="js/supabase-js.min.js?v=5"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="greeting">🎯 الامتحانات</div>
+    <div class="sub">خطط قبل الامتحان بوقت</div>
+  </div>
+  <div class="icon-btn" onclick="location.href='dashboard.html'">🏠</div>
+</div>
+
+<div class="container">
+  <div class="list-card" id="examsList"><div class="empty-state">جاري التحميل...</div></div>
+</div>
+
+<button class="fab" onclick="openExamModal()">＋ إضافة امتحان</button>
+
+<div class="modal-overlay" id="examModal">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <h3>امتحان جديد</h3>
+      <button class="modal-close" onclick="closeExamModal()">✕</button>
+    </div>
+    <div class="field">
+      <label>اسم الامتحان</label>
+      <input type="text" id="examTitle" placeholder="مثلاً: امتحان الشهر">
+    </div>
+    <div class="field">
+      <label>المادة</label>
+      <select id="examSubject"></select>
+    </div>
+    <div class="field">
+      <label>تاريخ الامتحان</label>
+      <input type="date" id="examDate">
+    </div>
+    <button class="btn btn-primary" id="saveExamBtn" onclick="saveExam()">حفظ الامتحان</button>
+  </div>
+</div>
+
+<div class="bottom-nav">
+  <a href="dashboard.html"><span class="ic">🏠</span>الرئيسية</a>
+  <a href="schedule.html"><span class="ic">📅</span>الجدول</a>
+  <a href="exams.html" class="active"><span class="ic">🎯</span>الامتحانات</a>
+  <a href="#" onclick="comingSoon('المساعد الذكي', event)"><span class="ic">🤖</span>مساعد</a>
+  <a href="settings.html"><span class="ic">⚙️</span>إعدادات</a>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/supabase-client.js?v=5"></script>
+<script src="js/exams.js?v=5"></script>
+</body>
+</html>

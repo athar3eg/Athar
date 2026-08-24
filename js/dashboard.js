@@ -37,6 +37,7 @@ window.addEventListener("unhandledrejection", (e) => {
     applyTheme();
     setGreeting();
     await withTimeout(loadToday());
+    await withTimeout(loadTasksPreview());
     await withTimeout(loadSubjects());
   } catch (err) {
     console.error("Dashboard init error:", err);
@@ -122,6 +123,7 @@ function computeNowAction(fixed, nowMinutes) {
 
   if (current) {
     document.getElementById("nowAction").textContent = current.title;
+    document.getElementById("nowAction").dataset.free = "0";
     document.getElementById("nowMeta").textContent = `لحد الساعة ${current.end_time.slice(0,5)}`;
     return;
   }
@@ -139,10 +141,49 @@ function computeNowAction(fixed, nowMinutes) {
     const h = Math.floor(freeMinutes / 60), m = freeMinutes % 60;
     const freeText = h > 0 ? `${h} ساعة و${m} دقيقة` : `${m} دقيقة`;
     document.getElementById("nowAction").textContent = `عندك ${freeText} لحد "${upcoming.b.title}"`;
+    document.getElementById("nowAction").dataset.free = "1";
     document.getElementById("nowMeta").textContent = "وقت مثالي للمذاكرة أو المراجعة";
   } else {
     document.getElementById("nowAction").textContent = "وقتك فاضي — وقت مثالي للمذاكرة";
+    document.getElementById("nowAction").dataset.free = "1";
     document.getElementById("nowMeta").textContent = "مفيش مواعيد باقية النهاردة";
+  }
+}
+
+// ---------- Tasks preview ----------
+let pendingTasks = [];
+async function loadTasksPreview() {
+  const listEl = document.getElementById("tasksPreview");
+  const today = new Date().toISOString().slice(0, 10);
+
+  const { data, error } = await sb.from("tasks")
+    .select("*, subjects(name, color)")
+    .eq("user_id", me.id)
+    .neq("status", "completed")
+    .or(`due_date.lte.${today},due_date.is.null`)
+    .order("due_date", { ascending: true, nullsFirst: false })
+    .limit(4);
+
+  pendingTasks = data || [];
+
+  if (error || pendingTasks.length === 0) {
+    listEl.innerHTML = `<div class="empty-state">مفيش مهام مستحقة النهاردة 🌿</div>`;
+  } else {
+    listEl.innerHTML = pendingTasks.map(t => `
+      <div class="row" onclick="location.href='focus.html?task=${t.id}'">
+        <div class="check-circle"></div>
+        <div class="content">
+          <div class="title">${t.title}</div>
+          <div class="meta">${t.subjects?.name || ""} · ${t.estimated_minutes} د</div>
+        </div>
+      </div>`).join("");
+  }
+
+  // لو الوقت فاضي وفيه مهمة مستحقة، اقترحها بدل الرسالة العامة
+  const nowActionEl = document.getElementById("nowAction");
+  if (pendingTasks.length > 0 && nowActionEl.dataset.free === "1") {
+    nowActionEl.textContent = pendingTasks[0].title;
+    document.getElementById("nowMeta").textContent = `${pendingTasks[0].subjects?.name || ""} · ${pendingTasks[0].estimated_minutes} دقيقة تقريبًا`;
   }
 }
 

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>مِدار — الإعدادات</title>
+<link rel="stylesheet" href="css/style.css?v=5">
+<script src="js/supabase-js.min.js?v=5"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="greeting">⚙️ الإعدادات</div>
+  </div>
+  <div class="icon-btn" onclick="location.href='dashboard.html'">🏠</div>
+</div>
+
+<div class="container">
+
+  <div class="section-title"><span>حسابك</span></div>
+  <div class="card" style="max-width:100%; margin-bottom:8px">
+    <div class="field">
+      <label>النوم والصحيان</label>
+      <div style="display:flex; gap:8px">
+        <input type="time" id="sleepTime" style="flex:1">
+        <input type="time" id="wakeTime" style="flex:1">
+      </div>
+    </div>
+    <div class="field">
+      <label>مستوى الطاقة</label>
+      <select id="energyLevel">
+        <option value="high">عالي</option>
+        <option value="medium">متوسط</option>
+        <option value="low">منخفض</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>مدة جلسة المذاكرة المفضلة (دقيقة)</label>
+      <input type="number" id="sessionMinutes" min="15" max="180">
+    </div>
+    <button class="btn btn-primary" id="saveProfileBtn" onclick="saveProfile()">حفظ التغييرات</button>
+  </div>
+
+  <div class="section-title">
+    <span>موادك</span>
+    <a href="#" onclick="openSubjectModal(); event.preventDefault();" style="font-size:12px; color:var(--accent)">＋ إضافة</a>
+  </div>
+  <div class="list-card" id="subjectsList" style="margin-bottom:8px"><div class="empty-state">جاري التحميل...</div></div>
+
+  <div class="section-title">
+    <span>مدرسينك</span>
+    <a href="#" onclick="openTeacherModal(); event.preventDefault();" style="font-size:12px; color:var(--accent)">＋ إضافة</a>
+  </div>
+  <div class="list-card" id="teachersList" style="margin-bottom:8px"><div class="empty-state">جاري التحميل...</div></div>
+
+  <div class="section-title"><span>المظهر</span></div>
+  <div class="list-card" style="margin-bottom:8px">
+    <div class="row">
+      <div class="content"><div class="title">الوضع الليلي</div></div>
+      <div class="icon-btn" onclick="toggleTheme()">🌙</div>
+    </div>
+  </div>
+
+  <button class="btn btn-ghost" style="color:var(--red); border-color:var(--red); margin-top:8px" onclick="logout()">تسجيل الخروج</button>
+
+</div>
+
+<!-- Modal: Add Subject -->
+<div class="modal-overlay" id="subjectModal">
+  <div class="modal-sheet">
+    <div class="modal-header"><h3>مادة جديدة</h3><button class="modal-close" onclick="closeSubjectModal()">✕</button></div>
+    <div class="field"><label>اسم المادة</label><input type="text" id="newSubjectName" placeholder="مثلاً: فيزياء"></div>
+    <div class="field">
+      <label>الأولوية</label>
+      <select id="newSubjectPriority">
+        <option value="1">عالية</option>
+        <option value="2" selected>متوسطة</option>
+        <option value="3">عادية</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" id="saveSubjectBtn" onclick="saveSubject()">حفظ</button>
+  </div>
+</div>
+
+<!-- Modal: Add Teacher -->
+<div class="modal-overlay" id="teacherModal">
+  <div class="modal-sheet">
+    <div class="modal-header"><h3>مدرس جديد</h3><button class="modal-close" onclick="closeTeacherModal()">✕</button></div>
+    <div class="field"><label>المادة</label><select id="newTeacherSubject"></select></div>
+    <div class="field"><label>اسم المدرس</label><input type="text" id="newTeacherName"></div>
+    <div class="field"><label>رابط القناة (اختياري)</label><input type="text" id="newTeacherUrl" placeholder="https://youtube.com/..."></div>
+    <button class="btn btn-primary" id="saveTeacherBtn" onclick="saveTeacher()">حفظ</button>
+  </div>
+</div>
+
+<div class="bottom-nav">
+  <a href="dashboard.html"><span class="ic">🏠</span>الرئيسية</a>
+  <a href="schedule.html"><span class="ic">📅</span>الجدول</a>
+  <a href="exams.html"><span class="ic">🎯</span>الامتحانات</a>
+  <a href="#" onclick="comingSoon('المساعد الذكي', event)"><span class="ic">🤖</span>مساعد</a>
+  <a href="settings.html" class="active"><span class="ic">⚙️</span>إعدادات</a>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/supabase-client.js?v=5"></script>
+<script src="js/settings.js?v=5"></script>
+</body>
+</html>

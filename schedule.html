@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>مِدار — الجدول</title>
+<link rel="stylesheet" href="css/style.css?v=5">
+<script src="js/supabase-js.min.js?v=5"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="greeting">📅 جدولك</div>
+    <div class="sub" id="dateText"></div>
+  </div>
+  <div class="icon-btn" onclick="location.href='dashboard.html'">🏠</div>
+</div>
+
+<div class="container">
+  <div class="tab-scroll" id="dayTabs"></div>
+
+  <div class="section-title"><span>مواعيد ثابتة</span><a href="#" onclick="openFixedModal(); event.preventDefault();" style="font-size:12px; color:var(--accent)">＋ إضافة</a></div>
+  <div class="list-card" id="fixedList"><div class="empty-state">جاري التحميل...</div></div>
+
+  <div class="section-title"><span>مهامك</span></div>
+  <div class="list-card" id="tasksList"><div class="empty-state">جاري التحميل...</div></div>
+</div>
+
+<button class="fab" onclick="openTaskModal()">＋ إضافة مهمة</button>
+
+<!-- Modal: Add Task -->
+<div class="modal-overlay" id="taskModal">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <h3>مهمة جديدة</h3>
+      <button class="modal-close" onclick="closeTaskModal()">✕</button>
+    </div>
+    <div class="field">
+      <label>عنوان المهمة</label>
+      <input type="text" id="taskTitle" placeholder="مثلاً: مراجعة الباب التالت">
+    </div>
+    <div class="field">
+      <label>المادة</label>
+      <select id="taskSubject"></select>
+    </div>
+    <div class="field">
+      <label>النوع</label>
+      <select id="taskType">
+        <option value="study">مذاكرة</option>
+        <option value="watch">مشاهدة شرح</option>
+        <option value="practice">حل تمارين</option>
+        <option value="review">مراجعة</option>
+        <option value="quiz">اختبار</option>
+        <option value="other">تاني</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>تاريخ الاستحقاق</label>
+      <input type="date" id="taskDate">
+    </div>
+    <div class="field">
+      <label>الوقت المتوقع (دقيقة)</label>
+      <input type="number" id="taskMinutes" value="30" min="5">
+    </div>
+    <button class="btn btn-primary" id="saveTaskBtn" onclick="saveTask()">حفظ المهمة</button>
+  </div>
+</div>
+
+<!-- Modal: Add Fixed Schedule -->
+<div class="modal-overlay" id="fixedModal">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <h3>موعد ثابت جديد</h3>
+      <button class="modal-close" onclick="closeFixedModal()">✕</button>
+    </div>
+    <div class="field">
+      <label>اسم الموعد</label>
+      <input type="text" id="fixedTitle" placeholder="مثلاً: حصة فيزياء">
+    </div>
+    <div class="field">
+      <label>المادة</label>
+      <select id="fixedSubject"><option value="">بدون مادة</option></select>
+    </div>
+    <div class="field">
+      <label>الأيام</label>
+      <div class="day-pills" id="fixedDays"></div>
+    </div>
+    <div class="field">
+      <label>من</label>
+      <input type="time" id="fixedStart" value="16:00">
+    </div>
+    <div class="field">
+      <label>لحد</label>
+      <input type="time" id="fixedEnd" value="17:00">
+    </div>
+    <button class="btn btn-primary" id="saveFixedBtn" onclick="saveFixed()">حفظ الموعد</button>
+  </div>
+</div>
+
+<div class="bottom-nav">
+  <a href="dashboard.html"><span class="ic">🏠</span>الرئيسية</a>
+  <a href="schedule.html" class="active"><span class="ic">📅</span>الجدول</a>
+  <a href="exams.html"><span class="ic">🎯</span>الامتحانات</a>
+  <a href="#" onclick="comingSoon('المساعد الذكي', event)"><span class="ic">🤖</span>مساعد</a>
+  <a href="settings.html"><span class="ic">⚙️</span>إعدادات</a>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/supabase-client.js?v=5"></script>
+<script src="js/schedule.js?v=5"></script>
+</body>
+</html>
