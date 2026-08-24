@@ -12,6 +12,19 @@ function withTimeout(promise, ms = 15000) {
   ]);
 }
 
+const toast = document.getElementById("toast");
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 2200);
+}
+
+// الأقسام دي لسه في مراحل بناء جاية — بدل ما الزرار يفضل ميت، بيوريك إنه شغال ومسجل
+function comingSoon(sectionName, e) {
+  if (e) e.preventDefault();
+  showToast(`🚧 قسم "${sectionName}" جاي في التحديث الجاي`);
+}
+
 window.addEventListener("unhandledrejection", (e) => {
   console.error("Unhandled rejection:", e.reason);
 });
