@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  packages: write
 
 jobs:
   build-android:
@@ -15,6 +16,8 @@ jobs:
     steps:
       - name: Checkout المشروع
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: تحديد رقم النسخة
         id: ver
@@ -42,7 +45,9 @@ jobs:
 
       - name: تفعيل Firebase (نسخ google-services.json وإضافة الـ plugin)
         run: |
-          cp firebase/google-services.json android/app/google-services.json
+          if [ -f "firebase/google-services.json" ]; then
+            cp firebase/google-services.json android/app/google-services.json
+          fi
           # إضافة classpath الخاص بـ Google Services للملف الرئيسي لو مش موجود
           if ! grep -q "com.google.gms:google-services" android/build.gradle; then
             sed -i "/dependencies {/a\\        classpath 'com.google.gms:google-services:4.4.2'" android/build.gradle
@@ -69,13 +74,15 @@ jobs:
 
       - name: إنشاء إصدار (Release) عام برابط تحميل ثابت
         uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: v${{ steps.ver.outputs.version }}
           name: أَثَر v${{ steps.ver.outputs.version }}
           files: android/app/build/outputs/apk/debug/app-debug.apk
           make_latest: true
 
-      - name: تحديث ملف النسخة داخل المشروع (لتنبيه التحديثات جوه التطبيق)
+      - name: تحديث ملف النسخة داخل المشروع
         run: |
           cat > version.json << EOF
           {
@@ -87,5 +94,5 @@ jobs:
           git config user.name "athar-bot"
           git config user.email "bot@athar3eg.local"
           git add version.json
-          git diff --staged --quiet || git commit -m "📦 إصدار v${{ steps.ver.outputs.version }} [skip ci]"
-          git push
+          git commit -m "📦 إصدار v${{ steps.ver.outputs.version }} [skip ci]" || echo "No changes to commit"
+          git push origin HEAD:main || echo "Push skipped"

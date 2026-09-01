@@ -211,3 +211,18 @@ async function getMotivationalMessage() {
   _lastMotivationIdx = idx;
   return _motivationCache[idx];
 }
+
+// ── إخفاء كارت تحميل التطبيق تلقائياً لو شغالين داخل تطبيق الموبايل (Capacitor Native) ──
+(function checkNativeAppBadge() {
+  function applyBadgeVisibility() {
+    if (window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform()) {
+      const badges = document.querySelectorAll('#downloadAppBadge, .download-app-badge');
+      badges.forEach(b => b.style.setProperty('display', 'none', 'important'));
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyBadgeVisibility);
+  } else {
+    applyBadgeVisibility();
+  }
+})();
