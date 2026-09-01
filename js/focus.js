@@ -1,29 +1,16 @@
 // ============================================
-// مِدار — Focus Mode
+// أَثَر — Focus Mode Logic (Tailwind & Supabase)
 // ============================================
 let me = null;
 let currentTask = null;
-let remainingSeconds = 0;
+let totalSeconds = 25 * 60;
+let remainingSeconds = 25 * 60;
 let timerInterval = null;
 let isPaused = false;
-
-const toast = document.getElementById("toast");
-function showToast(msg) {
-  toast.textContent = msg;
-  toast.classList.add("show");
-  setTimeout(() => toast.classList.remove("show"), 2200);
-}
-function withTimeout(promise, ms = 15000) {
-  return Promise.race([
-    promise,
-    new Promise((_, reject) => setTimeout(() => reject(new Error("الاتصال بطيء — حاول تاني")), ms))
-  ]);
-}
-window.addEventListener("unhandledrejection", (e) => console.error("Unhandled:", e.reason));
+let pendingFreeMinutes = 25;
 
 (async function init() {
   try {
-    document.documentElement.setAttribute("data-theme", localStorage.getItem("madar-theme") || "light");
     me = await withTimeout(requireAuth(), 10000);
     if (!me) return;
 
@@ -32,27 +19,108 @@ window.addEventListener("unhandledrejection", (e) => console.error("Unhandled:",
 
     if (taskId) {
       const { data, error } = await sb.from("tasks").select("*, subjects(name)").eq("id", taskId).single();
-      if (!error) currentTask = data;
+      if (!error && data) currentTask = data;
     }
 
-    const minutes = currentTask ? currentTask.estimated_minutes : 25;
-    remainingSeconds = minutes * 60;
-    document.getElementById("taskLabel").textContent = currentTask
-      ? `${currentTask.title}${currentTask.subjects ? " · " + currentTask.subjects.name : ""}`
-      : "جلسة مذاكرة حرة";
+    buildClockTicks();
 
-    updateDisplay();
-    startTimer();
+    if (currentTask) {
+      // Task-linked session: duration comes from the task, start right away.
+      const minutes = currentTask.estimated_minutes || 25;
+      totalSeconds = minutes * 60;
+      remainingSeconds = totalSeconds;
+
+      const labelEl = document.getElementById("taskLabel");
+      if (labelEl) {
+        labelEl.textContent = `${currentTask.title}${currentTask.subjects ? " · " + currentTask.subjects.name : ""}`;
+      }
+
+      showTimerStage();
+      updateDisplay();
+      startTimer();
+    } else {
+      // Free session: let the person choose their own duration first.
+      const picker = document.getElementById("durationPicker");
+      if (picker) picker.classList.remove("hidden");
+    }
   } catch (err) {
     console.error("Focus init error:", err);
     showToast(err.message || "حصل خطأ في التحميل");
   }
 })();
 
+function buildClockTicks() {
+  const g = document.getElementById("clockTicks");
+  if (!g) return;
+  let html = "";
+  for (let i = 0; i < 12; i++) {
+    const angle = i * 30;
+    const isMajor = i % 3 === 0;
+    html += `<line x1="50" y1="${isMajor ? 5 : 7}" x2="50" y2="10" stroke-width="${isMajor ? 1.6 : 1}" transform="rotate(${angle} 50 50)"/>`;
+  }
+  g.innerHTML = html;
+}
+
+function showTimerStage() {
+  const picker = document.getElementById("durationPicker");
+  const stage = document.getElementById("timerStage");
+  if (picker) picker.classList.add("hidden");
+  if (stage) { stage.classList.remove("hidden"); stage.classList.add("fade-in"); }
+}
+
+// ── Free-session duration picker ──────────────────────────────
+function pickDuration(mins, fromCustomInput = false) {
+  if (!mins || mins < 1) return;
+  pendingFreeMinutes = Math.min(mins, 240);
+
+  document.querySelectorAll(".duration-chip").forEach(chip => {
+    const chipMins = parseInt(chip.textContent);
+    const active = chipMins === pendingFreeMinutes;
+    chip.classList.toggle("bg-primary", active);
+    chip.classList.toggle("text-white", active);
+    chip.classList.toggle("border-primary", active);
+    chip.classList.toggle("border-outline-variant", !active);
+  });
+
+  if (!fromCustomInput) {
+    const customInput = document.getElementById("customDuration");
+    if (customInput) customInput.value = "";
+  }
+}
+
+function startFreeSession() {
+  totalSeconds = pendingFreeMinutes * 60;
+  remainingSeconds = totalSeconds;
+
+  const labelEl = document.getElementById("taskLabel");
+  if (labelEl) labelEl.textContent = `جلسة مذاكرة حرة · ${pendingFreeMinutes} دقيقة`;
+
+  showTimerStage();
+  updateDisplay();
+  startTimer();
+}
+
 function updateDisplay() {
   const m = Math.floor(remainingSeconds / 60).toString().padStart(2, "0");
   const s = (remainingSeconds % 60).toString().padStart(2, "0");
-  document.getElementById("timeDisplay").textContent = `${m}:${s}`;
+  const timeEl = document.getElementById("timeDisplay");
+  if (timeEl) timeEl.textContent = `${m}:${s}`;
+
+  const fraction = totalSeconds > 0 ? remainingSeconds / totalSeconds : 0;
+
+  // Progress ring
+  const progressEl = document.getElementById("timerProgress");
+  if (progressEl) {
+    const dashoffset = (1 - fraction) * 264;
+    progressEl.style.strokeDashoffset = `${dashoffset}`;
+  }
+
+  // Analog hand — sweeps one full turn (360°) over the session duration
+  const handEl = document.getElementById("clockHand");
+  if (handEl) {
+    const angle = (1 - fraction) * 360;
+    handEl.setAttribute("transform", `rotate(${angle} 50 50)`);
+  }
 }
 
 function startTimer() {
@@ -61,9 +129,9 @@ function startTimer() {
     if (isPaused) return;
     remainingSeconds--;
     updateDisplay();
+
     if (remainingSeconds <= 0) {
       clearInterval(timerInterval);
-      showToast("خلصت الجلسة! 🎉");
       finishSession();
     }
   }, 1000);
@@ -71,23 +139,39 @@ function startTimer() {
 
 function togglePause() {
   isPaused = !isPaused;
-  document.getElementById("pauseBtn").textContent = isPaused ? "استكمال ▶️" : "إيقاف مؤقت";
+  const iconEl = document.getElementById("pauseIcon");
+  const textEl = document.getElementById("pauseText");
+  if (iconEl) iconEl.textContent = isPaused ? "play_arrow" : "pause";
+  if (textEl) textEl.textContent = isPaused ? "استكمال" : "إيقاف مؤقت";
 }
 
 async function finishSession() {
   clearInterval(timerInterval);
   const btn = document.getElementById("finishBtn");
-  btn.disabled = true; btn.textContent = "جاري الحفظ...";
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = `<span class="material-symbols-outlined animate-spin" style="font-size:16px">progress_activity</span><span>جاري الحفظ...</span>`;
+  }
+
+  // Visual celebration: turn progress ring green and trigger confetti
+  const progressEl = document.getElementById("timerProgress");
+  if (progressEl) {
+    progressEl.style.stroke = "#00875F";
+    progressEl.style.transform = "scale(1.03)";
+  }
+  if (typeof triggerConfetti === 'function') {
+    triggerConfetti(window.innerWidth / 2, window.innerHeight / 2);
+  }
 
   try {
     if (currentTask) {
-      await withTimeout(sb.from("tasks").update({ status: "completed" }).eq("id", currentTask.id));
+      await withTimeout(sb.from("tasks").update({ status: "completed", completed_at: new Date().toISOString() }).eq("id", currentTask.id));
     }
-    showToast("أحسنت! تم تسجيل الجلسة 🎉");
-    setTimeout(() => { window.location.href = "schedule.html"; }, 900);
+    showToast(typeof getMotivationalMessage === "function" ? await getMotivationalMessage() : "أحسنت! تم تسجيل إنجاز الجلسة 🎉");
+    setTimeout(() => { window.location.href = "schedule.html"; }, 800);
   } catch (err) {
     console.error(err);
-    showToast("حصل خطأ في الحفظ، بس هنرجعك على أي حال");
-    setTimeout(() => { window.location.href = "schedule.html"; }, 1200);
+    showToast("تم الانتهاء، جاري التوجيه للجدول...");
+    setTimeout(() => { window.location.href = "schedule.html"; }, 1000);
   }
 }

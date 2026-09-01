@@ -1,0 +1,171 @@
+/* ============================================
+   أَثَر — Animated Splash / Intro Screen
+   دخلة احترافية للتطبيق (ويب + Capacitor)، بتتشال أوتوماتيك
+   لما التطبيق يكون جاهز فعليًا (مش بعد مدة ثابتة عشوائية).
+   ============================================ */
+
+#atharSplash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at 50% 35%, #0f2c46 0%, #0b1220 60%, #060a12 100%);
+  overflow: hidden;
+}
+
+#atharSplash.splash-exit {
+  animation: splashExit 550ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
+}
+@keyframes splashExit {
+  to { opacity: 0; transform: scale(1.04); }
+}
+
+/* ── Orbit rings + particles (إشارة لهوية "مدار" التاريخية) ── */
+.splash-orbit-field {
+  position: absolute;
+  width: min(90vw, 420px);
+  height: min(90vw, 420px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.splash-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(56, 189, 248, 0.16);
+  animation: splashRingIn 900ms cubic-bezier(0.16, 1, 0.3, 1) both, splashRotate linear infinite;
+}
+.splash-ring--1 { width: 46%; height: 46%; animation-duration: 900ms, 14s; animation-delay: 80ms, 0s; }
+.splash-ring--2 { width: 68%; height: 68%; animation-duration: 900ms, 22s; animation-delay: 160ms, 0s; animation-direction: normal, reverse; }
+.splash-ring--3 { width: 92%; height: 92%; animation-duration: 900ms, 30s; animation-delay: 240ms, 0s; }
+
+@keyframes splashRingIn {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes splashRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.splash-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 10px 2px rgba(56, 189, 248, 0.55);
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  animation: splashParticleIn 400ms ease forwards;
+}
+.splash-particle--a { transform: translate(-50%, -50%) translateY(-23%); animation-delay: 380ms; }
+.splash-particle--b { transform: translate(-50%, -50%) translateY(34%) translateX(-30%); animation-delay: 460ms; background: #0077CC; box-shadow: 0 0 10px 2px rgba(0,119,204,.55); }
+.splash-particle--c { transform: translate(-50%, -50%) translateY(-34%) translateX(38%); animation-delay: 540ms; background: #00875F; box-shadow: 0 0 10px 2px rgba(0,135,95,.5); width:4px;height:4px; }
+@keyframes splashParticleIn { to { opacity: 1; } }
+
+/* ── Logo mark: spring bounce + glow pulse ── */
+.splash-logo-wrap {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.splash-logo-glow {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,119,204,0.35) 0%, rgba(0,119,204,0) 70%);
+  animation: splashGlowPulse 2.4s ease-in-out infinite;
+  animation-delay: 700ms;
+  opacity: 0;
+}
+@keyframes splashGlowPulse {
+  0%   { opacity: 0; transform: scale(0.8); }
+  15%  { opacity: 1; }
+  50%  { opacity: 0.55; transform: scale(1.15); }
+  100% { opacity: 0; transform: scale(0.8); }
+}
+
+.splash-icon {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  opacity: 0;
+  transform: scale(0.4) translateY(12px);
+  animation: splashLogoIn 700ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: 120ms;
+  position: relative;
+  z-index: 2;
+}
+@keyframes splashLogoIn {
+  60% { opacity: 1; transform: scale(1.08) translateY(0); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.splash-wordmark {
+  margin-top: 20px;
+  font-family: 'Thmanyah Sans', sans-serif;
+  font-weight: 800;
+  font-size: 2rem;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: splashFadeUp 550ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 480ms;
+}
+
+.splash-tagline {
+  margin-top: 6px;
+  font-family: 'Thmanyah Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: #8ea3c4;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: splashFadeUp 550ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 640ms;
+}
+
+@keyframes splashFadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Loading indicator ── */
+.splash-loader {
+  position: absolute;
+  bottom: 12%;
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+  animation: splashFadeUp 500ms ease forwards;
+  animation-delay: 850ms;
+}
+.splash-loader span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #38bdf8;
+  animation: splashDotBounce 1.1s ease-in-out infinite;
+}
+.splash-loader span:nth-child(2) { animation-delay: 0.15s; }
+.splash-loader span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes splashDotBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-6px); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #atharSplash * { animation-duration: 1ms !important; animation-delay: 0ms !important; }
+  .splash-ring { animation-name: splashRingIn !important; }
+}

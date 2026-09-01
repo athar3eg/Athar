@@ -1,0 +1,415 @@
+﻿<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>أَثَر | نظام التشغيل الأكاديمي لطلاب الثانوية العامة</title>
+<link rel="icon" type="image/png" href="assets/favicon.png"/>
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<style>
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Light.woff') format('woff'); font-weight:300; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Regular.woff') format('woff'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Medium.woff') format('woff'); font-weight:500; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Black.woff') format('woff'); font-weight:900; font-display:swap; }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet"/>
+<link rel="stylesheet" href="css/motion.css"/>
+<style>
+  * { font-family: 'Thmanyah Sans', sans-serif; }
+  body, button, input, select, textarea { font-family: 'Thmanyah Sans', sans-serif; }
+  .font-mono, [class*="font-mono"] { font-family: 'JetBrains Mono', monospace !important; }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined' !important; }html{visibility:hidden}</style>
+<script>!function(){try{var t=localStorage.getItem('athar-theme')||localStorage.getItem('madar-theme');if(t==='dark'||(t===null&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}document.addEventListener('DOMContentLoaded',function(){document.documentElement.style.visibility='visible'})}();</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Thmanyah Sans', 'sans-serif'], cairo: ['Thmanyah Sans', 'sans-serif'], mono: ['JetBrains Mono','monospace'] },
+        colors: {
+          primary: '#0077CC',
+          'primary-dark': '#005ea3',
+          'on-primary': '#ffffff',
+          'primary-container': '#e0f0ff',
+          'on-primary-container': '#003a5c',
+          secondary: '#00875f',
+          'secondary-container': '#d7f9e9',
+          'on-secondary-container': '#006446',
+          tertiary: '#a15c00',
+          'tertiary-container': '#ffe8c2',
+          'on-tertiary-container': '#7a4500',
+          error: '#ba1a1a',
+          'error-container': '#ffdad6',
+          'on-error-container': '#93000a',
+          surface: '#f7f9fc',
+          'surface-container-lowest': '#ffffff',
+          'surface-container-low': '#f1f4fa',
+          'surface-container': '#e9edf6',
+          'surface-container-high': '#e0e5f0',
+          'on-surface': '#111827',
+          'on-surface-variant': '#4b5566',
+          outline: '#8791a3',
+          'outline-variant': '#d6dbe6',
+        },
+        borderRadius: { sm: '4px', DEFAULT: '8px', md: '12px', lg: '16px', xl: '24px' },
+      }
+    }
+  }
+</script>
+<style>
+  * { font-family: 'Thmanyah Sans', sans-serif; }
+  body, button, input, select, textarea { font-family: 'Thmanyah Sans', sans-serif; }
+  .font-mono, [class*="font-mono"] { font-family: 'JetBrains Mono', monospace !important; }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined' !important; }
+  body{font-family:'Thmanyah Sans', sans-serif;background:#f7f9fc;color:#111827}
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;font-size:20px;line-height:1}
+  .auth-gradient{background:linear-gradient(135deg,#e0f0ff,#f7f9fc)}
+  .auth-gradient-2{background:linear-gradient(160deg,#e0f0ff,#d7f9e9)}
+
+  /* ---------- DARK MODE ---------- */
+  html.dark{color-scheme:dark}
+  html.dark body{background:#0b1220;color:#e5eaf2}
+  html.dark .bg-white,
+  html.dark .bg-surface-container-lowest{background-color:#141d2e !important}
+  html.dark .bg-surface-container-low{background-color:#182236 !important}
+  html.dark .bg-surface-container{background-color:#1e2a40 !important}
+  html.dark .bg-surface-container-high{background-color:#25324a !important}
+  html.dark .border-outline-variant{border-color:#2c3a52 !important}
+  html.dark .text-on-surface{color:#eef2f9 !important}
+  html.dark .text-on-surface-variant{color:#a7b2c4 !important}
+  html.dark .text-outline{color:#8592a8 !important}
+  html.dark .bg-primary-container{background-color:#0f2c46 !important}
+  html.dark .text-on-primary-container{color:#bfe0ff !important}
+  html.dark .auth-gradient{background:linear-gradient(135deg,#0f2c46,#0b1220)}
+</style>
+<script src="js/supabase-js.min.js"></script>
+</head>
+<body class="antialiased min-h-screen flex flex-col justify-between">
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-40 bg-white/80 dark:bg-[#141d2e]/80 backdrop-blur-md border-b border-outline-variant">
+    <div class="max-w-7xl mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
+      <a href="landing.html" class="flex items-center gap-2.5">
+        <img src="assets/icon.png" alt="أَثَر" class="w-8 h-8 object-contain"/>
+        <img src="assets/logo.png" alt="أَثَر" class="h-6 object-contain dark:hidden"/>
+        <img src="assets/logo-dark.png" alt="أَثَر" class="h-6 object-contain hidden dark:block"/>
+      </a>
+      
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-on-surface-variant">
+        <a class="hover:text-primary transition" href="#about">ما هو أَثَر؟</a>
+        <a class="hover:text-primary transition" href="#features">المميزات</a>
+        <a class="hover:text-primary transition" href="#why-free">لماذا مجاني؟</a>
+      </nav>
+
+      <div class="flex items-center gap-2.5">
+        <button onclick="toggleDarkMode()" class="w-9 h-9 rounded-full hover:bg-surface-container-low flex items-center justify-center transition" title="تبديل المظهر">
+          <span class="material-symbols-outlined" id="theme-icon-landing" style="font-size:20px">dark_mode</span>
+        </button>
+        <a href="index.html#login" class="text-sm font-semibold text-on-surface-variant hover:text-primary px-3 py-2 transition hidden sm:block">تسجيل الدخول</a>
+        <a href="index.html#signup" class="bg-primary text-on-primary text-sm font-bold px-5 py-2.5 rounded-full hover:bg-primary-dark transition shadow-sm">ابدأ مجاناً</a>
+        <button onclick="toggleLandingMenu()" class="md:hidden w-9 h-9 rounded-full hover:bg-surface-container-low flex items-center justify-center">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="landing-mobile-menu" class="hidden md:hidden border-t border-outline-variant px-6 py-4 space-y-3 text-sm font-medium text-on-surface-variant bg-white dark:bg-[#141d2e]">
+      <a class="block hover:text-primary" href="#about" onclick="toggleLandingMenu()">ما هو أَثَر؟</a>
+      <a class="block hover:text-primary" href="#how-it-works" onclick="toggleLandingMenu()">كيف يعمل؟</a>
+      <a class="block hover:text-primary" href="#features" onclick="toggleLandingMenu()">المميزات</a>
+      <a class="block hover:text-primary" href="#why-free" onclick="toggleLandingMenu()">لماذا مجاني؟</a>
+      <div class="pt-2 border-t border-outline-variant flex items-center justify-between">
+        <a href="index.html#login" class="font-bold text-primary">تسجيل الدخول</a>
+        <a href="index.html#signup" class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-full">حساب جديد</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-6 md:px-10 w-full space-y-24 py-12">
+    
+    <!-- 1. Hero Section -->
+    <section class="text-center pt-8 md:pt-16 max-w-3xl mx-auto anim-fade-up">
+      <span class="inline-block bg-primary-container text-on-primary-container text-xs font-bold px-4 py-1.5 rounded-full mb-5 shadow-xs">
+        أَثَر — عقلك الثاني للدراسة 🧠
+      </span>
+      <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-6 text-on-surface">
+        نظام تشغيل دراسي شخصي <br/><span class="text-primary">لطلاب الثانوية العامة</span>
+      </h1>
+      <p class="text-base md:text-lg text-on-surface-variant mb-8 leading-relaxed">
+        منصة مجانية بالكامل، بلا اشتراكات أو إعلانات، تساعدك تبني جدولك، تتابع امتحاناتك، وتذاكر بذكاء وهدوء.
+      </p>
+      <div class="flex items-center justify-center gap-3.5 flex-wrap">
+        <a href="index.html#signup" class="bg-primary text-on-primary font-bold px-8 py-3.5 rounded-full hover:bg-primary-dark transition flex items-center gap-2 shadow-lg shadow-primary/20 hover:scale-105 active:scale-95">
+          <span>ابدأ الآن مجاناً</span>
+          <span class="material-symbols-outlined" style="font-size:18px">arrow_back</span>
+        </a>
+        <a href="index.html#login" class="border border-outline-variant font-semibold px-6 py-3.5 rounded-full hover:bg-surface-container-low transition flex items-center gap-2">
+          <span class="material-symbols-outlined" style="font-size:18px">login</span>
+          <span>تسجيل الدخول</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 2. What is Athar? Section -->
+    <section id="about" class="card-3d bg-white border border-outline-variant rounded-2xl p-8 md:p-12 shadow-sm">
+      <div class="max-w-3xl mx-auto text-center space-y-4">
+        <span class="text-xs font-bold text-primary bg-primary-container px-3 py-1 rounded-full">مفهوم العقل الثاني</span>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface">ما هو نظام أَثَر؟</h2>
+        <p class="text-sm md:text-base text-on-surface-variant leading-relaxed">
+          أَثَر مش مجرد تطبيق جدول عادي. هو <strong>نظام تشغيل دراسي كامل</strong> مبني مخصوص لطلاب الثانوية العامة. يعرف مواعيد نومك وصحيانك، مستوى طاقتك، موادك وشعبتك، ومواعيد دروسك وسناترك، وبيقولك في كل لحظة <em>"ماذا تفعل الآن؟"</em> عشان ما تضيعش وقتك في التفكير والحيرة.
+        </p>
+      </div>
+    </section>
+
+    <!-- 3. How It Works Section -->
+    <section id="how-it-works" class="space-y-10">
+      <div class="text-center max-w-2xl mx-auto">
+        <span class="text-xs font-bold text-secondary bg-secondary-container px-3 py-1 rounded-full">البساطة في الاستخدام</span>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface mt-2">كيف يعمل أَثَر في 5 خطوات؟</h2>
+      </div>
+
+      <div class="grid md:grid-cols-5 gap-4">
+        <div class="card-3d bg-white border border-outline-variant rounded-2xl p-5 flex flex-col justify-between">
+          <div>
+            <span class="font-mono font-extrabold text-2xl text-primary mb-2 block">01</span>
+            <h3 class="font-bold text-sm text-on-surface mb-1">الإعداد الأولي</h3>
+            <p class="text-xs text-on-surface-variant leading-relaxed">حدد صفك، شعبتك، روتين نومك، وموادك في 3 دقائق.</p>
+          </div>
+        </div>
+
+        <div class="card-3d bg-white border border-outline-variant rounded-2xl p-5 flex flex-col justify-between">
+          <div>
+            <span class="font-mono font-extrabold text-2xl text-primary mb-2 block">02</span>
+            <h3 class="font-bold text-sm text-on-surface mb-1">التخطيط الذكي</h3>
+            <p class="text-xs text-on-surface-variant leading-relaxed">أضف حصصك الثابتة (سناتر وأونلاين) ومهامك اليومية.</p>
+          </div>
+        </div>
+
+        <div class="card-3d bg-white border border-outline-variant rounded-2xl p-5 flex flex-col justify-between">
+          <div>
+            <span class="font-mono font-extrabold text-2xl text-primary mb-2 block">03</span>
+            <h3 class="font-bold text-sm text-on-surface mb-1">ماذا أفعل الآن؟</h3>
+            <p class="text-xs text-on-surface-variant leading-relaxed">النظام يحددلك أنسب وقت لمذاكرة كل مادة حسب طاقتك ووقتك المتاح.</p>
+          </div>
+        </div>
+
+        <div class="card-3d bg-white border border-outline-variant rounded-2xl p-5 flex flex-col justify-between">
+          <div>
+            <span class="font-mono font-extrabold text-2xl text-primary mb-2 block">04</span>
+            <h3 class="font-bold text-sm text-on-surface mb-1">جلسات التركيز</h3>
+            <p class="text-xs text-on-surface-variant leading-relaxed">بومودورو مدمج يتابع وقت مذاكرتك الفعلي ويحتفل بإنجازك.</p>
+          </div>
+        </div>
+
+        <div class="card-3d bg-white border border-outline-variant rounded-2xl p-5 flex flex-col justify-between">
+          <div>
+            <span class="font-mono font-extrabold text-2xl text-primary mb-2 block">05</span>
+            <h3 class="font-bold text-sm text-on-surface mb-1">العقل الثاني (AI)</h3>
+            <p class="text-xs text-on-surface-variant leading-relaxed">اشرح أي درس، اسأل أي سؤال، ورتب يومك فوراً مع الذكاء الاصطناعي.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 11 Features Grid -->
+    <section id="features" class="space-y-10">
+      <div class="text-center max-w-2xl mx-auto">
+        <span class="text-xs font-bold text-primary bg-primary-container px-3 py-1 rounded-full">قدرات المنصة</span>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface mt-2">كل ما تحتاجه للثانوية في مكان واحد</h2>
+      </div>
+
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-5">
+        <div class="card-3d bg-white border border-outline-variant rounded-2xl p-5">
+          <div class="w-10 h-10 rounded-xl bg-primary-container text-primary flex items-center justify-center mb-3">
+            <span class="material-symbols-outlined">calendar_month</span>
+          </div>
+          <h3 class="font-bold text-sm mb-1 text-on-surface">الجدول الدراسي التفاعلي</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">تنظيم كامل لحصص السناتر، المحاضرات الأونلاين، وجلسات المذاكرة المرنة.</p>
+        </div>
+
+        <div class="card-3d bg-white border border-outline-variant rounded-2xl p-5">
+          <div class="w-10 h-10 rounded-xl bg-secondary-container text-secondary flex items-center justify-center mb-3">
+            <span class="material-symbols-outlined">navigation</span>
+          </div>
+          <h3 class="font-bold text-sm mb-1 text-on-surface">ماذا أفعل الآن؟ (Decision Engine)</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">محرك اتخاذ قرار ذكي يحسب وقتك الفارغ ويقترح أفضل نشاط فوري.</p>
+        </div>
+
+        <div class="card-3d bg-white border border-outline-variant rounded-2xl p-5">
+          <div class="w-10 h-10 rounded-xl bg-error-container text-error flex items-center justify-center mb-3">
+            <span class="material-symbols-outlined">emergency</span>
+          </div>
+          <h3 class="font-bold text-sm mb-1 text-on-surface">وضع الإنقاذ (Rescue Mode)</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">تراكمت عليك الدروس؟ ضغطة واحدة تعيد جدولة المهام المتأخرة حسب الأولوية وسعتك اليومية.</p>
+        </div>
+
+        <div class="card-3d bg-white border border-outline-variant rounded-2xl p-5">
+          <div class="w-10 h-10 rounded-xl bg-tertiary-container text-tertiary flex items-center justify-center mb-3">
+            <span class="material-symbols-outlined">quiz</span>
+          </div>
+          <h3 class="font-bold text-sm mb-1 text-on-surface">مخطط الامتحانات والعد التنازلي</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">متابعة دقيقة لكل اختبار مع عداد تنازلي بالأيام والساعات والدقائق.</p>
+        </div>
+
+        <div class="card-3d bg-white border border-outline-variant rounded-2xl p-5">
+          <div class="w-10 h-10 rounded-xl bg-primary-container text-primary flex items-center justify-center mb-3">
+            <span class="material-symbols-outlined">donut_large</span>
+          </div>
+          <h3 class="font-bold text-sm mb-1 text-on-surface">نسبة الاستعداد الحقيقية</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">حساب ديناميكي لنسبة جاهزيتك لكل امتحان بناءً على المهام المنجزة فعلياً.</p>
+        </div>
+
+        <div class="card-3d bg-white border border-outline-variant rounded-2xl p-5">
+          <div class="w-10 h-10 rounded-xl bg-error-container text-error flex items-center justify-center mb-3">
+            <span class="material-symbols-outlined">timer</span>
+          </div>
+          <h3 class="font-bold text-sm mb-1 text-on-surface">جلسات التركيز (بومودورو)</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">مؤقت تركيز هادئ خالٍ من المشتتات مع احتفال بصري عند الإنجاز.</p>
+        </div>
+
+        <div class="card-3d bg-white border border-outline-variant rounded-2xl p-5">
+          <div class="w-10 h-10 rounded-xl bg-primary-container text-primary flex items-center justify-center mb-3">
+            <span class="material-symbols-outlined">auto_awesome</span>
+          </div>
+          <h3 class="font-bold text-sm mb-1 text-on-surface">العقل الثاني (Gemini AI)</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">معلمك الخاص يفهم منهجك، يشرح الصعب، ويتحكم في موقعك بناءً على طلبك.</p>
+        </div>
+
+        <div class="card-3d bg-white border border-outline-variant rounded-2xl p-5">
+          <div class="w-10 h-10 rounded-xl bg-secondary-container text-secondary flex items-center justify-center mb-3">
+            <span class="material-symbols-outlined">smart_display</span>
+          </div>
+          <h3 class="font-bold text-sm mb-1 text-on-surface">ترشيحات يوتيوب الذكية</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">البحث التلقائي عن أفضل فيديوهات الشرح المباشرة للمنهج المصري.</p>
+        </div>
+
+        <div class="card-3d bg-white border border-outline-variant rounded-2xl p-5">
+          <div class="w-10 h-10 rounded-xl bg-tertiary-container text-tertiary flex items-center justify-center mb-3">
+            <span class="material-symbols-outlined">fact_check</span>
+          </div>
+          <h3 class="font-bold text-sm mb-1 text-on-surface">اختبارات تفاعلية فورية</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">توليد اختبارات اختيار من متعدد فورية مع التفسير العلمي لكل إجابة.</p>
+        </div>
+
+        <div class="card-3d bg-white border border-outline-variant rounded-2xl p-5">
+          <div class="w-10 h-10 rounded-xl bg-primary-container text-primary flex items-center justify-center mb-3">
+            <span class="material-symbols-outlined">groups</span>
+          </div>
+          <h3 class="font-bold text-sm mb-1 text-on-surface">تتبع المدرسين والمنصات</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">قائمة مدرّسيك وقنواتهم لتسهيل الوصول للمحاضرات بدون تشتت.</p>
+        </div>
+
+        <div class="card-3d bg-white border border-outline-variant rounded-2xl p-5">
+          <div class="w-10 h-10 rounded-xl bg-surface-container-high text-on-surface flex items-center justify-center mb-3">
+            <span class="material-symbols-outlined">dark_mode</span>
+          </div>
+          <h3 class="font-bold text-sm mb-1 text-on-surface">وضع ليلي كامل (Dark Mode)</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">تصميم مريح للعين أثناء جلسات المذاكرة والمراجعة الليلية.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. "Why Free?" Section -->
+    <section id="why-free" class="bg-primary text-white rounded-2xl p-8 md:p-12 shadow-lg shadow-primary/20">
+      <div class="max-w-3xl mx-auto text-center space-y-4">
+        <span class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full backdrop-blur-xs">مشروع صدقة جارية</span>
+        <h2 class="text-2xl md:text-3xl font-extrabold">ليه منصة أَثَر مجانية بالكامل؟</h2>
+        <p class="text-sm md:text-base text-blue-100 leading-relaxed">
+          أَثَر هو مشروع صدقة جارية مخصص بنسبة 100% لخدمة ودعم طلاب الثانوية العامة في مصر. لا توجد أي خطط مدفوعة، ولا اشتراكات شهرية، ولا إعلانات تجارية مزعجة. كل الميزات متاحة للجميع مجاناً ودائماً.
+        </p>
+      </div>
+    </section>
+
+    <!-- 6. Privacy & Security Summary -->
+    <section class="card-3d bg-white border border-outline-variant rounded-2xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xs">
+      <div class="space-y-1">
+        <h3 class="font-bold text-base text-on-surface flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">verified_user</span>
+          <span>بياناتك في أمان تام</span>
+        </h3>
+        <p class="text-xs text-on-surface-variant">لا نشارك بياناتك أو أرقامك مع أي طرف ثالث على الإطلاق.</p>
+      </div>
+      <a href="privacy.html" class="border border-outline-variant text-xs font-bold text-on-surface px-5 py-2.5 rounded-full hover:bg-surface-container-low transition shrink-0">
+        قراءة سياسة الخصوصية
+      </a>
+    </section>
+
+    <!-- 7. Final Call to Action -->
+    <section class="text-center py-12 space-y-6">
+      <h2 class="text-2xl md:text-4xl font-extrabold text-on-surface">جاهز تبدأ وتنظم رحلتك في الثانوية؟</h2>
+      <p class="text-sm text-on-surface-variant max-w-md mx-auto">أنشئ حسابك في أقل من دقيقة وابدأ في استعادة السيطرة على وقتك وموادك.</p>
+      <a href="index.html#signup" class="inline-flex bg-primary text-on-primary font-bold px-8 py-3.5 rounded-full hover:bg-primary-dark transition shadow-lg shadow-primary/20 hover:scale-105 active:scale-95">
+        ابدأ رحلتك مع أَثَر مجاناً 🚀
+      </a>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-outline-variant py-8 bg-white dark:bg-[#141d2e]">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-on-surface-variant">
+      <div class="flex items-center gap-2.5">
+        <img src="assets/icon.png" alt="أَثَر" class="w-8 h-8 object-contain"/>
+        <img src="assets/logo.png" alt="أَثَر" class="h-6 object-contain dark:hidden"/>
+        <img src="assets/logo-dark.png" alt="أَثَر" class="h-6 object-contain hidden dark:block"/>
+      </div>
+      <span>© 2026 أَثَر — مشروع صدقة جارية لطلاب الثانوية العامة.</span>
+      <div class="flex items-center gap-4">
+        <a href="privacy.html" class="hover:text-primary transition">سياسة الخصوصية</a>
+        <a href="index.html#login" class="hover:text-primary transition">تسجيل الدخول</a>
+      </div>
+    </div>
+  </footer>
+
+<script src="js/supabase-client.js"></script>
+<script src="js/common.js"></script>
+<script src="js/motion.js"></script>
+<script>
+  function toggleLandingMenu(){
+    document.getElementById('landing-mobile-menu').classList.toggle('hidden');
+  }
+
+  function syncThemeIcons(){
+    const isDark = document.documentElement.classList.contains('dark');
+    const el = document.getElementById('theme-icon-landing');
+    if(el) el.textContent = isDark ? 'light_mode' : 'dark_mode';
+  }
+
+  function toggleDarkMode(){
+    document.documentElement.classList.toggle('dark');
+    const isDark = document.documentElement.classList.contains('dark');
+    localStorage.setItem('athar-theme', isDark ? 'dark' : 'light');
+    syncThemeIcons();
+  }
+
+  (function initTheme(){
+    const saved = localStorage.getItem('athar-theme') || localStorage.getItem('madar-theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if(saved === 'dark' || (!saved && prefersDark)){
+      document.documentElement.classList.add('dark');
+    }
+    syncThemeIcons();
+  })();
+
+  // Session check: if already logged in, redirect straight to dashboard
+  (async function checkExistingAuth() {
+    try {
+      if (typeof sb !== 'undefined') {
+        const { data: { session } } = await withTimeout(sb.auth.getSession(), 4000);
+        if (session) {
+          window.location.href = "dashboard.html";
+        }
+      }
+    } catch(e) {}
+  })();
+</script>
+</body>
+</html>
+
+
+

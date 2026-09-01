@@ -1,5 +1,5 @@
 // ============================================
-// مِدار — Supabase Client
+// أَثَر — Supabase Client
 // ============================================
 const SUPABASE_URL = "https://uujxqzwcqvezsebamnpb.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1anhxendjcXZlenNlYmFtbnBiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MDYxODcsImV4cCI6MjEwMjk4MjE4N30.QuhhY8E_SfLU28tQv9ePcKV-YVHsmiPSm1rCqdFWduI";

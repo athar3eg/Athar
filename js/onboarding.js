@@ -1,64 +1,134 @@
 // ============================================
-// مِدار — Onboarding Wizard
+// أَثَر — Onboarding Wizard Logic (Tailwind & Supabase)
 // ============================================
 let currentUser = null;
 let currentStep = 1;
-const TOTAL_STEPS = 5;
-const DAYS = ["أحد", "اتنين", "تلات", "أربع", "خميس", "جمعة", "سبت"];
+const TOTAL_STEPS = 6;
+const DAYS = ["الأحد", "الاتنين", "التلات", "الأربع", "الخميس", "الجمعة", "السبت"];
 
+let selectedStage = null;
+let selectedTrack = null;
 let subjectRows = [];
 let teacherRows = [];
 let scheduleRows = [];
 
-const toast = document.getElementById("toast");
-function showToast(msg) {
-  toast.textContent = msg;
-  toast.classList.add("show");
-  setTimeout(() => toast.classList.remove("show"), 2200);
-}
-
-function withTimeout(promise, ms = 15000) {
-  return Promise.race([
-    promise,
-    new Promise((_, reject) => setTimeout(() => reject(new Error("الاتصال بطيء جدًا — تأكد من الإنترنت وحاول تاني")), ms))
-  ]);
-}
-
-window.addEventListener("unhandledrejection", (e) => {
-  console.error("Unhandled rejection:", e.reason);
-  const btn = document.getElementById("nextBtn");
-  if (btn) { btn.disabled = false; btn.textContent = currentStep === TOTAL_STEPS ? "احفظ وابدأ 🚀" : "التالي"; }
-  showToast(e.reason?.message || "حصل خطأ، حاول تاني");
-});
+const SUGGESTIONS_MAP = {
+  literary: ["اللغة العربية", "اللغة الإنجليزية", "التاريخ", "الجغرافيا", "الفلسفة والمنطق", "علم النفس والاجتماع", "لغة أجنبية ثانية"],
+  scientific_math: ["اللغة العربية", "اللغة الإنجليزية", "الجبر والهندسة الفراغية", "التفاضل والتكامل", "الفيزياء", "الكيمياء", "لغة أجنبية ثانية"],
+  scientific_science: ["اللغة العربية", "اللغة الإنجليزية", "الأحياء", "الفيزياء", "الكيمياء", "الجيولوجيا", "لغة أجنبية ثانية"],
+  first_secondary: ["اللغة العربية", "اللغة الإنجليزية", "الرياضيات", "العلوم المتكاملة", "التاريخ", "لغة أجنبية ثانية"]
+};
 
 (async function init() {
   try {
     currentUser = await withTimeout(requireAuth(), 10000);
     if (!currentUser) return;
-    addSubjectRow();
     addScheduleRow();
   } catch (err) {
     console.error("Init error:", err);
-    showToast(err.message || "حصل خطأ في تحميل الصفحة");
+    showToast(err.message || "حدث خطأ أثناء تحميل الصفحة");
   }
 })();
 
-// ---------- Subjects ----------
+// ---------- Step 1: Grade & Track Handlers (1.7.2) ----------
+function selectGrade(grade) {
+  selectedStage = grade;
+  document.querySelectorAll(".grade-btn").forEach(btn => {
+    if (btn.dataset.grade === grade) {
+      btn.classList.add("border-primary", "bg-primary-container/30", "text-primary");
+      btn.classList.remove("border-outline-variant");
+    } else {
+      btn.classList.remove("border-primary", "bg-primary-container/30", "text-primary");
+      btn.classList.add("border-outline-variant");
+    }
+  });
+
+  const branchArea = document.getElementById("branchSelectionArea");
+  if (grade === "first_secondary") {
+    selectedTrack = null;
+    if (branchArea) branchArea.classList.add("hidden");
+  } else {
+    if (branchArea) branchArea.classList.remove("hidden");
+  }
+}
+
+function selectTrack(track) {
+  selectedTrack = track;
+  document.querySelectorAll(".track-btn").forEach(btn => {
+    if (btn.dataset.track === track) {
+      btn.classList.add("border-primary", "bg-primary-container/30", "text-primary");
+      btn.classList.remove("border-outline-variant");
+    } else {
+      btn.classList.remove("border-primary", "bg-primary-container/30", "text-primary");
+      btn.classList.add("border-outline-variant");
+    }
+  });
+}
+
+// ---------- Step 3: Suggested Subjects (1.7.5) ----------
+function renderSuggestedSubjects() {
+  const container = document.getElementById("suggestedChipsList");
+  if (!container) return;
+
+  let key = selectedTrack;
+  if (selectedStage === "first_secondary" || !key) key = "first_secondary";
+
+  const list = SUGGESTIONS_MAP[key] || SUGGESTIONS_MAP.first_secondary;
+  
+  container.innerHTML = list.map(name => `
+    <button type="button" onclick="addSuggestedSubject('${name}')" class="px-3 py-1.5 rounded-full text-xs font-semibold border border-outline-variant bg-white dark:bg-surface-container hover:border-primary hover:text-primary transition flex items-center gap-1 shadow-xs">
+      <span class="material-symbols-outlined" style="font-size:14px">add</span>
+      <span>${name}</span>
+    </button>
+  `).join("");
+}
+
+function addSuggestedSubject(name) {
+  // Check if subject already exists
+  const existingNames = subjectRows.map(sid => document.querySelector(`#${sid} .subj-name`)?.value.trim());
+  if (existingNames.includes(name)) {
+    showToast(`مادة ${name} مضافة بالفعل`);
+    return;
+  }
+
+  const id = "s" + Date.now() + Math.random().toString(36).slice(2, 6);
+  subjectRows.push(id);
+  const wrap = document.getElementById("subjectsList");
+  const div = document.createElement("div");
+  div.className = "flex items-center gap-2 bg-surface-container-low p-2.5 rounded-xl border border-outline-variant fade-in";
+  div.id = id;
+  div.innerHTML = `
+    <input type="text" value="${escapeHtml(name)}" placeholder="اسم المادة" class="subj-name flex-1 border border-outline-variant rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-surface-container font-semibold">
+    <select class="subj-priority border border-outline-variant rounded-lg py-2 px-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-surface-container">
+      <option value="1">أولوية عالية 🔴</option>
+      <option value="2" selected>أولوية متوسطة 🟡</option>
+      <option value="3">أولوية عادية 🟢</option>
+    </select>
+    <button type="button" class="w-8 h-8 rounded-lg hover:bg-error-container text-error flex items-center justify-center transition" onclick="removeRow('${id}')">
+      <span class="material-symbols-outlined" style="font-size:18px">delete</span>
+    </button>`;
+  wrap.appendChild(div);
+  showToast(`تمت إضافة ${name} ✓`);
+}
+
+// ---------- Subjects Manual Add ----------
 function addSubjectRow() {
   const id = "s" + Date.now() + Math.random().toString(36).slice(2, 6);
   subjectRows.push(id);
   const wrap = document.getElementById("subjectsList");
   const div = document.createElement("div");
-  div.className = "repeat-item";
+  div.className = "flex items-center gap-2 bg-surface-container-low p-2.5 rounded-xl border border-outline-variant fade-in";
   div.id = id;
   div.innerHTML = `
-    <input type="text" placeholder="اسم المادة" class="subj-name">
-    <select class="subj-priority">
-      <option value="1">أولوية عالية</option>
-      <option value="2" selected>أولوية متوسطة</option>
-      <option value="3">أولوية عادية</option>
+    <input type="text" placeholder="اسم المادة (مثلاً: فيزياء)" class="subj-name flex-1 border border-outline-variant rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-surface-container">
+    <select class="subj-priority border border-outline-variant rounded-lg py-2 px-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-surface-container">
+      <option value="1">أولوية عالية 🔴</option>
+      <option value="2" selected>أولوية متوسطة 🟡</option>
+      <option value="3">أولوية عادية 🟢</option>
     </select>
-    <button type="button" class="remove-btn" onclick="removeRow('${id}')">✕</button>`;
+    <button type="button" class="w-8 h-8 rounded-lg hover:bg-error-container text-error flex items-center justify-center transition" onclick="removeRow('${id}')">
+      <span class="material-symbols-outlined" style="font-size:18px">delete</span>
+    </button>`;
   wrap.appendChild(div);
 }
 
@@ -69,45 +139,63 @@ function addTeacherRow() {
   const wrap = document.getElementById("teachersList");
   const options = subjectRows.map(sid => {
     const name = document.querySelector(`#${sid} .subj-name`)?.value || "مادة";
-    return `<option value="${sid}">${name}</option>`;
+    return `<option value="${sid}">${escapeHtml(name)}</option>`;
   }).join("");
+
   const div = document.createElement("div");
-  div.className = "repeat-item";
+  div.className = "flex flex-col gap-2 bg-surface-container-low p-3 rounded-xl border border-outline-variant fade-in";
   div.id = id;
   div.innerHTML = `
-    <select class="teach-subject">${options}</select>
-    <input type="text" placeholder="اسم المدرس" class="teach-name">
-    <input type="text" placeholder="رابط القناة (اختياري)" class="teach-url">
-    <button type="button" class="remove-btn" onclick="removeRow('${id}')">✕</button>`;
+    <div class="flex items-center gap-2">
+      <select class="teach-subject flex-1 border border-outline-variant rounded-lg py-2 px-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-surface-container">${options}</select>
+      <input type="text" placeholder="اسم المدرس" class="teach-name flex-1 border border-outline-variant rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-surface-container">
+      <button type="button" class="w-8 h-8 rounded-lg hover:bg-error-container text-error flex items-center justify-center transition shrink-0" onclick="removeRow('${id}')">
+        <span class="material-symbols-outlined" style="font-size:18px">delete</span>
+      </button>
+    </div>
+    <input type="text" placeholder="رابط القناة أو المنصة (اختياري)" class="teach-url border border-outline-variant rounded-lg py-1.5 px-3 text-xs focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-surface-container">`;
   wrap.appendChild(div);
 }
 
-// ---------- Fixed schedule ----------
+// ---------- Fixed Schedule ----------
 function addScheduleRow() {
   const id = "f" + Date.now() + Math.random().toString(36).slice(2, 6);
   scheduleRows.push(id);
   const wrap = document.getElementById("scheduleList");
   const subjOptions = `<option value="">بدون مادة</option>` + subjectRows.map(sid => {
     const name = document.querySelector(`#${sid} .subj-name`)?.value || "مادة";
-    return `<option value="${sid}">${name}</option>`;
+    return `<option value="${sid}">${escapeHtml(name)}</option>`;
   }).join("");
 
   const div = document.createElement("div");
-  div.className = "repeat-item";
+  div.className = "flex flex-col gap-2.5 bg-surface-container-low p-3.5 rounded-xl border border-outline-variant fade-in";
   div.id = id;
-  div.style.flexWrap = "wrap";
   div.innerHTML = `
-    <input type="text" placeholder="اسم الموعد (مثلاً: حصة فيزياء)" class="sched-title" style="flex-basis:100%">
-    <select class="sched-subject" style="flex-basis:48%">${subjOptions}</select>
-    <div class="day-pills sched-days" style="flex-basis:100%">
-      ${DAYS.map((d, i) => `<div class="day-pill" data-day="${i}" onclick="toggleDay(this)">${d}</div>`).join("")}
+    <div class="flex items-center gap-2">
+      <input type="text" placeholder="اسم الحصة / السنتر" class="sched-title flex-1 border border-outline-variant rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-surface-container">
+      <select class="sched-subject flex-1 border border-outline-variant rounded-lg py-2 px-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-surface-container">${subjOptions}</select>
+      <button type="button" class="w-8 h-8 rounded-lg hover:bg-error-container text-error flex items-center justify-center transition shrink-0" onclick="removeRow('${id}')">
+        <span class="material-symbols-outlined" style="font-size:18px">delete</span>
+      </button>
     </div>
-    <input type="time" class="sched-start" value="16:00" style="flex-basis:47%">
-    <input type="time" class="sched-end" value="17:00" style="flex-basis:47%">
-    <button type="button" class="remove-btn" onclick="removeRow('${id}')">✕</button>`;
+    <div class="flex flex-wrap gap-1 sched-days">
+      ${DAYS.map((d, i) => `<button type="button" class="day-pill px-2.5 py-1 rounded-md text-xs font-semibold border border-outline-variant bg-white dark:bg-surface-container transition text-on-surface-variant hover:border-primary" data-day="${i}" onclick="toggleDay(this)">${d}</button>`).join("")}
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-xs text-on-surface-variant font-semibold">من:</span>
+      <input type="time" class="sched-start flex-1 border border-outline-variant rounded-lg py-1 px-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-surface-container font-mono" value="16:00">
+      <span class="text-xs text-on-surface-variant font-semibold">إلى:</span>
+      <input type="time" class="sched-end flex-1 border border-outline-variant rounded-lg py-1 px-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-surface-container font-mono" value="17:30">
+    </div>`;
   wrap.appendChild(div);
 }
-function toggleDay(el) { el.classList.toggle("selected"); }
+
+function toggleDay(el) {
+  el.classList.toggle("bg-primary");
+  el.classList.toggle("text-white");
+  el.classList.toggle("border-primary");
+  el.classList.toggle("selected");
+}
 
 function removeRow(id) {
   document.getElementById(id)?.remove();
@@ -118,19 +206,47 @@ function removeRow(id) {
 
 // ---------- Navigation ----------
 function updateProgress() {
-  document.getElementById("progressFill").style.width = (currentStep / TOTAL_STEPS * 100) + "%";
-  document.getElementById("backBtn").style.display = currentStep === 1 ? "none" : "flex";
-  document.getElementById("nextBtn").textContent = currentStep === TOTAL_STEPS ? "احفظ وابدأ 🚀" : "التالي";
+  const percent = Math.round((currentStep / TOTAL_STEPS) * 100);
+  const fill = document.getElementById("progressFill");
+  if (fill) fill.style.width = percent + "%";
+  const counter = document.getElementById("stepCounterText");
+  if (counter) counter.textContent = `الخطوة ${currentStep} من ${TOTAL_STEPS}`;
+  const percentTxt = document.getElementById("stepPercentText");
+  if (percentTxt) percentTxt.textContent = `${percent}%`;
+
+  const backBtn = document.getElementById("backBtn");
+  if (backBtn) {
+    if (currentStep === 1) backBtn.classList.add("hidden");
+    else backBtn.classList.remove("hidden");
+  }
+
+  const nextBtn = document.getElementById("nextBtn");
+  if (nextBtn) {
+    nextBtn.textContent = currentStep === TOTAL_STEPS ? "حفظ والبدء 🚀" : "التالي";
+  }
 }
 
 function goToStep(n) {
   document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
-  document.querySelector(`.step[data-step="${n}"]`).classList.add("active");
+  const target = document.querySelector(`.step[data-step="${n}"]`);
+  if (target) target.classList.add("active");
   currentStep = n;
   updateProgress();
-  if (n === 3) refreshTeacherSubjectOptions();
-  if (n === 4) refreshScheduleSubjectOptions();
-  if (n === 5) renderSummary();
+  if (n === 3) {
+    renderSuggestedSubjects();
+    if (subjectRows.length === 0) {
+      // Auto pre-populate 2 suggested subjects
+      const key = selectedTrack || (selectedStage === "first_secondary" ? "first_secondary" : "scientific_science");
+      const list = SUGGESTIONS_MAP[key] || SUGGESTIONS_MAP.first_secondary;
+      if (list && list.length >= 2) {
+        addSuggestedSubject(list[0]);
+        addSuggestedSubject(list[1]);
+      }
+    }
+  }
+  if (n === 4) refreshTeacherSubjectOptions();
+  if (n === 5) refreshScheduleSubjectOptions();
+  if (n === 6) renderSummary();
 }
 
 function refreshTeacherSubjectOptions() {
@@ -138,71 +254,122 @@ function refreshTeacherSubjectOptions() {
     const current = sel.value;
     sel.innerHTML = subjectRows.map(sid => {
       const name = document.querySelector(`#${sid} .subj-name`)?.value || "مادة";
-      return `<option value="${sid}">${name}</option>`;
+      return `<option value="${sid}">${escapeHtml(name)}</option>`;
     }).join("");
     if (current) sel.value = current;
   });
 }
+
 function refreshScheduleSubjectOptions() {
   document.querySelectorAll(".sched-subject").forEach(sel => {
     const current = sel.value;
     sel.innerHTML = `<option value="">بدون مادة</option>` + subjectRows.map(sid => {
       const name = document.querySelector(`#${sid} .subj-name`)?.value || "مادة";
-      return `<option value="${sid}">${name}</option>`;
+      return `<option value="${sid}">${escapeHtml(name)}</option>`;
     }).join("");
     if (current) sel.value = current;
   });
 }
 
 function nextStep() {
-  if (currentStep === 2 && subjectRows.length === 0) {
-    showToast("ضيف مادة واحدة على الأقل");
+  if (currentStep === 1) {
+    if (!selectedStage) {
+      showToast("يرجى اختيار الصف الدراسي");
+      return;
+    }
+    if ((selectedStage === "second_secondary" || selectedStage === "third_secondary") && !selectedTrack) {
+      showToast("يرجى اختيار الشعبة الدراسية");
+      return;
+    }
+  }
+
+  if (currentStep === 3 && subjectRows.length === 0) {
+    showToast("يرجى إضافة مادة واحدة على الأقل");
     return;
   }
+
   if (currentStep < TOTAL_STEPS) {
     goToStep(currentStep + 1);
   } else {
     saveEverything();
   }
 }
+
 function prevStep() {
   if (currentStep > 1) goToStep(currentStep - 1);
 }
 
 function renderSummary() {
-  const wakeTime = document.getElementById("wakeTime").value;
-  const sleepTime = document.getElementById("sleepTime").value;
+  const wakeTime = document.getElementById("wakeTime")?.value || "07:00";
+  const sleepTime = document.getElementById("sleepTime")?.value || "23:00";
   const subjCount = subjectRows.length;
   const teachCount = teacherRows.length;
   const schedCount = scheduleRows.length;
 
+  const stageLabels = {
+    first_secondary: "الأول الثانوي",
+    second_secondary: "الثاني الثانوي",
+    third_secondary: "الثالث الثانوي"
+  };
+  const trackLabels = {
+    literary: "أدبي",
+    scientific_math: "علمي رياضة",
+    scientific_science: "علمي علوم"
+  };
+
+  const stageText = stageLabels[selectedStage] || "غير محدد";
+  const trackText = selectedTrack ? ` · ${trackLabels[selectedTrack] || ""}` : "";
+
   document.getElementById("summaryCard").innerHTML = `
-    <div class="row"><div class="content"><div class="title">النوم والصحيان</div><div class="meta">من ${sleepTime} لحد ${wakeTime}</div></div></div>
-    <div class="row"><div class="content"><div class="title">المواد</div><div class="meta">${subjCount} مادة</div></div></div>
-    <div class="row"><div class="content"><div class="title">المدرسين</div><div class="meta">${teachCount} مدرس</div></div></div>
-    <div class="row"><div class="content"><div class="title">الجدول الثابت</div><div class="meta">${schedCount} موعد أسبوعي</div></div></div>
-  `.replace(/<div class="row">/g, '<div class="row" style="border-bottom:1px solid var(--border)">');
+    <div class="flex items-center justify-between py-2 border-b border-outline-variant">
+      <span class="text-xs font-semibold text-on-surface-variant">المرحلة الدراسية</span>
+      <span class="text-xs font-bold text-primary">${stageText}${trackText}</span>
+    </div>
+    <div class="flex items-center justify-between py-2 border-b border-outline-variant">
+      <span class="text-xs font-semibold text-on-surface-variant">ساعات الروتين</span>
+      <span class="text-xs font-bold font-cairo">من <span class="font-mono">${sleepTime}</span> حتى <span class="font-mono">${wakeTime}</span></span>
+    </div>
+    <div class="flex items-center justify-between py-2 border-b border-outline-variant">
+      <span class="text-xs font-semibold text-on-surface-variant">المواد الدراسية</span>
+      <span class="text-xs font-bold text-primary">${subjCount} مادة</span>
+    </div>
+    <div class="flex items-center justify-between py-2 border-b border-outline-variant">
+      <span class="text-xs font-semibold text-on-surface-variant">المدرسون</span>
+      <span class="text-xs font-bold">${teachCount} مدرس</span>
+    </div>
+    <div class="flex items-center justify-between py-2">
+      <span class="text-xs font-semibold text-on-surface-variant">المواعيد الثابتة الأسبوعية</span>
+      <span class="text-xs font-bold text-secondary">${schedCount} موعد أسبوعي</span>
+    </div>`;
 }
 
 // ---------- Save to Supabase ----------
 async function saveEverything() {
   const btn = document.getElementById("nextBtn");
-  btn.disabled = true;
-  btn.innerHTML = `<span class="spinner"></span> جاري الحفظ...`;
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = `<span class="animate-spin material-symbols-outlined" style="font-size:18px">progress_activity</span><span>جاري الحفظ...</span>`;
+  }
 
   try {
-    // 1) Profile
-    const wake_time = document.getElementById("wakeTime").value;
-    const sleep_time = document.getElementById("sleepTime").value;
-    const energy_level = document.getElementById("energyLevel").value;
-    const preferred_session_minutes = parseInt(document.getElementById("sessionMinutes").value) || 50;
+    // 1) Profile with stage and track
+    const wake_time = document.getElementById("wakeTime")?.value || "07:00";
+    const sleep_time = document.getElementById("sleepTime")?.value || "23:00";
+    const energy_level = document.getElementById("energyLevel")?.value || "medium";
+    const preferred_session_minutes = parseInt(document.getElementById("sessionMinutes")?.value) || 50;
 
     const profileUpdate = withTimeout(sb.from("profiles").update({
-      wake_time, sleep_time, energy_level, preferred_session_minutes,
-      onboarding_completed: true, updated_at: new Date().toISOString()
+      stage: selectedStage,
+      track: selectedTrack,
+      wake_time,
+      sleep_time,
+      energy_level,
+      preferred_session_minutes,
+      onboarding_completed: true,
+      updated_at: new Date().toISOString()
     }).eq("id", currentUser.id));
 
-    // 2) Subjects — طلب واحد بس لكل المواد مع بعض
+    // 2) Subjects
     const subjectsPayload = subjectRows
       .map(sid => ({
         sid,
@@ -213,15 +380,23 @@ async function saveEverything() {
 
     let subjectIdMap = {};
     if (subjectsPayload.length) {
+      const colors = ["#0077CC", "#00875F", "#A15C00", "#7C3AED", "#DB2777", "#D97706", "#2563EB"];
       const { data, error } = await withTimeout(sb.from("subjects")
-        .insert(subjectsPayload.map(s => ({ user_id: currentUser.id, name: s.name, priority: s.priority })))
+        .insert(subjectsPayload.map((s, idx) => ({
+          user_id: currentUser.id,
+          name: s.name,
+          priority: s.priority,
+          color: colors[idx % colors.length],
+          mastery_percentage: 50,
+          risk_level: "stable"
+        })))
         .select());
       if (!error && data) {
         data.forEach((row, i) => { subjectIdMap[subjectsPayload[i].sid] = row.id; });
       }
     }
 
-    // 3) Teachers — طلب واحد لكل المدرسين مع بعض
+    // 3) Teachers
     const teachersPayload = teacherRows
       .map(tid => ({
         name: document.querySelector(`#${tid} .teach-name`)?.value.trim(),
@@ -235,7 +410,7 @@ async function saveEverything() {
       ? withTimeout(sb.from("teachers").insert(teachersPayload))
       : Promise.resolve();
 
-    // 4) Fixed schedule — طلب واحد لكل المواعيد (بكل أيامها) مع بعض
+    // 4) Fixed schedule
     const fixedPayload = [];
     for (const fid of scheduleRows) {
       const title = document.querySelector(`#${fid} .sched-title`)?.value.trim();
@@ -252,17 +427,18 @@ async function saveEverything() {
       ? withTimeout(sb.from("fixed_schedule").insert(fixedPayload))
       : Promise.resolve();
 
-    // نبعت الطلبات التلاتة الباقية مع بعض في نفس الوقت بدل ما نستناهم واحد واحد
     await Promise.all([profileUpdate, teachersInsert, fixedInsert]);
 
-    showToast("تم الحفظ! 🎉");
+    showToast("تم الحفظ بنجاح! 🎉");
     setTimeout(() => window.location.href = "dashboard.html", 700);
 
   } catch (err) {
     console.error(err);
-    showToast("حصل خطأ، حاول تاني");
-    btn.disabled = false;
-    btn.textContent = "احفظ وابدأ 🚀";
+    showToast("حدث خطأ أثناء الحفظ، يرجى المحاولة ثانية");
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = "حفظ والبدء 🚀";
+    }
   }
 }
 
