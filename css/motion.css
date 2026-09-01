@@ -202,6 +202,14 @@ body {
   max-width: 100%;
 }
 
+/* ── إخفاء روابط وتحميل التطبيق لما نكون شغالين داخل تطبيق الموبايل نفسه ── */
+html.capacitor-native #downloadAppBadge,
+html.capacitor-native #landingAppDownload,
+html.capacitor-native .app-download-link,
+html.capacitor-native .download-app-badge {
+  display: none !important;
+}
+
 /* ── القائمة الجانبية على الموبايل: منطق واضح مفيهوش أي غموض ──
    افتراضيًا مخفية تحت 768px، وبتظهر بس لما تاخد كلاس mobile-open.
    منفصلة تمامًا عن نظام "hidden" بتاع زرار طي القائمة في الديسكتوب. */

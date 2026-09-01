@@ -46,6 +46,9 @@ jobs:
             npx cap add android
           fi
 
+      - name: تثبيت أيقونة وشعار التطبيق (App Launcher Icons)
+        run: node setup-android-icons.js
+
       - name: تفعيل Firebase (نسخ google-services.json وإضافة الـ plugin)
         run: |
           if [ -f "firebase/google-services.json" ]; then

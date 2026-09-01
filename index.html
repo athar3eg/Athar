@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
 <meta charset="utf-8"/>
@@ -21,8 +21,9 @@
   * { font-family: 'Thmanyah Sans', sans-serif; }
   body, button, input, select, textarea { font-family: 'Thmanyah Sans', sans-serif; }
   .font-mono, [class*="font-mono"] { font-family: 'JetBrains Mono', monospace !important; }
-  .material-symbols-outlined { font-family: 'Material Symbols Outlined' !important; }html{visibility:hidden}</style>
-<script>!function(){try{var t=localStorage.getItem('athar-theme')||localStorage.getItem('madar-theme');if(t==='dark'||(t===null&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}document.addEventListener('DOMContentLoaded',function(){document.documentElement.style.visibility='visible'})}();</script>
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined' !important; }
+</style>
+<script>!function(){try{var t=localStorage.getItem('athar-theme')||localStorage.getItem('madar-theme');if(t==='dark'||(t===null&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}}();</script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
@@ -189,7 +190,7 @@
           <span class="material-symbols-outlined" style="font-size:18px">login</span> لدي حساب بالفعل
         </button>
       </div>
-      <a href="https://github.com/athar3eg/Athar/releases/latest/download/app-debug.apk" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-on-surface-variant hover:text-primary transition">
+      <a id="landingAppDownload" href="https://github.com/athar3eg/Athar/releases/latest/download/app-debug.apk" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-on-surface-variant hover:text-primary transition app-download-link">
         <span class="material-symbols-outlined" style="font-size:18px">android</span>
         حمّل تطبيق أَثَر لأندرويد
       </a>
