@@ -1,8 +1,7 @@
 {
   "appId": "com.company.athar",
   "appName": "أَثَر",
-  "webDir": ".",
-  "bundledWebRuntime": false,
+  "webDir": "www",
   "server": {
     "androidScheme": "https"
   },

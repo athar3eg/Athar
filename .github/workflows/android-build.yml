@@ -37,6 +37,9 @@ jobs:
       - name: تثبيت الباكدجات
         run: npm install
 
+      - name: تجهيز حزمة الويب للتطبيق (www bundle)
+        run: node prepare-www.js
+
       - name: إضافة منصة أندرويد (لو مش موجودة أصلاً)
         run: |
           if [ ! -d "android" ]; then
