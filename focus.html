@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>أَثَر | جلسة تركيز (بومودورو)</title>
+<link rel="icon" type="image/png" href="assets/favicon.png"/>
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<style>
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Light.woff') format('woff'); font-weight:300; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Regular.woff') format('woff'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Medium.woff') format('woff'); font-weight:500; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Black.woff') format('woff'); font-weight:900; font-display:swap; }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet"/>
+<link rel="stylesheet" href="css/motion.css"/>
+<style>
+  * { font-family: 'Thmanyah Sans', sans-serif; }
+  body, button, input, select, textarea { font-family: 'Thmanyah Sans', sans-serif; }
+  .font-mono, [class*="font-mono"] { font-family: 'JetBrains Mono', monospace !important; }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined' !important; }html{visibility:hidden}</style>
+<script>!function(){try{var t=localStorage.getItem('athar-theme')||localStorage.getItem('madar-theme');if(t==='dark'||(t===null&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}document.addEventListener('DOMContentLoaded',function(){document.documentElement.style.visibility='visible'})}();</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Thmanyah Sans', 'sans-serif'], cairo: ['Thmanyah Sans', 'sans-serif'], mono: ['JetBrains Mono','monospace'] },
+        colors: {
+          primary: '#0077CC',
+          'primary-dark': '#005ea3',
+          'on-primary': '#ffffff',
+          'primary-container': '#e0f0ff',
+          'on-primary-container': '#003a5c',
+          secondary: '#00875f',
+          'secondary-container': '#d7f9e9',
+          'on-secondary-container': '#006446',
+          tertiary: '#a15c00',
+          'tertiary-container': '#ffe8c2',
+          'on-tertiary-container': '#7a4500',
+          error: '#ba1a1a',
+          'error-container': '#ffdad6',
+          'on-error-container': '#93000a',
+          surface: '#f7f9fc',
+          'surface-container-lowest': '#ffffff',
+          'surface-container-low': '#f1f4fa',
+          'surface-container': '#e9edf6',
+          'surface-container-high': '#e0e5f0',
+          'on-surface': '#111827',
+          'on-surface-variant': '#4b5566',
+          outline: '#8791a3',
+          'outline-variant': '#d6dbe6',
+        },
+        borderRadius: { sm: '4px', DEFAULT: '8px', md: '12px', lg: '16px', xl: '24px' },
+      }
+    }
+  }
+</script>
+<style>
+  * { font-family: 'Thmanyah Sans', sans-serif; }
+  body, button, input, select, textarea { font-family: 'Thmanyah Sans', sans-serif; }
+  .font-mono, [class*="font-mono"] { font-family: 'JetBrains Mono', monospace !important; }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined' !important; }
+  *{box-sizing:border-box}
+  body{font-family:'Thmanyah Sans', sans-serif;background:#f7f9fc;color:#111827;-webkit-font-smoothing:antialiased}
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;font-size:20px;line-height:1;vertical-align:middle}
+  .toast{transition:all .3s ease}
+  .auth-gradient{background:linear-gradient(135deg,#e0f0ff,#f7f9fc)}
+
+  /* ═══════════════ COMPLETE DARK MODE PALETTE ═══════════════ */
+  html.dark{color-scheme:dark}
+  html.dark body{background:#0b1220 !important;color:#eef2f9 !important}
+  html.dark .auth-gradient{background:linear-gradient(135deg,#0a192f,#0b1220) !important}
+  html.dark .bg-white,
+  html.dark .bg-surface-container-lowest{background-color:#141d2e !important;color:#eef2f9 !important}
+  html.dark .bg-surface-container-low{background-color:#182236 !important}
+  html.dark .bg-surface-container{background-color:#1e2a40 !important}
+  html.dark .bg-surface-container-high{background-color:#25324a !important}
+  html.dark .border-outline-variant{border-color:#2c3a52 !important}
+  html.dark .text-on-surface{color:#eef2f9 !important}
+  html.dark .text-on-surface-variant{color:#a7b2c4 !important}
+  html.dark .text-outline{color:#94a3b8 !important}
+  html.dark .text-primary{color:#38bdf8 !important}
+  
+  html.dark .hover\:bg-surface-container-low:hover,
+  html.dark .hover\:bg-surface-container:hover,
+  html.dark .hover\:bg-surface-container-high:hover,
+  html.dark .hover\:bg-white:hover{background-color:#1e2a40 !important;color:#ffffff !important}
+</style>
+<script src="js/supabase-js.min.js"></script>
+</head>
+<body class="antialiased min-h-screen flex flex-col items-center justify-between p-6 auth-gradient relative">
+
+<!-- Toast -->
+<div id="toast" class="toast fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-24 opacity-0 z-[100] bg-on-surface text-white px-5 py-3 rounded-lg shadow-lg text-sm font-medium"></div>
+
+<!-- Top Bar -->
+<div class="w-full max-w-2xl flex items-center justify-between">
+  <button onclick="history.back()" class="w-10 h-10 rounded-full bg-white dark:bg-[#141d2e] border border-outline-variant text-on-surface dark:text-white flex items-center justify-center hover:scale-105 transition shadow-xs" title="رجوع">
+    <span class="material-symbols-outlined">arrow_forward</span>
+  </button>
+  
+  <div class="flex items-center gap-2">
+    <span class="material-symbols-outlined text-primary" style="font-size:22px">timer</span>
+    <span class="text-sm font-bold text-primary">جلسة تركيز (بومودورو)</span>
+  </div>
+
+  <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full bg-white dark:bg-[#141d2e] border border-outline-variant text-on-surface dark:text-white flex items-center justify-center hover:scale-105 transition shadow-xs" title="تبديل الوضع">
+    <span class="material-symbols-outlined" id="theme-icon-focus">dark_mode</span>
+  </button>
+</div>
+
+<!-- Center Timer Circle -->
+<div class="flex flex-col items-center justify-center my-auto text-center max-w-md w-full">
+
+  <!-- Free-session duration picker (shown only when starting without a linked task) -->
+  <div id="durationPicker" class="hidden card-3d bg-white dark:bg-[#141d2e] rounded-2xl p-6 w-full border border-outline-variant shadow-sm mb-6">
+    <p class="text-sm font-bold text-on-surface mb-1">حدد مدة جلستك الحرة</p>
+    <p class="text-xs text-on-surface-variant mb-4">اختار مدة جاهزة أو حط رقمك إنت</p>
+    <div class="flex flex-wrap items-center justify-center gap-2 mb-4" id="durationChips">
+      <button type="button" onclick="pickDuration(10)" class="duration-chip px-4 py-2 rounded-full text-sm font-bold border border-outline-variant hover:border-primary/50 transition">10 د</button>
+      <button type="button" onclick="pickDuration(15)" class="duration-chip px-4 py-2 rounded-full text-sm font-bold border border-outline-variant hover:border-primary/50 transition">15 د</button>
+      <button type="button" onclick="pickDuration(25)" class="duration-chip px-4 py-2 rounded-full text-sm font-bold border border-primary bg-primary text-white transition">25 د</button>
+      <button type="button" onclick="pickDuration(45)" class="duration-chip px-4 py-2 rounded-full text-sm font-bold border border-outline-variant hover:border-primary/50 transition">45 د</button>
+      <button type="button" onclick="pickDuration(60)" class="duration-chip px-4 py-2 rounded-full text-sm font-bold border border-outline-variant hover:border-primary/50 transition">60 د</button>
+    </div>
+    <div class="flex items-center gap-2 mb-5">
+      <input id="customDuration" type="number" min="1" max="240" placeholder="مدة مخصصة بالدقايق" oninput="pickDuration(parseInt(this.value)||0, true)" class="w-full border border-outline-variant rounded-full py-2.5 px-4 text-center text-sm focus:outline-none focus:ring-2 focus:ring-primary"/>
+      <span class="text-xs text-on-surface-variant shrink-0">دقيقة</span>
+    </div>
+    <button onclick="startFreeSession()" class="w-full bg-primary text-on-primary font-bold py-3 rounded-full hover:bg-primary-dark transition flex items-center justify-center gap-1.5 shadow-sm">
+      <span class="material-symbols-outlined" style="font-size:18px">play_arrow</span> ابدأ الجلسة
+    </button>
+  </div>
+
+  <div id="timerStage" class="hidden w-full flex flex-col items-center">
+  <div class="relative w-64 h-64 md:w-72 md:h-72 flex items-center justify-center mb-6 timer-pulse-aura">
+    <svg viewBox="0 0 100 100" class="w-full h-full">
+      <!-- Base ring -->
+      <circle cx="50" cy="50" r="42" stroke="currentColor" class="text-surface-container-high dark:text-[#1e2a40]" stroke-width="8" fill="none"/>
+      <!-- Progress ring -->
+      <circle id="timerProgress" cx="50" cy="50" r="42" stroke="#0077CC" stroke-width="8" fill="none" stroke-dasharray="264" stroke-dashoffset="0" stroke-linecap="round" class="transition-all duration-1000" transform="rotate(-90 50 50)"/>
+      <!-- Analog clock ticks (12, built by JS) -->
+      <g id="clockTicks" class="text-outline/50 dark:text-slate-500" stroke="currentColor" stroke-width="1"></g>
+      <!-- Analog hand: sweeps a full turn over the session duration -->
+      <line id="clockHand" x1="50" y1="50" x2="50" y2="16" stroke="#0077CC" stroke-width="2" stroke-linecap="round" class="dark:opacity-90 transition-transform duration-1000"/>
+      <circle cx="50" cy="50" r="2" fill="#0077CC"/>
+    </svg>
+    <div class="absolute inset-0 flex flex-col items-center justify-center">
+      <span id="timeDisplay" class="text-5xl md:text-6xl font-extrabold font-mono text-primary tracking-tight">25:00</span>
+      <span class="text-xs font-bold text-outline dark:text-slate-400 mt-2">جلسة بومودورو</span>
+    </div>
+  </div>
+
+  <!-- Current Task Card -->
+  <div class="card-3d bg-white dark:bg-[#141d2e] rounded-2xl p-5 w-full border border-outline-variant shadow-sm mb-8">
+    <p class="text-xs font-bold text-outline dark:text-slate-400 mb-1">المهمة الجارية</p>
+    <h3 class="font-bold text-base text-on-surface dark:text-white" id="taskLabel">جلسة مذاكرة حرة</h3>
+  </div>
+
+  <!-- Action Controls -->
+  <div class="flex items-center gap-4 w-full justify-center">
+    <button id="pauseBtn" onclick="togglePause()" class="flex-1 max-w-[150px] bg-white dark:bg-[#1e2a40] text-on-surface dark:text-white border border-outline-variant font-bold py-3.5 rounded-full hover:bg-surface-container-low transition flex items-center justify-center gap-1.5 shadow-sm text-sm active:scale-95">
+      <span class="material-symbols-outlined" id="pauseIcon" style="font-size:20px">pause</span>
+      <span id="pauseText">إيقاف مؤقت</span>
+    </button>
+    <button id="finishBtn" onclick="finishSession()" class="flex-1 max-w-[150px] bg-secondary text-white font-bold py-3.5 rounded-full hover:opacity-90 transition flex items-center justify-center gap-1.5 shadow-md shadow-secondary/20 text-sm active:scale-95">
+      <span class="material-symbols-outlined" style="font-size:20px">check_circle</span>
+      <span>إنهاء الجلسة</span>
+    </button>
+  </div>
+  </div>
+</div>
+
+<!-- Bottom Quote -->
+<div class="text-center text-xs text-on-surface-variant dark:text-slate-400 font-medium">
+  ✨ التركيز الهادئ يصنع الفارق الحقيقي في نتائجك.
+</div>
+
+<script src="js/supabase-client.js"></script>
+<script src="js/common.js"></script>
+<script src="js/focus.js"></script>
+<script src="js/motion.js"></script>
+<script>
+  function syncThemeIcons(){
+    const isDark = document.documentElement.classList.contains('dark');
+    const el = document.getElementById('theme-icon-focus');
+    if(el) el.textContent = isDark ? 'light_mode' : 'dark_mode';
+  }
+
+  function toggleDarkMode(){
+    document.documentElement.classList.toggle('dark');
+    const isDark = document.documentElement.classList.contains('dark');
+    localStorage.setItem('athar-theme', isDark ? 'dark' : 'light');
+    syncThemeIcons();
+  }
+
+  (function initTheme(){
+    const saved = localStorage.getItem('athar-theme') || localStorage.getItem('madar-theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if(saved === 'dark' || (!saved && prefersDark)){
+      document.documentElement.classList.add('dark');
+    }
+    syncThemeIcons();
+  })();
+</script>
+</body>
+</html>
+
+
+

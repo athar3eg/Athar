@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>أَثَر | الإعدادات والملف الشخصي</title>
+<link rel="icon" type="image/png" href="assets/favicon.png"/>
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<style>
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Light.woff') format('woff'); font-weight:300; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Regular.woff') format('woff'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Medium.woff') format('woff'); font-weight:500; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Black.woff') format('woff'); font-weight:900; font-display:swap; }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet"/>
+<link rel="stylesheet" href="css/motion.css"/>
+<style>
+  * { font-family: 'Thmanyah Sans', sans-serif; }
+  body, button, input, select, textarea { font-family: 'Thmanyah Sans', sans-serif; }
+  .font-mono, [class*="font-mono"] { font-family: 'JetBrains Mono', monospace !important; }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined' !important; }html{visibility:hidden}</style>
+<script>!function(){try{var t=localStorage.getItem('athar-theme')||localStorage.getItem('madar-theme');if(t==='dark'||(t===null&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}document.addEventListener('DOMContentLoaded',function(){document.documentElement.style.visibility='visible'})}();</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Thmanyah Sans', 'sans-serif'], cairo: ['Thmanyah Sans', 'sans-serif'], mono: ['JetBrains Mono','monospace'] },
+        colors: {
+          primary: '#0077CC',
+          'primary-dark': '#005ea3',
+          'on-primary': '#ffffff',
+          'primary-container': '#e0f0ff',
+          'on-primary-container': '#003a5c',
+          secondary: '#00875f',
+          'secondary-container': '#d7f9e9',
+          'on-secondary-container': '#006446',
+          tertiary: '#a15c00',
+          'tertiary-container': '#ffe8c2',
+          'on-tertiary-container': '#7a4500',
+          error: '#ba1a1a',
+          'error-container': '#ffdad6',
+          'on-error-container': '#93000a',
+          surface: '#f7f9fc',
+          'surface-container-lowest': '#ffffff',
+          'surface-container-low': '#f1f4fa',
+          'surface-container': '#e9edf6',
+          'surface-container-high': '#e0e5f0',
+          'on-surface': '#111827',
+          'on-surface-variant': '#4b5566',
+          outline: '#8791a3',
+          'outline-variant': '#d6dbe6',
+        },
+        borderRadius: { sm: '4px', DEFAULT: '8px', md: '12px', lg: '16px', xl: '24px' },
+      }
+    }
+  }
+</script>
+<style>
+  * { font-family: 'Thmanyah Sans', sans-serif; }
+  body, button, input, select, textarea { font-family: 'Thmanyah Sans', sans-serif; }
+  .font-mono, [class*="font-mono"] { font-family: 'JetBrains Mono', monospace !important; }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined' !important; }
+  
+  body{font-family:'Thmanyah Sans', sans-serif;background:#f7f9fc;color:#111827;font-size:14px}
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;font-size:20px;line-height:1}
+  ::-webkit-scrollbar{width:8px;height:8px}
+  ::-webkit-scrollbar-thumb{background:#d6dbe6;border-radius:8px}
+  .nav-item{position:relative;transition:background .15s ease}
+  .nav-item.active{background:#e0f0ff;color:#0077CC;font-weight:700}
+  html.dark .nav-item.active{background-color:#0f2c46 !important;color:#38bdf8 !important}
+  .nav-item.active::before{content:"";position:absolute;right:0;top:8px;bottom:8px;width:3px;background:#0077CC;border-radius:4px 0 0 4px}
+  .fade-in{animation:fadeIn .25s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+  .toast{transition:all .3s ease}
+
+  /* ---------- DARK MODE ---------- */
+  html.dark{color-scheme:dark}
+  html.dark body{background:#0b1220;color:#e5eaf2}
+  html.dark .nav-item.active{background-color:#0f2c46 !important;color:#38bdf8 !important}
+  html.dark .bg-white,
+  html.dark .bg-surface-container-lowest{background-color:#141d2e !important}
+  html.dark .bg-surface-container-low{background-color:#182236 !important}
+  html.dark .bg-surface-container{background-color:#1e2a40 !important}
+  html.dark .bg-surface-container-high{background-color:#25324a !important}
+  html.dark .border-outline-variant{border-color:#2c3a52 !important}
+  html.dark .divide-outline-variant>*+*{border-color:#2c3a52 !important}
+  html.dark .text-on-surface{color:#eef2f9 !important}
+  html.dark .text-on-surface-variant{color:#a7b2c4 !important}
+  html.dark .text-outline{color:#8592a8 !important}
+  html.dark .bg-primary-container{background-color:#0f2c46 !important}
+  html.dark input,html.dark select{background-color:#182236;border-color:#2c3a52;color:#e5eaf2}
+  html.dark ::placeholder{color:#6b7789}
+  html.dark #toast{background:#eef2f9;color:#0b1220}
+
+  /* Prevent white flashes on hover in dark mode */
+  html.dark .hover\:bg-surface-container-low:hover,
+  html.dark .hover\:bg-surface-container:hover,
+  html.dark .hover\:bg-surface-container-high:hover,
+  html.dark .hover\:bg-white:hover{background-color:#1e2a40!important;color:#eef2f9!important}
+  html.dark .hover\:bg-primary-container:hover{background-color:#0f2c46!important;color:#bfe0ff!important}
+  html.dark .hover\:border-primary:hover{border-color:#0077CC!important}
+</style>
+<script src="js/supabase-js.min.js"></script>
+</head>
+<body class="antialiased">
+
+<!-- Toast -->
+<div id="toast" class="toast fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-24 opacity-0 z-[100] bg-on-surface text-white px-5 py-3 rounded-lg shadow-lg text-sm font-medium"></div>
+
+<div class="flex min-h-screen">
+  <!-- Sidebar -->
+  <aside id="sidebar" class="w-72 shrink-0 bg-white border-l border-outline-variant flex flex-col fixed md:sticky top-0 right-0 h-screen z-50">
+    <div class="p-6 flex items-center justify-between border-b border-outline-variant">
+      <div>
+        <a href="dashboard.html" class="flex items-center gap-2.5 athar-logo-wrapper">
+          <img src="assets/icon.png" alt="أَثَر" class="w-10 h-10 object-contain drop-shadow-sm"/>
+          <img src="assets/logo.png" alt="أَثَر" class="h-7 object-contain dark:hidden"/>
+          <img src="assets/logo-dark.png" alt="أَثَر" class="h-7 object-contain hidden dark:block athar-logo-dark-glow"/>
+        </a>
+        <p class="text-xs text-on-surface-variant mt-0.5 font-medium">نظام التشغيل الأكاديمي</p>
+      </div>
+      <div class="flex items-center gap-1">
+        <button onclick="toggleSidebar()" class="w-8 h-8 rounded-lg hover:bg-surface-container-low flex items-center justify-center text-on-surface transition" title="إخفاء القائمة وتمديد الصفحة"><span class="material-symbols-outlined" style="font-size:20px">menu_open</span></button>
+      </div>
+    </div>
+    
+    <div class="p-4">
+      <a href="schedule.html?action=new-task" class="w-full bg-primary text-on-primary font-bold py-2.5 rounded-full flex items-center justify-center gap-1.5 hover:bg-primary-dark transition text-sm shadow-sm">
+        <span class="material-symbols-outlined" style="font-size:18px">add</span> إضافة مهمة جديدة
+      </a>
+    </div>
+
+    <nav class="flex-1 px-4 space-y-1 overflow-y-auto">
+      <p class="text-xs font-bold text-outline px-3 pt-3 pb-1">القائمة الرئيسية</p>
+      <a href="dashboard.html" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined">grid_view</span>لوحة التحكم</a>
+      <a href="schedule.html" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined">calendar_month</span>الجدول الدراسي</a>
+      <a href="dashboard.html" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined text-primary">insights</span>مراجعة الأسبوع</a>
+      <a href="focus.html" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined">timer</span>جلسة تركيز (بومودورو)</a>
+      <a href="exams.html" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined">quiz</span>الاختبارات</a>
+      <a href="#subjects" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined">menu_book</span>المواد الدراسية</a>
+      
+      <p class="text-xs font-bold text-outline px-3 pt-4 pb-1">ذكاء اصطناعي</p>
+      <a href="assistant.html" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined text-primary">auto_awesome</span>المساعد الذكي (AI)</a>
+    </nav>
+
+    <div id="downloadAppBadge" class="mx-4 mb-3 p-3 rounded-xl bg-primary-container/40 border border-primary/20 flex items-center gap-2.5">
+      <span class="material-symbols-outlined text-primary" style="font-size:20px">android</span>
+      <div class="flex-1 min-w-0">
+        <p class="text-xs font-bold text-on-primary-container">حمّل تطبيق أَثَر</p>
+        <a href="https://github.com/athar3eg/Athar/releases/latest/download/app-debug.apk" class="text-[11px] text-primary font-semibold hover:underline">تحميل مباشر لأندرويد</a>
+      </div>
+    </div>
+
+    <div class="p-4 border-t border-outline-variant space-y-1">
+      <a href="settings.html" class="nav-item active flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined">settings</span>الإعدادات</a>
+      <a onclick="logout()" class="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-error hover:bg-error-container/30 transition"><span class="material-symbols-outlined">logout</span>تسجيل الخروج</a>
+    </div>
+  </aside>
+  
+  <div id="sidebar-overlay" onclick="toggleSidebar()" class="hidden fixed inset-0 bg-black/40 z-40 md:hidden"></div>
+
+  <!-- Main Content -->
+  <main class="flex-1 min-w-0 flex flex-col">
+    <!-- Top Bar Stretching Full Width -->
+    <div class="sticky top-0 z-30 bg-white/90 dark:bg-[#141d2e]/90 backdrop-blur border-b border-outline-variant px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button id="topbarSidebarToggle" onclick="toggleSidebar()" class="w-9 h-9 rounded-xl hover:bg-surface-container-low flex items-center justify-center text-on-surface transition md:hidden" title="فتح القائمة الجانبية"><span class="material-symbols-outlined">menu</span></button>
+        <div>
+          <h1 class="text-base font-bold text-on-surface">الإعدادات والتفضيلات الأكاديمية</h1>
+          <p class="text-xs text-on-surface-variant">تخصيص روتينك اليومي، إدارة مفتاح Gemini، المواد والمدرسين، ومظهر التطبيق</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="toggleDarkMode()" class="w-9 h-9 rounded-full hover:bg-surface-container-low flex items-center justify-center"><span class="material-symbols-outlined" id="theme-icon-mobile">dark_mode</span></button>
+      </div>
+    </div>
+
+    <!-- Page Content Container -->
+    <div class="p-6 md:p-10 max-w-4xl w-full mx-auto space-y-8">
+      
+      <!-- Gemini API Key Card (العقل الثاني) -->
+      <div class="card-3d anim-fade-up stagger-1 bg-white border-2 border-primary/30 rounded-2xl p-6 shadow-md relative overflow-hidden">
+        <div class="absolute top-0 left-0 bg-primary text-white text-[10px] font-bold px-3 py-1 rounded-br-xl">
+          العقل الثاني 🧠
+        </div>
+        
+        <div class="flex items-start gap-3 mb-3">
+          <div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center text-primary shrink-0 mt-0.5">
+            <span class="material-symbols-outlined" style="font-size:24px">key</span>
+          </div>
+          <div>
+            <h3 class="font-bold text-base text-on-surface">مفتاح الذكاء الاصطناعي (Google Gemini API Key)</h3>
+            <p class="text-xs text-on-surface-variant leading-relaxed mt-0.5">
+              ضع مفتاحك الشخصي لتمكين Gemini من التحكم الكامل في موقعك (إضافة مهام، بناء جداول، شرح المناهج بالفيديو، وعمل امتحانات تفاعلية غير محدودة).
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-3 mt-4">
+          <div>
+            <label class="text-xs font-semibold text-on-surface-variant flex items-center justify-between">
+              <span>مفتاح API (Gemini Key)</span>
+              <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-primary text-[11px] font-bold hover:underline flex items-center gap-0.5">
+                <span>احصل على مفتاح مجاني من Google AI Studio</span>
+                <span class="material-symbols-outlined" style="font-size:14px">open_in_new</span>
+              </a>
+            </label>
+            <div class="relative mt-1">
+              <input type="password" id="geminiApiKey" placeholder="AIzaSy..." class="w-full border border-outline-variant rounded-lg py-2.5 px-3.5 pl-10 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary"/>
+              <button type="button" onclick="toggleApiKeyVisibility()" class="absolute left-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface">
+                <span class="material-symbols-outlined" id="keyVisIcon" style="font-size:18px">visibility</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 pt-1">
+            <button onclick="testGeminiKey()" id="testKeyBtn" class="flex-1 bg-surface-container-high text-on-surface font-bold text-xs py-2.5 rounded-lg hover:bg-surface-container transition flex items-center justify-center gap-1 active:scale-95">
+              <span class="material-symbols-outlined" style="font-size:16px">verified</span> اختبار المفتاح
+            </button>
+            <button onclick="saveGeminiSettings()" id="saveKeyBtn" class="flex-1 bg-primary text-white font-bold text-xs py-2.5 rounded-lg hover:bg-primary-dark transition shadow-sm flex items-center justify-center gap-1 active:scale-95">
+              <span class="material-symbols-outlined" style="font-size:16px">save</span> حفظ المفتاح
+            </button>
+          </div>
+          <div id="keyTestResult" class="hidden text-xs p-2.5 rounded-lg font-medium"></div>
+
+          <!-- Multi-Key Gemini Management (1.8) -->
+          <div class="pt-4 mt-4 border-t border-outline-variant">
+            <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+              <div>
+                <h4 class="font-bold text-xs text-on-surface">توكنز Gemini الاحتياطية (التبديل التلقائي)</h4>
+                <p class="text-[11px] text-on-surface-variant">يتم التبديل تلقائياً للتوكن التالي عند نفاد الرصيد اليومي</p>
+              </div>
+              <button onclick="openAddKeyModal()" class="bg-primary text-white text-xs font-bold px-3 py-1.5 rounded-full hover:bg-primary-dark transition flex items-center gap-1">
+                <span class="material-symbols-outlined" style="font-size:14px">add</span> أضف توكن
+              </button>
+            </div>
+            <div id="geminiKeysList" class="space-y-2">
+              <div class="text-xs text-on-surface-variant text-center py-2">جاري التحميل...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Academic Profile Card (1.7.4) -->
+      <div class="card-3d anim-fade-up stagger-2 bg-white border border-outline-variant rounded-2xl p-6 shadow-xs" id="academic">
+        <h3 class="font-bold text-base mb-2 flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary">school</span>
+          <span>بياناتي الدراسية</span>
+        </h3>
+        <p class="text-xs text-on-surface-variant mb-4">الصف والشعبة لتخصيص جدولك والمواد المقترحة بدقة</p>
+        
+        <div class="grid sm:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="text-xs font-semibold text-on-surface-variant">الصف الدراسي</label>
+            <select id="academicStage" onchange="onStageSelectChange(this.value)" class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary bg-white">
+              <option value="">اختر الصف...</option>
+              <option value="first_secondary">الصف الأول الثانوي</option>
+              <option value="second_secondary">الصف الثاني الثانوي</option>
+              <option value="third_secondary">الصف الثالث الثانوي</option>
+            </select>
+          </div>
+
+          <div id="academicTrackContainer" class="hidden">
+            <label class="text-xs font-semibold text-on-surface-variant">الشعبة</label>
+            <select id="academicTrack" class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary bg-white">
+              <option value="literary">أدبي</option>
+              <option value="scientific_math">علمي رياضة</option>
+              <option value="scientific_science">علمي علوم</option>
+            </select>
+            <p class="text-[10px] text-tertiary mt-1 font-medium">⚠️ تغيير الشعبة قد يؤثر على قائمة المواد وخطة الدراسة الحالية</p>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="text-xs font-semibold text-on-surface-variant">رقم الهاتف (اختياري - للتذكيرات)</label>
+          <input type="tel" id="academicPhone" placeholder="01xxxxxxxxx" class="w-full sm:w-1/2 border border-outline-variant rounded-lg py-2.5 px-3 mt-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary" dir="ltr"/>
+          <p class="text-[11px] text-on-surface-variant mt-1">يُستخدم فقط لإرسال تذكيرات المواعيد والامتحانات، ولن يُشارك مع أي طرف ثالث.</p>
+        </div>
+
+        <button onclick="saveAcademicProfile()" id="saveAcademicBtn" class="bg-primary text-white font-bold text-xs px-6 py-2.5 rounded-full hover:bg-primary-dark transition shadow-sm">
+          حفظ البيانات الدراسية
+        </button>
+      </div>
+
+      <!-- Password Change Card (1.7.3) -->
+      <div class="card-3d anim-fade-up stagger-2 bg-white border border-outline-variant rounded-2xl p-6 shadow-xs" id="password">
+        <h3 class="font-bold text-base mb-4 flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary">lock_reset</span>
+          <span>تغيير كلمة السر</span>
+        </h3>
+        
+        <div class="grid sm:grid-cols-3 gap-4 mb-4">
+          <div>
+            <label class="text-xs font-semibold text-on-surface-variant">كلمة السر الحالية</label>
+            <input type="password" id="currentPassword" placeholder="••••••••" class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"/>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-on-surface-variant">كلمة السر الجديدة</label>
+            <input type="password" id="newPassword" placeholder="8 أحرف على الأقل" class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"/>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-on-surface-variant">تأكيد كلمة السر الجديدة</label>
+            <input type="password" id="confirmPassword" placeholder="••••••••" class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"/>
+          </div>
+        </div>
+
+        <button onclick="changePassword()" id="changePasswordBtn" class="bg-primary text-white font-bold text-xs px-6 py-2.5 rounded-full hover:bg-primary-dark transition shadow-sm">
+          تحديث كلمة السر
+        </button>
+      </div>
+
+      <!-- Routine & Profile Card -->
+      <div class="card-3d anim-fade-up stagger-2 bg-white border border-outline-variant rounded-2xl p-6 shadow-xs">
+        <h3 class="font-bold text-base mb-4 flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary">person</span>
+          <span>الروتين ومستوى الطاقة</span>
+        </h3>
+        
+        <div class="grid sm:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="text-xs font-semibold text-on-surface-variant">وقت الاستيقاظ</label>
+            <input type="time" id="wakeTime" class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"/>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-on-surface-variant">وقت النوم</label>
+            <input type="time" id="sleepTime" class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"/>
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4 mb-6">
+          <div>
+            <label class="text-xs font-semibold text-on-surface-variant">مستوى الطاقة في الصباح</label>
+            <select id="energyLevel" class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+              <option value="high">عالي ⚡</option>
+              <option value="medium" selected>متوسط ☕</option>
+              <option value="low">منخفض 🌿</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-on-surface-variant">مدة جلسة المذاكرة المفضلة (دقيقة)</label>
+            <input type="number" id="sessionMinutes" min="15" max="180" value="50" class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"/>
+          </div>
+        </div>
+
+        <button onclick="saveProfile()" id="saveProfileBtn" class="bg-primary text-white font-bold text-xs px-6 py-2.5 rounded-full hover:bg-primary-dark transition shadow-sm">
+          حفظ تغييرات الروتين
+        </button>
+      </div>
+
+      <!-- Subjects Management -->
+      <div class="bg-white border border-outline-variant rounded-2xl p-6 shadow-xs" id="subjects">
+        <div class="flex items-center justify-between flex-wrap gap-2 mb-4">
+          <h3 class="font-bold text-base flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">menu_book</span>
+            <span>المواد الدراسية</span>
+          </h3>
+          <button onclick="openSubjectModal()" class="bg-primary text-white font-bold text-xs px-4 py-2 rounded-full hover:bg-primary-dark transition shadow-sm flex items-center gap-1">
+            <span class="material-symbols-outlined" style="font-size:16px">add</span>
+            <span>إضافة مادة</span>
+          </button>
+        </div>
+        <div class="space-y-2.5" id="subjectsList">
+          <div class="text-xs text-on-surface-variant text-center py-4">جاري التحميل...</div>
+        </div>
+      </div>
+
+      <!-- Teachers Management -->
+      <div class="bg-white border border-outline-variant rounded-2xl p-6 shadow-xs">
+        <div class="flex items-center justify-between flex-wrap gap-2 mb-4">
+          <h3 class="font-bold text-base flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">groups</span>
+            <span>المدرسون وقنوات الشرح</span>
+          </h3>
+          <button onclick="openTeacherModal()" class="bg-primary text-white font-bold text-xs px-4 py-2 rounded-full hover:bg-primary-dark transition shadow-sm flex items-center gap-1">
+            <span class="material-symbols-outlined" style="font-size:16px">add</span>
+            <span>إضافة مدرس</span>
+          </button>
+        </div>
+        <div class="space-y-2.5" id="teachersList">
+          <div class="text-xs text-on-surface-variant text-center py-4">جاري التحميل...</div>
+        </div>
+      </div>
+
+      <!-- Appearance & Preferences -->
+      <div class="bg-white dark:bg-[#141d2e] border border-outline-variant rounded-2xl p-6 shadow-xs space-y-4">
+        <h3 class="font-bold text-base flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary">palette</span>
+          <span>المظهر والتخصيص</span>
+        </h3>
+        
+        <div class="flex items-center justify-between flex-wrap gap-2 py-3 border-b border-outline-variant">
+          <div>
+            <p class="font-bold text-sm text-on-surface">الوضع الليلي (Dark Mode)</p>
+            <p class="text-xs text-on-surface-variant mt-0.5">راحة العين أثناء المذاكرة الليلية</p>
+          </div>
+          <button onclick="toggleDarkMode()" class="px-4 py-2 rounded-full border border-outline-variant font-bold text-xs hover:bg-surface-container-low transition flex items-center gap-1.5 shadow-2xs">
+            <span class="material-symbols-outlined" id="theme-btn-icon" style="font-size:16px">dark_mode</span>
+            <span id="theme-btn-text">تبديل المظهر</span>
+          </button>
+        </div>
+
+        <div class="flex items-center justify-between flex-wrap gap-2 py-3 border-b border-outline-variant">
+          <div>
+            <p class="font-bold text-sm text-on-surface">إشعارات وتنبيهات المهام 🔔</p>
+            <p class="text-xs text-on-surface-variant mt-0.5">تنبيه فوري بمواعيد الحصص والمهام وجلسات المذاكرة</p>
+          </div>
+          <button onclick="testAtharNotification()" class="bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 font-bold text-xs px-4 py-2 rounded-full transition flex items-center gap-1.5 shadow-2xs">
+            <span class="material-symbols-outlined" style="font-size:16px">notifications_active</span>
+            <span>تجربة إشعار فوري</span>
+          </button>
+        </div>
+
+        <div class="flex items-center justify-between flex-wrap gap-2 py-3 border-b border-outline-variant">
+          <div>
+            <div class="flex items-center gap-2">
+              <p class="font-bold text-sm text-on-surface">تحديثات التطبيق (v1.0.3)</p>
+              <span class="text-[10px] bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full font-extrabold">مستقر</span>
+            </div>
+            <p class="text-xs text-on-surface-variant mt-0.5">التحقق من وجود إصدارات أحدث من المنصة والتطبيق</p>
+          </div>
+          <button onclick="checkAppUpdatesManually()" class="border border-outline-variant hover:border-primary text-on-surface font-bold text-xs px-4 py-2 rounded-full hover:bg-surface-container-low transition flex items-center gap-1.5 shadow-2xs">
+            <span class="material-symbols-outlined" style="font-size:16px">sync</span>
+            <span>فحص التحديثات الآن</span>
+          </button>
+        </div>
+
+        <div class="flex items-center justify-between flex-wrap gap-2 py-3 border-b border-outline-variant">
+          <div>
+            <p class="font-bold text-sm text-on-surface">صُنع بواسطة / سيف الشيخ (Saif_Elsheikh)</p>
+            <p class="text-xs text-on-surface-variant mt-0.5">روابط التواصل المباشر (واتساب، فيسبوك، انستجرام)</p>
+          </div>
+          <button onclick="openDeveloperSocialModal()" class="bg-surface-container hover:bg-primary-container text-on-surface hover:text-primary font-bold text-xs px-4 py-2 rounded-full transition flex items-center gap-1.5 shadow-2xs">
+            <span class="material-symbols-outlined" style="font-size:16px">contact_support</span>
+            <span>بطاقة التواصل</span>
+          </button>
+        </div>
+
+        <div class="pt-2 flex justify-between items-center">
+          <div>
+            <p class="font-bold text-sm text-error">تسجيل الخروج من الحساب</p>
+            <p class="text-xs text-on-surface-variant mt-0.5">يمكنك تسجيل الدخول مرة أخرى في أي وقت</p>
+          </div>
+          <button onclick="logout()" class="border border-error/50 text-error hover:bg-error hover:text-white font-bold text-xs px-5 py-2 rounded-full transition shadow-2xs">
+            تسجيل الخروج
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Modal: Add Subject -->
+<div id="subjectModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-xs">
+  <div class="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl border border-outline-variant fade-in">
+    <div class="flex items-center justify-between flex-wrap gap-2 pb-4 mb-4 border-b border-outline-variant">
+      <h3 class="font-bold text-lg flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-primary">menu_book</span>
+        <span>إضافة مادة جديدة</span>
+      </h3>
+      <button onclick="closeSubjectModal()" class="w-8 h-8 rounded-full hover:bg-surface-container-low flex items-center justify-center"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    
+    <div class="space-y-4">
+      <div>
+        <label class="text-xs font-semibold text-on-surface-variant">اسم المادة</label>
+        <input type="text" id="newSubjectName" placeholder="مثلاً: أحياء / كيمياء" class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-primary text-sm"/>
+      </div>
+      <div>
+        <label class="text-xs font-semibold text-on-surface-variant">الأولوية</label>
+        <select id="newSubjectPriority" class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+          <option value="1">أولوية عالية 🔴</option>
+          <option value="2" selected>أولوية متوسطة 🟡</option>
+          <option value="3">أولوية عادية 🟢</option>
+        </select>
+      </div>
+      <div>
+        <label class="text-xs font-semibold text-on-surface-variant">مستوى الصعوبة عندك</label>
+        <select id="newSubjectDifficulty" class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+          <option value="hard">صعبة عليّ 😰</option>
+          <option value="medium" selected>متوسطة 🙂</option>
+          <option value="easy">سهلة عليّ 😌</option>
+        </select>
+        <p class="text-[11px] text-on-surface-variant mt-1">المساعد الذكي هيحط المواد الصعبة في أوقات تركيزك الأعلى</p>
+      </div>
+      <button onclick="saveSubject()" id="saveSubjectBtn" class="w-full bg-primary text-on-primary font-bold py-3 rounded-full hover:bg-primary-dark transition shadow-sm mt-2">
+        حفظ المادة
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Add Teacher -->
+<div id="teacherModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-xs">
+  <div class="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl border border-outline-variant fade-in">
+    <div class="flex items-center justify-between flex-wrap gap-2 pb-4 mb-4 border-b border-outline-variant">
+      <h3 class="font-bold text-lg flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-primary">person_add</span>
+        <span>إضافة مدرس / قناة</span>
+      </h3>
+      <button onclick="closeTeacherModal()" class="w-8 h-8 rounded-full hover:bg-surface-container-low flex items-center justify-center"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    
+    <div class="space-y-4">
+      <div>
+        <label class="text-xs font-semibold text-on-surface-variant">المادة</label>
+        <select id="newTeacherSubject" class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-primary text-sm"></select>
+      </div>
+      <div>
+        <label class="text-xs font-semibold text-on-surface-variant">اسم المدرس</label>
+        <input type="text" id="newTeacherName" placeholder="مثلاً: مستر محمد عبد المعبود" class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-primary text-sm"/>
+      </div>
+      <div>
+        <label class="text-xs font-mono font-semibold text-on-surface-variant">رابط القناة أو المنصة (اختياري)</label>
+        <input type="url" id="newTeacherUrl" placeholder="https://youtube.com/..." class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-primary text-sm"/>
+      </div>
+      <button onclick="saveTeacher()" id="saveTeacherBtn" class="w-full bg-primary text-on-primary font-bold py-3 rounded-full hover:bg-primary-dark transition shadow-sm mt-2">
+        حفظ المدرس
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Add Gemini Key (1.8) -->
+<div id="addKeyModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-xs">
+  <div class="bg-white dark:bg-[#141d2e] rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl border border-outline-variant fade-in">
+    <div class="flex items-center justify-between flex-wrap gap-2 pb-4 mb-4 border-b border-outline-variant">
+      <h3 class="font-bold text-lg flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-primary">key</span>
+        <span>إضافة توكن Gemini احتياطي</span>
+      </h3>
+      <button onclick="closeAddKeyModal()" class="w-8 h-8 rounded-full hover:bg-surface-container-low flex items-center justify-center"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    
+    <div class="space-y-4">
+      <div>
+        <label class="text-xs font-semibold text-on-surface-variant">مفتاح API Key</label>
+        <input type="text" id="newKeyVal" placeholder="AIzaSy..." class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-primary text-sm font-mono" dir="ltr"/>
+      </div>
+      <div>
+        <label class="text-xs font-semibold text-on-surface-variant">اسم أو تسمية المفتاح (اختياري)</label>
+        <input type="text" id="newKeyLabel" placeholder="مثلاً: حساب الجيميل الثاني" class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-primary text-sm"/>
+      </div>
+      <button onclick="addGeminiKey()" id="saveNewKeyBtn" class="w-full bg-primary text-on-primary font-bold py-3 rounded-full hover:bg-primary-dark transition shadow-sm mt-2">
+        حفظ التوكن
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="js/supabase-client.js"></script>
+<script src="js/common.js"></script>
+<script src="js/shared/push-notifications.js"></script>
+<script src="js/shared/update-checker.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/motion.js"></script>
+<script>
+  function toggleSidebar(){
+    const sb = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    const topBtn = document.getElementById('topbarSidebarToggle');
+    if (window.innerWidth < 768) {
+      sb.classList.toggle('mobile-open');
+      if (overlay) overlay.classList.toggle('hidden');
+    } else {
+      sb.classList.toggle('desktop-collapsed');
+      const isCollapsed = sb.classList.contains('desktop-collapsed');
+      if (topBtn) {
+        if (isCollapsed) {
+          topBtn.classList.remove('md:hidden');
+        } else {
+          topBtn.classList.add('md:hidden');
+        }
+      }
+    }
+  }
+
+  function syncThemeIcons(){
+    const isDark = document.documentElement.classList.contains('dark');
+    ['theme-icon-app','theme-icon-mobile','theme-btn-icon'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.textContent = isDark ? 'light_mode' : 'dark_mode';
+    });
+    const btnText = document.getElementById('theme-btn-text');
+    if(btnText) btnText.textContent = isDark ? 'تفعيل الوضع الفاتح' : 'تفعيل الوضع الليلي';
+  }
+
+  function toggleDarkMode(){
+    document.documentElement.classList.toggle('dark');
+    const isDark = document.documentElement.classList.contains('dark');
+    localStorage.setItem('athar-theme', isDark ? 'dark' : 'light');
+    syncThemeIcons();
+  }
+
+  (function initTheme(){
+    const saved = localStorage.getItem('athar-theme') || localStorage.getItem('madar-theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if(saved === 'dark' || (!saved && prefersDark)){
+      document.documentElement.classList.add('dark');
+    }
+    syncThemeIcons();
+  })();
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+

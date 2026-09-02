@@ -1,0 +1,300 @@
+﻿<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>أَثَر | إعداد نظامك الأكاديمي</title>
+<link rel="icon" type="image/png" href="assets/favicon.png"/>
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<style>
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Light.woff') format('woff'); font-weight:300; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Regular.woff') format('woff'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Medium.woff') format('woff'); font-weight:500; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Black.woff') format('woff'); font-weight:900; font-display:swap; }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet"/>
+<link rel="stylesheet" href="css/motion.css"/>
+<style>
+  * { font-family: 'Thmanyah Sans', sans-serif; }
+  body, button, input, select, textarea { font-family: 'Thmanyah Sans', sans-serif; }
+  .font-mono, [class*="font-mono"] { font-family: 'JetBrains Mono', monospace !important; }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined' !important; }html{visibility:hidden}</style>
+<script>!function(){try{var t=localStorage.getItem('athar-theme')||localStorage.getItem('madar-theme');if(t==='dark'||(t===null&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}document.addEventListener('DOMContentLoaded',function(){document.documentElement.style.visibility='visible'})}();</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Thmanyah Sans', 'sans-serif'], cairo: ['Thmanyah Sans', 'sans-serif'], mono: ['JetBrains Mono','monospace'] },
+        colors: {
+          primary: '#0077CC',
+          'primary-dark': '#005ea3',
+          'on-primary': '#ffffff',
+          'primary-container': '#e0f0ff',
+          'on-primary-container': '#003a5c',
+          secondary: '#00875f',
+          'secondary-container': '#d7f9e9',
+          'on-secondary-container': '#006446',
+          tertiary: '#a15c00',
+          'tertiary-container': '#ffe8c2',
+          'on-tertiary-container': '#7a4500',
+          error: '#ba1a1a',
+          'error-container': '#ffdad6',
+          'on-error-container': '#93000a',
+          surface: '#f7f9fc',
+          'surface-container-lowest': '#ffffff',
+          'surface-container-low': '#f1f4fa',
+          'surface-container': '#e9edf6',
+          'surface-container-high': '#e0e5f0',
+          'on-surface': '#111827',
+          'on-surface-variant': '#4b5566',
+          outline: '#8791a3',
+          'outline-variant': '#d6dbe6',
+        },
+        borderRadius: { sm: '4px', DEFAULT: '8px', md: '12px', lg: '16px', xl: '24px' },
+      }
+    }
+  }
+</script>
+<style>
+  * { font-family: 'Thmanyah Sans', sans-serif; }
+  body, button, input, select, textarea { font-family: 'Thmanyah Sans', sans-serif; }
+  .font-mono, [class*="font-mono"] { font-family: 'JetBrains Mono', monospace !important; }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined' !important; }
+  body{font-family:'Thmanyah Sans', sans-serif;background:#f7f9fc;color:#111827}
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;font-size:20px;line-height:1}
+  .step{display:none}
+  .step.active{display:block}
+  .toast{transition:all .3s ease}
+  .auth-gradient{background:linear-gradient(135deg,#e0f0ff,#f7f9fc)}
+
+  /* ---------- DARK MODE ---------- */
+  html.dark{color-scheme:dark}
+  html.dark body{background:#0b1220;color:#e5eaf2}
+  html.dark .bg-white,
+  html.dark .bg-surface-container-lowest{background-color:#141d2e !important}
+  html.dark .bg-surface-container-low{background-color:#182236 !important}
+  html.dark .bg-surface-container{background-color:#1e2a40 !important}
+  html.dark .border-outline-variant{border-color:#2c3a52 !important}
+  html.dark .text-on-surface{color:#eef2f9 !important}
+  html.dark .text-on-surface-variant{color:#a7b2c4 !important}
+  html.dark .auth-gradient{background:linear-gradient(135deg,#0f2c46,#0b1220)}
+  html.dark input,html.dark select{background-color:#182236;border-color:#2c3a52;color:#e5eaf2}
+  html.dark #toast{background:#eef2f9;color:#0b1220}
+</style>
+<script src="js/supabase-js.min.js"></script>
+</head>
+<body class="antialiased min-h-screen flex flex-col items-center justify-between p-6 auth-gradient">
+
+<!-- Toast -->
+<div id="toast" class="toast fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-24 opacity-0 z-[100] bg-on-surface text-white px-5 py-3 rounded-lg shadow-lg text-sm font-medium"></div>
+
+<!-- Top Bar -->
+<div class="w-full max-w-xl flex items-center justify-between">
+  <div class="flex items-center gap-2.5">
+    <img src="assets/icon.png" alt="أَثَر" class="w-10 h-10 object-contain"/>
+    <img src="assets/logo.png" alt="أَثَر" class="h-7 object-contain dark:hidden"/>
+    <img src="assets/logo-dark.png" alt="أَثَر" class="h-7 object-contain hidden dark:block"/>
+  </div>
+  <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full bg-white/80 dark:bg-white/10 flex items-center justify-center hover:scale-105 transition shadow-xs">
+    <span class="material-symbols-outlined" id="theme-icon-onboarding">dark_mode</span>
+  </button>
+</div>
+
+<!-- Main Card -->
+<div class="w-full max-w-xl bg-white rounded-2xl shadow-xl border border-outline-variant p-6 md:p-8 my-auto">
+  <!-- Progress Bar -->
+  <div class="mb-6">
+    <div class="flex justify-between text-xs font-bold text-outline mb-2">
+      <span id="stepCounterText">الخطوة 1 من 6</span>
+      <span id="stepPercentText" class="font-mono">16%</span>
+    </div>
+    <div class="h-2 bg-surface-container-high rounded-full overflow-hidden">
+      <div id="progressFill" class="h-full bg-primary rounded-full transition-all duration-300" style="width:16%"></div>
+    </div>
+  </div>
+
+  <!-- Step 1: Grade & Track Selection (1.7.2) -->
+  <div class="step active" data-step="1">
+    <div class="flex items-center gap-2 mb-1">
+      <span class="material-symbols-outlined text-primary">school</span>
+      <h2 class="text-xl font-extrabold text-on-surface">صفك الدراسي وشعبتك؟</h2>
+    </div>
+    <p class="text-xs text-on-surface-variant mb-6 leading-relaxed">لتخصيص المواد والمواعيد المناسبة لمرحلتك تلقائياً.</p>
+
+    <div class="space-y-4">
+      <div>
+        <label class="text-xs font-semibold text-on-surface-variant mb-2 block">الصف الدراسي</label>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          <button type="button" onclick="selectGrade('first_secondary')" class="grade-btn border-2 border-outline-variant rounded-xl p-3 text-center text-xs font-bold hover:border-primary transition" data-grade="first_secondary">
+            الأول الثانوي
+          </button>
+          <button type="button" onclick="selectGrade('second_secondary')" class="grade-btn border-2 border-outline-variant rounded-xl p-3 text-center text-xs font-bold hover:border-primary transition" data-grade="second_secondary">
+            الثاني الثانوي
+          </button>
+          <button type="button" onclick="selectGrade('third_secondary')" class="grade-btn border-2 border-outline-variant rounded-xl p-3 text-center text-xs font-bold hover:border-primary transition" data-grade="third_secondary">
+            الثالث الثانوي
+          </button>
+        </div>
+      </div>
+
+      <!-- Conditional Track Selection -->
+      <div id="branchSelectionArea" class="hidden pt-2 border-t border-outline-variant">
+        <label class="text-xs font-semibold text-on-surface-variant mb-2 block">الشعبة الدراسية</label>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          <button type="button" onclick="selectTrack('literary')" class="track-btn border-2 border-outline-variant rounded-xl p-3 text-center text-xs font-bold hover:border-primary transition" data-track="literary">
+            أدبي 📚
+          </button>
+          <button type="button" onclick="selectTrack('scientific_math')" class="track-btn border-2 border-outline-variant rounded-xl p-3 text-center text-xs font-bold hover:border-primary transition" data-track="scientific_math">
+            علمي رياضة 📐
+          </button>
+          <button type="button" onclick="selectTrack('scientific_science')" class="track-btn border-2 border-outline-variant rounded-xl p-3 text-center text-xs font-bold hover:border-primary transition" data-track="scientific_science">
+            علمي علوم 🔬
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: Sleep & Wake -->
+  <div class="step" data-step="2">
+    <div class="flex items-center gap-2 mb-1">
+      <span class="material-symbols-outlined text-primary">bedtime</span>
+      <h2 class="text-xl font-extrabold text-on-surface">مواعيد نومك واستيقاظك؟</h2>
+    </div>
+    <p class="text-xs text-on-surface-variant mb-6 leading-relaxed">يبني أَثَر جدولك حول ساعات راحتك ونشاطك وليس العكس.</p>
+
+    <div class="space-y-4">
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-xs font-semibold text-on-surface-variant">الاستيقاظ</label>
+          <input type="time" id="wakeTime" value="07:00" class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"/>
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-on-surface-variant">النوم</label>
+          <input type="time" id="sleepTime" value="23:00" class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"/>
+        </div>
+      </div>
+      <div>
+        <label class="text-xs font-semibold text-on-surface-variant">مستوى طاقتك في الصباح</label>
+        <select id="energyLevel" class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+          <option value="high">عالي ⚡ (مستعد للمواد الصعبة)</option>
+          <option value="medium" selected>متوسط ☕ (روتين متوازن)</option>
+          <option value="low">منخفض 🌿 (أفضل البدء بالتدريج)</option>
+        </select>
+      </div>
+      <div>
+        <label class="text-xs font-semibold text-on-surface-variant">مدة جلسة المذاكرة المفضلة (بالدقائق)</label>
+        <input type="number" id="sessionMinutes" value="50" min="15" max="180" class="w-full border border-outline-variant rounded-lg py-2.5 px-3 mt-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: Subjects (1.7.5 with Suggested Chips) -->
+  <div class="step" data-step="3">
+    <div class="flex items-center gap-2 mb-1">
+      <span class="material-symbols-outlined text-primary">menu_book</span>
+      <h2 class="text-xl font-extrabold text-on-surface">موادك الدراسية</h2>
+    </div>
+    <p class="text-xs text-on-surface-variant mb-4 leading-relaxed">أضف المواد التي تدرسها وحدد أولويتها وصعوبتها.</p>
+
+    <!-- Suggested Subjects Container -->
+    <div id="suggestedSubjectsContainer" class="mb-4 bg-surface-container-low p-3 rounded-xl border border-outline-variant">
+      <p class="text-xs font-bold text-on-surface mb-2 flex items-center gap-1">
+        <span class="material-symbols-outlined text-primary" style="font-size:16px">auto_awesome</span>
+        <span>مواد مقترحة لشعبتك (اضغط للإضافة السريعة):</span>
+      </p>
+      <div id="suggestedChipsList" class="flex flex-wrap gap-1.5"></div>
+    </div>
+
+    <div class="space-y-3 mb-4" id="subjectsList"></div>
+    <button type="button" onclick="addSubjectRow()" class="w-full border border-dashed border-primary text-primary font-bold text-xs py-2.5 rounded-lg hover:bg-primary-container/40 transition flex items-center justify-center gap-1">
+      <span class="material-symbols-outlined" style="font-size:16px">add</span> إضافة مادة أخرى يدوياً
+    </button>
+  </div>
+
+  <!-- Step 4: Teachers -->
+  <div class="step" data-step="4">
+    <div class="flex items-center gap-2 mb-1">
+      <span class="material-symbols-outlined text-primary">groups</span>
+      <h2 class="text-xl font-extrabold text-on-surface">المدرسون المفضلون</h2>
+    </div>
+    <p class="text-xs text-on-surface-variant mb-6 leading-relaxed">اختياري — يساعد المساعد الذكي في اقتراح الشروحات المناسبة لك فوراً.</p>
+
+    <div class="space-y-3 mb-4" id="teachersList"></div>
+    <button type="button" onclick="addTeacherRow()" class="w-full border border-dashed border-primary text-primary font-bold text-xs py-2.5 rounded-lg hover:bg-primary-container/40 transition flex items-center justify-center gap-1">
+      <span class="material-symbols-outlined" style="font-size:16px">add</span> إضافة مدرس
+    </button>
+  </div>
+
+  <!-- Step 5: Fixed Schedule -->
+  <div class="step" data-step="5">
+    <div class="flex items-center gap-2 mb-1">
+      <span class="material-symbols-outlined text-primary">calendar_month</span>
+      <h2 class="text-xl font-extrabold text-on-surface">مواعيدك وحصصك الثابتة</h2>
+    </div>
+    <p class="text-xs text-on-surface-variant mb-6 leading-relaxed">الحصص، السناتر، والمواعيد الثابتة أسبوعياً.</p>
+
+    <div class="space-y-3 mb-4" id="scheduleList"></div>
+    <button type="button" onclick="addScheduleRow()" class="w-full border border-dashed border-primary text-primary font-bold text-xs py-2.5 rounded-lg hover:bg-primary-container/40 transition flex items-center justify-center gap-1">
+      <span class="material-symbols-outlined" style="font-size:16px">add</span> إضافة موعد ثابت
+    </button>
+  </div>
+
+  <!-- Step 6: Summary -->
+  <div class="step" data-step="6">
+    <div class="flex items-center gap-2 mb-1">
+      <span class="material-symbols-outlined text-secondary" style="font-size:28px">check_circle</span>
+      <h2 class="text-xl font-extrabold text-on-surface">رائع! نظامك جاهز للبدء 🎉</h2>
+    </div>
+    <p class="text-xs text-on-surface-variant mb-6 leading-relaxed">سنقوم بحفظ إعداداتك وبناء خطتك الدراسية الذكية الآن.</p>
+
+    <div class="bg-surface-container-low border border-outline-variant rounded-xl p-4 space-y-3" id="summaryCard"></div>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="flex items-center gap-3 mt-8 pt-4 border-t border-outline-variant">
+    <button type="button" id="backBtn" onclick="prevStep()" class="hidden px-5 py-2.5 rounded-full border border-outline-variant text-xs font-bold text-on-surface-variant hover:bg-surface-container-low transition">
+      رجوع
+    </button>
+    <button type="button" id="nextBtn" onclick="nextStep()" class="flex-1 bg-primary text-on-primary font-bold text-sm py-3 rounded-full hover:bg-primary-dark transition shadow-sm">
+      التالي
+    </button>
+  </div>
+</div>
+
+<script src="js/supabase-client.js"></script>
+<script src="js/common.js"></script>
+<script src="js/onboarding.js"></script>
+<script src="js/motion.js"></script>
+<script>
+  function syncThemeIcons(){
+    const isDark = document.documentElement.classList.contains('dark');
+    const el = document.getElementById('theme-icon-onboarding');
+    if(el) el.textContent = isDark ? 'light_mode' : 'dark_mode';
+  }
+
+  function toggleDarkMode(){
+    document.documentElement.classList.toggle('dark');
+    const isDark = document.documentElement.classList.contains('dark');
+    localStorage.setItem('athar-theme', isDark ? 'dark' : 'light');
+    syncThemeIcons();
+  }
+
+  (function initTheme(){
+    const saved = localStorage.getItem('athar-theme') || localStorage.getItem('madar-theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if(saved === 'dark' || (!saved && prefersDark)){
+      document.documentElement.classList.add('dark');
+    }
+    syncThemeIcons();
+  })();
+</script>
+</body>
+</html>
+
+
+

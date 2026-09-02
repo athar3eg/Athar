@@ -1,0 +1,24 @@
+{
+  "name": "athar",
+  "version": "1.0.0",
+  "private": true,
+  "description": "أَثَر — منصة إنتاجية أكاديمية للطلاب",
+  "scripts": {
+    "prepare:www": "node prepare-www.js",
+    "cap:add:android": "npm run prepare:www && npx cap add android",
+    "cap:add:ios": "npm run prepare:www && npx cap add ios",
+    "cap:sync": "npm run prepare:www && npx cap sync",
+    "cap:open:android": "npx cap open android",
+    "cap:open:ios": "npx cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/core": "^6.1.2",
+    "@capacitor/splash-screen": "^6.0.3",
+    "@capacitor/push-notifications": "^6.0.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.1.2",
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/ios": "^6.1.2"
+  }
+}

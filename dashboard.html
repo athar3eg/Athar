@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>أَثَر | لوحة التحكم</title>
+<link rel="icon" type="image/png" href="assets/favicon.png"/>
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<style>
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Light.woff') format('woff'); font-weight:300; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Regular.woff') format('woff'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Medium.woff') format('woff'); font-weight:500; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Black.woff') format('woff'); font-weight:900; font-display:swap; }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet"/>
+<link rel="stylesheet" href="css/motion.css"/>
+<style>
+  * { font-family: 'Thmanyah Sans', sans-serif; }
+  body, button, input, select, textarea { font-family: 'Thmanyah Sans', sans-serif; }
+  .font-mono, [class*="font-mono"] { font-family: 'JetBrains Mono', monospace !important; }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined' !important; }
+  html{visibility:hidden}
+</style>
+<script>!function(){try{var t=localStorage.getItem('athar-theme')||localStorage.getItem('madar-theme');if(t==='dark'||(t===null&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}document.addEventListener('DOMContentLoaded',function(){document.documentElement.style.visibility='visible'})}();</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Thmanyah Sans', 'sans-serif'], cairo: ['Thmanyah Sans', 'sans-serif'], mono: ['JetBrains Mono','monospace'] },
+        colors: {
+          primary: '#0077CC',
+          'primary-dark': '#005ea3',
+          'on-primary': '#ffffff',
+          'primary-container': '#e0f0ff',
+          'on-primary-container': '#003a5c',
+          secondary: '#00875f',
+          'secondary-container': '#d7f9e9',
+          'on-secondary-container': '#006446',
+          tertiary: '#a15c00',
+          'tertiary-container': '#ffe8c2',
+          'on-tertiary-container': '#7a4500',
+          error: '#ba1a1a',
+          'error-container': '#ffdad6',
+          'on-error-container': '#93000a',
+          surface: '#f7f9fc',
+          'surface-container-lowest': '#ffffff',
+          'surface-container-low': '#f1f4fa',
+          'surface-container': '#e9edf6',
+          'surface-container-high': '#e0e5f0',
+          'on-surface': '#111827',
+          'on-surface-variant': '#4b5566',
+          outline: '#8791a3',
+          'outline-variant': '#d6dbe6',
+        },
+        borderRadius: { sm: '4px', DEFAULT: '8px', md: '12px', lg: '16px', xl: '24px' },
+      }
+    }
+  }
+</script>
+<style>
+  * { font-family: 'Thmanyah Sans', sans-serif; }
+  body, button, input, select, textarea { font-family: 'Thmanyah Sans', sans-serif; }
+  .font-mono, [class*="font-mono"] { font-family: 'JetBrains Mono', monospace !important; }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined' !important; }
+  body { background: #f7f9fc; color: #111827; }
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;font-size:20px;line-height:1}
+  ::-webkit-scrollbar{width:8px;height:8px}
+  ::-webkit-scrollbar-thumb{background:#d6dbe6;border-radius:8px}
+  .nav-item{position:relative;transition:background .15s ease}
+  .nav-item.active{background:#e0f0ff;color:#0077CC;font-weight:700}
+  .nav-item.active::before{content:"";position:absolute;right:0;top:8px;bottom:8px;width:3px;background:#0077CC;border-radius:4px 0 0 4px}
+  .fade-in{animation:fadeIn .25s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+  .toast{transition:all .3s ease}
+
+  /* ---------- DARK MODE ---------- */
+  html.dark{color-scheme:dark}
+  html.dark body{background:#0b1220;color:#e5eaf2}
+  html.dark .nav-item.active{background-color:#0f2c46 !important;color:#38bdf8 !important}
+  html.dark .bg-white,
+  html.dark .bg-surface-container-lowest{background-color:#141d2e !important}
+  html.dark .bg-surface-container-low{background-color:#182236 !important}
+  html.dark .bg-surface-container{background-color:#1e2a40 !important}
+  html.dark .bg-surface-container-high{background-color:#25324a !important}
+  html.dark .border-outline-variant{border-color:#2c3a52 !important}
+  html.dark .divide-outline-variant>*+*{border-color:#2c3a52 !important}
+  html.dark .text-on-surface{color:#eef2f9 !important}
+  html.dark .text-on-surface-variant{color:#a7b2c4 !important}
+  html.dark .text-outline{color:#8592a8 !important}
+  html.dark .bg-primary-container,
+  html.dark .bg-primary-container\/50,
+  html.dark .bg-primary-container\/40,
+  html.dark .bg-primary-container\/30,
+  html.dark .bg-primary-container\/20{background-color:#0f2c46 !important}
+  html.dark .text-on-primary-container{color:#bfe0ff !important}
+  html.dark .bg-secondary-container,
+  html.dark .bg-secondary-container\/50{background-color:#0a3322 !important}
+  html.dark .text-on-secondary-container{color:#8fe9c4 !important}
+  html.dark .bg-tertiary-container{background-color:#3a2400 !important}
+  html.dark .text-on-tertiary-container{color:#ffd28a !important}
+  html.dark .bg-error-container,
+  html.dark .bg-error-container\/40,
+  html.dark .bg-error-container\/20{background-color:#3a0d0d !important}
+  html.dark .text-on-error-container{color:#ffb4ab !important}
+  html.dark input,html.dark select{background-color:#182236;border-color:#2c3a52;color:#e5eaf2}
+  html.dark ::placeholder{color:#6b7789}
+  html.dark #toast{background:#eef2f9;color:#0b1220}
+
+  /* Prevent white flashes on hover in dark mode */
+  html.dark .hover\:bg-surface-container-low:hover,
+  html.dark .hover\:bg-surface-container:hover,
+  html.dark .hover\:bg-surface-container-high:hover,
+  html.dark .hover\:bg-white:hover{background-color:#1e2a40!important;color:#eef2f9!important}
+  html.dark .hover\:bg-primary-container:hover{background-color:#0f2c46!important;color:#bfe0ff!important}
+  html.dark .hover\:border-primary:hover{border-color:#0077CC!important}
+  html.dark .shadow-xl,html.dark .shadow-lg,html.dark .shadow-2xl{box-shadow:0 10px 25px -5px rgba(0,0,0,.5)}
+  .chart-dot-ring{stroke:#ffffff;stroke-width:2}
+  html.dark .chart-dot-ring{stroke:#141d2e}
+</style>
+<script src="js/supabase-js.min.js"></script>
+</head>
+<body class="antialiased">
+
+<!-- ======================= TOAST ======================= -->
+<div id="toast" class="toast fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-24 opacity-0 z-[100] bg-on-surface text-white px-5 py-3 rounded-lg shadow-lg text-sm font-medium"></div>
+
+<div class="flex min-h-screen">
+  <!-- Sidebar -->
+  <aside id="sidebar" class="w-72 shrink-0 bg-white border-l border-outline-variant flex flex-col fixed md:sticky top-0 right-0 h-screen z-50">
+    <div class="p-6 flex items-center justify-between border-b border-outline-variant">
+      <div>
+        <a href="dashboard.html" class="flex items-center gap-2.5 athar-logo-wrapper">
+          <img src="assets/icon.png" alt="أَثَر" class="w-10 h-10 object-contain drop-shadow-sm"/>
+          <img src="assets/logo.png" alt="أَثَر" class="h-7 object-contain dark:hidden"/>
+          <img src="assets/logo-dark.png" alt="أَثَر" class="h-7 object-contain hidden dark:block athar-logo-dark-glow"/>
+        </a>
+        <p class="text-xs text-on-surface-variant mt-0.5 font-medium">نظام التشغيل الأكاديمي</p>
+      </div>
+      <div class="flex items-center gap-1">
+        <button onclick="toggleSidebar()" class="w-8 h-8 rounded-lg hover:bg-surface-container-low flex items-center justify-center text-on-surface transition" title="إخفاء القائمة وتمديد الصفحة"><span class="material-symbols-outlined" style="font-size:20px">menu_open</span></button>
+      </div>
+    </div>
+    
+    <div class="p-4">
+      <a href="schedule.html?action=new-task" class="w-full bg-primary text-on-primary font-bold py-2.5 rounded-full flex items-center justify-center gap-1.5 hover:bg-primary-dark transition text-sm shadow-sm">
+        <span class="material-symbols-outlined" style="font-size:18px">add</span> إضافة مهمة جديدة
+      </a>
+    </div>
+
+    <nav class="flex-1 px-4 space-y-1 overflow-y-auto">
+      <p class="text-xs font-bold text-outline px-3 pt-3 pb-1">القائمة الرئيسية</p>
+      <a href="dashboard.html" class="nav-item active flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined">grid_view</span>لوحة التحكم</a>
+      <a href="schedule.html" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined">calendar_month</span>الجدول الدراسي</a>
+      <a onclick="openWeeklyReviewModal()" class="nav-item cursor-pointer flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined text-primary">insights</span>مراجعة الأسبوع</a>
+      <a href="focus.html" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined">timer</span>جلسة تركيز (بومودورو)</a>
+      <a href="exams.html" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined">quiz</span>الاختبارات</a>
+      <a href="settings.html#subjects" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined">menu_book</span>المواد الدراسية</a>
+      
+      <p class="text-xs font-bold text-outline px-3 pt-4 pb-1">ذكاء اصطناعي</p>
+      <a href="assistant.html" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined text-primary">auto_awesome</span>المساعد الذكي (AI)</a>
+    </nav>
+
+    <div id="downloadAppBadge" class="mx-4 mb-3 p-3 rounded-xl bg-primary-container/40 border border-primary/20 flex items-center gap-2.5">
+      <span class="material-symbols-outlined text-primary" style="font-size:20px">android</span>
+      <div class="flex-1 min-w-0">
+        <p class="text-xs font-bold text-on-primary-container">حمّل تطبيق أَثَر</p>
+        <a href="https://github.com/athar3eg/Athar/releases/latest/download/app-debug.apk" class="text-[11px] text-primary font-semibold hover:underline">تحميل مباشر لأندرويد</a>
+      </div>
+    </div>
+
+    <div class="p-4 border-t border-outline-variant space-y-1">
+      <a href="settings.html" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined">settings</span>الإعدادات</a>
+      <a onclick="logout()" class="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-error hover:bg-error-container/30 transition"><span class="material-symbols-outlined">logout</span>تسجيل الخروج</a>
+    </div>
+  </aside>
+  
+  <div id="sidebar-overlay" onclick="toggleSidebar()" class="hidden fixed inset-0 bg-black/40 z-40 md:hidden backdrop-blur-xs"></div>
+
+  <!-- Main content -->
+  <main class="flex-1 min-w-0 w-full overflow-x-hidden">
+    <!-- Top Bar -->
+    <div class="sticky top-0 z-30 bg-white/90 dark:bg-[#141d2e]/90 backdrop-blur border-b border-outline-variant px-4 sm:px-6 py-3.5 sm:py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button id="topbarSidebarToggle" onclick="toggleSidebar()" class="w-9 h-9 rounded-xl hover:bg-surface-container-low flex items-center justify-center text-on-surface transition md:hidden" title="فتح القائمة الجانبية"><span class="material-symbols-outlined">menu</span></button>
+        <div>
+          <h1 class="text-base font-bold text-on-surface">لوحة التحكم</h1>
+          <p class="text-xs text-on-surface-variant">نظرة عامة على أدائك الدراسي وجدولك اليومي</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="toggleDarkMode()" class="w-9 h-9 rounded-full hover:bg-surface-container-low flex items-center justify-center" title="تبديل الوضع"><span class="material-symbols-outlined" id="theme-icon-mobile">dark_mode</span></button>
+      </div>
+    </div>
+    <div class="p-4 sm:p-6 md:p-10 max-w-7xl mx-auto w-full">
+      <!-- Missing Profile Banner -->
+      <div id="profileMissingBanner" class="hidden mb-6 bg-primary-container border border-primary/30 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-on-primary-container anim-fade-up">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-primary text-2xl">school</span>
+          <div>
+            <p class="font-bold text-sm">كمّل بياناتك الدراسية عشان أَثَر يقدر يخطط لك صح 🎓</p>
+            <p class="text-xs text-on-primary-container/80">حدد صفك وشعبتك لتخصيص المواد والمواعيد تلقائياً</p>
+          </div>
+        </div>
+        <a href="settings.html#academic" class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-primary-dark transition shrink-0">
+          تحديث البيانات
+        </a>
+      </div>
+
+      <!-- Header Greeting & Search -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 sm:mb-8 anim-fade-up stagger-1">
+        <div>
+          <h1 class="text-xl md:text-3xl font-extrabold flex flex-wrap items-center gap-x-2 gap-y-0" id="greetingHeader">
+            <span id="greetingText">مرحباً بك</span> <span id="userName"></span> <span>👋</span>
+          </h1>
+          <p class="text-on-surface-variant text-sm mt-1" id="dateText"></p>
+        </div>
+        <div class="relative w-full md:w-72">
+          <input id="quickSearch" oninput="filterQuickItems(this.value)" placeholder="بحث سريع في المواد والمهام..." class="border border-outline-variant rounded-full py-2.5 px-4 pl-10 w-full focus:outline-none focus:ring-2 focus:ring-primary text-sm bg-white dark:bg-[#141d2e] transition focus:scale-[1.02]"/>
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" style="font-size:18px">search</span>
+        </div>
+      </div>
+
+      <!-- Daily Motivation Card -->
+      <div id="dailyMotivationCard" class="card-3d anim-fade-up bg-gradient-to-r from-primary-container/60 via-surface-container-low to-secondary-container/40 dark:from-[#0f2c46] dark:via-[#141d2e] dark:to-[#0a3322] border border-primary/20 dark:border-primary/30 rounded-2xl p-4 sm:p-5 shadow-xs mb-6 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 justify-between">
+        <div class="flex items-center gap-3.5 min-w-0 flex-1">
+          <div class="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center shrink-0 shadow-sm">
+            <span class="material-symbols-outlined" style="font-size:22px">format_quote</span>
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="text-[11px] font-bold text-primary dark:text-sky-300 mb-0.5">جرعة تحفيز وإلهام لليوم ✨</p>
+            <p id="dailyMotivationText" class="text-xs sm:text-sm font-bold text-on-surface leading-relaxed">عاش يا بطل! خطوة جديدة بتقربك من حلمك وهدفك الكبير 🎯</p>
+          </div>
+        </div>
+        <button onclick="refreshDailyQuote()" class="shrink-0 text-xs font-bold text-primary dark:text-sky-300 hover:bg-primary/10 px-3.5 py-1.5 rounded-full transition flex items-center gap-1.5 border border-primary/20" title="اقتباس آخر">
+          <span class="material-symbols-outlined" style="font-size:16px">refresh</span>
+          <span>اقتباس آخر</span>
+        </button>
+      </div>
+
+      <!-- Daily Energy Check-in -->
+      <div id="energyCheckinCard" class="hidden card-3d anim-fade-up bg-white dark:bg-[#141d2e] border border-outline-variant/80 dark:border-[#2c3a52] rounded-2xl p-4 sm:p-5 shadow-xs mb-6 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 justify-between">
+        <div class="flex items-center gap-2.5">
+          <span class="w-8 h-8 rounded-full bg-amber-500/10 dark:bg-amber-500/20 text-amber-500 flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined" style="font-size:18px">battery_charging_full</span>
+          </span>
+          <p class="text-sm font-bold text-on-surface dark:text-[#eef2f9] text-center sm:text-right">إزاي حاسس طاقتك ونشاطك النهاردة؟ 🌤️</p>
+        </div>
+        <div class="flex flex-wrap items-center justify-center gap-2">
+          <button onclick="logEnergyLevel('low')" class="px-3.5 py-1.5 rounded-full text-xs font-bold border border-outline-variant/70 dark:border-[#2c3a52] hover:border-error hover:bg-error-container/20 dark:hover:bg-[#3a0d0d] text-on-surface dark:text-gray-300 transition flex items-center gap-1.5 active:scale-95">😪 تعبان شوية</button>
+          <button onclick="logEnergyLevel('medium')" class="px-3.5 py-1.5 rounded-full text-xs font-bold border border-outline-variant/70 dark:border-[#2c3a52] hover:border-tertiary hover:bg-tertiary-container/20 dark:hover:bg-[#3a2400] text-on-surface dark:text-gray-300 transition flex items-center gap-1.5 active:scale-95">🙂 عادي ومستقر</button>
+          <button onclick="logEnergyLevel('high')" class="px-3.5 py-1.5 rounded-full text-xs font-bold border border-outline-variant/70 dark:border-[#2c3a52] hover:border-secondary hover:bg-secondary-container/20 dark:hover:bg-[#0a3322] text-on-surface dark:text-gray-300 transition flex items-center gap-1.5 active:scale-95">⚡ طاقة عالية ومتحمس</button>
+        </div>
+      </div>
+
+      <!-- Top 3-Col Hero & Metrics -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 mb-6 sm:mb-8 w-full min-w-0">
+        <!-- AI Assistant Action Suggestion -->
+        <div class="card-3d anim-fade-up stagger-2 bg-gradient-to-br from-primary to-primary-dark text-white rounded-2xl p-6 flex flex-col md:col-span-1 shadow-lg shadow-primary/20 w-full min-w-0">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="material-symbols-outlined text-white" style="font-size:26px">auto_awesome</span>
+            <span class="text-xs font-bold bg-white/20 px-2.5 py-0.5 rounded-full backdrop-blur-xs">اقتراح ذكي</span>
+          </div>
+          <h3 class="font-bold text-lg mb-1" id="nowAction">بنجهزلك الخطة...</h3>
+          <p class="text-xs text-blue-100 mb-6 leading-relaxed flex-1" id="nowMeta">جارٍ تحليل جدولك الدراسي وطاقتك الآن</p>
+          <a href="assistant.html" class="w-full text-center bg-white dark:bg-[#141d2e] text-primary dark:text-sky-400 font-bold text-sm py-2.5 rounded-full hover:scale-[1.02] active:scale-[0.98] transition shadow-sm">تحدث مع المساعد الذكي</a>
+        </div>
+
+        <!-- 7-Day Performance & Stats -->
+        <div class="md:col-span-2 flex flex-col gap-4 w-full min-w-0">
+          <div class="card-3d anim-fade-up stagger-3 bg-white border border-outline-variant rounded-2xl p-5 shadow-xs w-full min-w-0">
+            <div class="flex items-start justify-between mb-1">
+              <div>
+                <p class="text-xs text-on-surface-variant mb-1 font-semibold">نسبة إنجاز مهامك · آخر 7 أيام</p>
+                <div class="flex items-baseline gap-2">
+                  <p class="text-3xl font-extrabold" id="weeklyCompletionPercent">--%</p>
+                  <span id="weeklyTrendBadge" class="text-xs font-bold text-secondary flex items-center gap-0.5"></span>
+                </div>
+              </div>
+              <button onclick="openWeeklyReviewModal()" class="px-3 sm:px-3.5 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary text-xs font-bold transition flex items-center gap-1.5 shadow-xs border border-primary/20">
+                <span class="material-symbols-outlined" style="font-size:16px">insights</span>
+                <span>مراجعة الأسبوع</span>
+              </button>
+            </div>
+
+            <div class="mt-2 w-full min-w-0 overflow-hidden" id="weeklyChartWrap">
+              <svg viewBox="0 0 280 85" class="w-full h-20" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#0077CC" stop-opacity="0.35"/>
+                    <stop offset="100%" stop-color="#0077CC" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <g id="weeklyChartGeometry"></g>
+              </svg>
+              <div class="flex justify-between text-[11px] text-outline mt-1 px-1 font-semibold" id="weeklyChartDayLabels"></div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-3 sm:gap-4 w-full min-w-0">
+            <div class="card-3d anim-fade-up stagger-4 bg-white dark:bg-[#141d2e] border border-outline-variant rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-center shadow-xs min-w-0">
+              <span class="material-symbols-outlined text-amber-500 mb-1" style="font-size:22px">local_fire_department</span>
+              <p class="text-xl sm:text-2xl font-extrabold text-amber-500 flex items-center gap-0.5" id="streakDaysCount">0 <span class="text-xs font-bold text-on-surface-variant">أيام</span></p>
+              <p class="text-[11px] text-on-surface-variant font-medium mt-0.5">ستريك الالتزام 🔥</p>
+            </div>
+            <div class="card-3d anim-fade-up stagger-4 bg-white dark:bg-[#141d2e] border border-outline-variant rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-center shadow-xs min-w-0">
+              <span class="material-symbols-outlined text-tertiary mb-1" style="font-size:22px">schedule</span>
+              <p class="text-xl sm:text-2xl font-extrabold" id="statTodayCount">0</p>
+              <p class="text-[11px] text-on-surface-variant font-medium mt-0.5">مواعيد وحصص اليوم</p>
+            </div>
+            <div class="card-3d anim-fade-up stagger-4 bg-white dark:bg-[#141d2e] border border-outline-variant rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-center shadow-xs min-w-0">
+              <span class="material-symbols-outlined text-primary mb-1" style="font-size:22px">checklist</span>
+              <p class="text-xl sm:text-2xl font-extrabold" id="statTasksCount">0</p>
+              <p class="text-[11px] text-on-surface-variant font-medium mt-0.5">مهام تنتظر الإنجاز</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prayer Times & Quran Wird -->
+      <div id="prayerWirdCard" class="card-3d anim-fade-up bg-white dark:bg-[#141d2e] border border-outline-variant rounded-2xl p-4 sm:p-5 shadow-xs mb-6 sm:mb-8 w-full min-w-0">
+        <div id="prayerLocationPrompt" class="hidden flex flex-col sm:flex-row items-center gap-3 justify-between">
+          <p class="text-sm text-on-surface-variant text-center sm:text-right">فعّل تحديد موقعك عشان نجيبلك مواعيد الصلاة الصحيحة في جدولك</p>
+          <button onclick="enablePrayerLocation()" class="shrink-0 bg-primary text-white text-sm font-bold px-4 py-2 rounded-full hover:bg-primary-dark transition flex items-center gap-1.5">
+            <span class="material-symbols-outlined" style="font-size:18px">my_location</span> تحديد موقعي
+          </button>
+        </div>
+        <div id="prayerTimesContent" class="hidden">
+          <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary" style="font-size:20px">mosque</span>
+              <span class="text-sm font-bold text-on-surface">مواعيد الصلاة النهاردة</span>
+            </div>
+            <span id="nextPrayerBadge" class="text-xs font-bold bg-primary-container text-on-primary-container px-2.5 py-1 rounded-full"></span>
+          </div>
+          <div id="prayerTimesRow" class="grid grid-cols-5 gap-1 sm:gap-1.5 mb-4"></div>
+          <div class="border-t border-outline-variant pt-3 flex items-center justify-between">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="checkbox" id="quranWirdCheckbox" onchange="onQuranWirdToggle(this)" class="w-5 h-5 rounded accent-primary"/>
+              <span class="text-sm font-semibold text-on-surface">الورد القرآني اليومي</span>
+            </label>
+            <span id="quranWirdStreak" class="text-xs font-bold text-tertiary flex items-center gap-1"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Today's Schedule Full Width (Notion Table by default) -->
+      <div id="todayScheduleContainer" class="bg-white dark:bg-[#141d2e] border border-outline-variant/80 dark:border-[#2c3a52] rounded-2xl p-4 sm:p-6 shadow-xs mb-6 sm:mb-8 w-full min-w-0">
+        <div class="flex items-center justify-between flex-wrap gap-3 mb-4">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">📋</span>
+            <div>
+              <h3 class="font-bold text-base sm:text-lg text-on-surface dark:text-[#eef2f9]" id="dashboardScheduleTitle">جدول مهام اليوم</h3>
+              <p class="text-xs text-on-surface-variant dark:text-gray-400">الحصص والمذاكرة والمهام مقسمة بالنوع والمادة والوقت</p>
+            </div>
+          </div>
+          <div class="flex items-center flex-wrap gap-2">
+            <!-- Smart Reschedule Button (إعادة التوازن الذكي) -->
+            <button onclick="smartRescheduleToday()" class="px-3 py-1.5 rounded-full bg-secondary-container/80 hover:bg-secondary-container text-on-secondary-container text-xs font-bold transition flex items-center gap-1 shadow-xs border border-secondary/20" title="إعادة توزيع المهام المتبقية على باقي اليوم">
+              <span class="material-symbols-outlined" style="font-size:15px">balance</span>
+              <span class="hidden sm:inline">إعادة توازن ذكي</span>
+            </button>
+
+            <!-- Export Day as Image / PDF Button (تصدير اليوم) -->
+            <button onclick="exportTodaySchedule()" class="px-3 py-1.5 rounded-full bg-surface-container-low dark:bg-[#182236] hover:bg-surface-container-high text-on-surface dark:text-gray-200 text-xs font-bold transition flex items-center gap-1 shadow-xs border border-outline-variant/60" title="تصدير جدول اليوم كصورة أو ملف جاهز">
+              <span class="material-symbols-outlined" style="font-size:15px">download</span>
+              <span class="hidden sm:inline">تصدير ومشاركة</span>
+            </button>
+
+            <!-- View Toggle (Notion Table vs Timeline) -->
+            <div class="flex items-center bg-surface-container-low dark:bg-[#182236] p-0.5 rounded-full border border-outline-variant/60 text-[11px] font-bold">
+              <button id="dashViewTableBtn" onclick="switchDashboardScheduleView('table')" class="px-2.5 py-1 rounded-full bg-primary text-white shadow-xs transition" title="عرض بنمط جدول نوشن">جدول نوشن</button>
+              <button id="dashViewTimelineBtn" onclick="switchDashboardScheduleView('timeline')" class="px-2.5 py-1 rounded-full text-on-surface-variant hover:text-on-surface transition" title="عرض بالخط الزمني">الخط الزمني</button>
+            </div>
+
+            <a href="schedule.html" class="text-xs font-bold text-primary hover:underline flex items-center gap-1 shrink-0 mr-1">
+              <span>الجدول الكامل</span>
+              <span class="material-symbols-outlined" style="font-size:16px">arrow_back</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 1. Notion Table View (Default) -->
+        <div id="dashboardNotionTableView" class="overflow-x-auto w-full min-w-0">
+          <table class="w-full text-right text-xs border-collapse">
+            <thead>
+              <tr class="border-b border-outline-variant/60 dark:border-[#2c3a52] text-on-surface-variant dark:text-gray-400 font-bold bg-surface-container-low/50 dark:bg-[#182236]/60">
+                <th class="p-2.5 w-8 text-center">✓</th>
+                <th class="p-2.5 min-w-[160px]">المهمة / الحصة</th>
+                <th class="p-2.5 min-w-[100px]">النوع</th>
+                <th class="p-2.5 min-w-[110px]">المادة</th>
+                <th class="p-2.5 min-w-[120px]">الوقت / المدة</th>
+                <th class="p-2.5 w-16 text-center">بدء</th>
+              </tr>
+            </thead>
+            <tbody id="dashboardNotionTableBody" class="divide-y divide-outline-variant/40 dark:divide-[#2c3a52]/60 text-on-surface dark:text-[#eef2f9]">
+              <tr><td colspan="6" class="text-center py-6 text-outline">جاري جلب جدول اليوم...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 2. Timeline View (Toggleable) -->
+        <div id="dashboardTimelineView" class="hidden space-y-2.5 sm:space-y-3 w-full min-w-0">
+          <div class="space-y-2.5 sm:space-y-3 w-full min-w-0" id="todayList">
+            <div class="text-xs text-on-surface-variant text-center py-6">جاري جلب جدول اليوم...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rest of the Week (باقي الأسبوع) -->
+      <div class="bg-white border border-outline-variant rounded-2xl p-4 sm:p-5 shadow-xs mb-6 sm:mb-8 w-full min-w-0">
+        <div class="flex items-center justify-between flex-wrap gap-2 mb-4">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary" style="font-size:22px">date_range</span>
+            <div>
+              <h3 class="font-bold text-base text-on-surface">جدول باقي أيام الأسبوع</h3>
+              <p class="text-xs text-on-surface-variant">نظرة سريعة على حصصك ومواعيدك القادمة هذا الأسبوع</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <!-- Order toggle pills -->
+            <div class="flex items-center bg-surface-container-low dark:bg-[#182236] p-0.5 rounded-full border border-outline-variant/60 text-[11px] font-bold">
+              <button id="weekOrderUpcomingBtn" onclick="setWeekCardsOrder('upcoming')" class="px-2.5 py-1 rounded-full bg-primary text-white shadow-xs transition" title="ترتيب الأيام بدءاً من الغد">الأيام القادمة</button>
+              <button id="weekOrderCalendarBtn" onclick="setWeekCardsOrder('calendar')" class="px-2.5 py-1 rounded-full text-on-surface-variant hover:text-on-surface transition" title="ترتيب الأسبوع من السبت إلى الجمعة">ترتيب الأسبوع</button>
+            </div>
+            <a href="schedule.html" class="text-xs font-bold text-primary hover:underline flex items-center gap-1 shrink-0 mr-1">
+              <span>الجدول الكامل</span>
+              <span class="material-symbols-outlined" style="font-size:16px">arrow_back</span>
+            </a>
+          </div>
+        </div>
+        <div id="weekRestCards" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3 w-full min-w-0">
+          <div class="text-xs text-on-surface-variant col-span-full text-center py-4">جاري التحميل...</div>
+        </div>
+      </div>
+
+      <!-- Subject Status Summary -->
+      <div class="bg-white border border-outline-variant rounded-2xl p-4 sm:p-5 shadow-xs w-full min-w-0">
+        <div class="flex items-center justify-between flex-wrap gap-2 mb-4">
+          <h3 class="font-bold text-base flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-primary" style="font-size:20px">menu_book</span>
+            <span>حالة المواد ومستوى الإتقان</span>
+          </h3>
+          <a href="settings.html#subjects" class="text-xs font-bold text-primary hover:underline">إدارة المواد</a>
+        </div>
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 w-full min-w-0" id="subjectsList">
+          <div class="text-xs text-on-surface-variant col-span-full text-center py-4">جاري التحميل...</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="js/supabase-client.js"></script>
+<script src="js/common.js"></script>
+<script src="js/shared/rescue-engine.js"></script>
+<script src="js/shared/prayer-times.js"></script>
+<script src="js/shared/timeline-engine.js"></script>
+<script src="js/shared/push-notifications.js"></script>
+<script src="js/shared/update-checker.js"></script>
+<script src="js/shared/weekly-review.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/motion.js"></script>
+<script>
+  function toggleSidebar(){
+    const sb = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    const topBtn = document.getElementById('topbarSidebarToggle');
+    if (window.innerWidth < 768) {
+      sb.classList.toggle('mobile-open');
+      if (overlay) overlay.classList.toggle('hidden');
+    } else {
+      sb.classList.toggle('desktop-collapsed');
+      const isCollapsed = sb.classList.contains('desktop-collapsed');
+      if (topBtn) {
+        if (isCollapsed) {
+          topBtn.classList.remove('md:hidden');
+        } else {
+          topBtn.classList.add('md:hidden');
+        }
+      }
+    }
+  }
+
+  function syncThemeIcons(){
+    const isDark = document.documentElement.classList.contains('dark');
+    ['theme-icon-app','theme-icon-mobile'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.textContent = isDark ? 'light_mode' : 'dark_mode';
+    });
+  }
+
+  function toggleDarkMode(){
+    document.documentElement.classList.toggle('dark');
+    const isDark = document.documentElement.classList.contains('dark');
+    localStorage.setItem('athar-theme', isDark ? 'dark' : 'light');
+    syncThemeIcons();
+  }
+
+  (function initTheme(){
+    const saved = localStorage.getItem('athar-theme') || localStorage.getItem('madar-theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if(saved === 'dark' || (!saved && prefersDark)){
+      document.documentElement.classList.add('dark');
+    }
+    syncThemeIcons();
+  })();
+</script>
+</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>أَثَر | المساعد الذكي (العقل الثاني)</title>
+<link rel="icon" type="image/png" href="assets/favicon.png"/>
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<style>
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Light.woff') format('woff'); font-weight:300; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Regular.woff') format('woff'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Medium.woff') format('woff'); font-weight:500; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Black.woff') format('woff'); font-weight:900; font-display:swap; }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet"/>
+<link rel="stylesheet" href="css/motion.css"/>
+<style>
+  * { font-family: 'Thmanyah Sans', sans-serif; }
+  body, button, input, select, textarea { font-family: 'Thmanyah Sans', sans-serif; }
+  .font-mono, [class*="font-mono"] { font-family: 'JetBrains Mono', monospace !important; }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined' !important; }html{visibility:hidden}</style>
+<script>!function(){try{var t=localStorage.getItem('athar-theme')||localStorage.getItem('madar-theme');if(t==='dark'||(t===null&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}document.addEventListener('DOMContentLoaded',function(){document.documentElement.style.visibility='visible'})}();</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Thmanyah Sans', 'sans-serif'], cairo: ['Thmanyah Sans', 'sans-serif'], mono: ['JetBrains Mono','monospace'] },
+        colors: {
+          primary: '#0077CC',
+          'primary-dark': '#005ea3',
+          'on-primary': '#ffffff',
+          'primary-container': '#e0f0ff',
+          'on-primary-container': '#003a5c',
+          secondary: '#00875f',
+          'secondary-container': '#d7f9e9',
+          'on-secondary-container': '#006446',
+          tertiary: '#a15c00',
+          'tertiary-container': '#ffe8c2',
+          'on-tertiary-container': '#7a4500',
+          error: '#ba1a1a',
+          'error-container': '#ffdad6',
+          'on-error-container': '#93000a',
+          surface: '#f7f9fc',
+          'surface-container-lowest': '#ffffff',
+          'surface-container-low': '#f1f4fa',
+          'surface-container': '#e9edf6',
+          'surface-container-high': '#e0e5f0',
+          'on-surface': '#111827',
+          'on-surface-variant': '#4b5566',
+          outline: '#8791a3',
+          'outline-variant': '#d6dbe6',
+        },
+        borderRadius: { sm: '4px', DEFAULT: '8px', md: '12px', lg: '16px', xl: '24px' },
+      }
+    }
+  }
+</script>
+<style>
+  * { font-family: 'Thmanyah Sans', sans-serif; }
+  body, button, input, select, textarea { font-family: 'Thmanyah Sans', sans-serif; }
+  .font-mono, [class*="font-mono"] { font-family: 'JetBrains Mono', monospace !important; }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined' !important; }
+  *{box-sizing:border-box}
+  body{font-family:'Thmanyah Sans', sans-serif;background:#f7f9fc;color:#111827;-webkit-font-smoothing:antialiased}
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;font-size:20px;line-height:1;vertical-align:middle}
+  ::-webkit-scrollbar{width:6px;height:6px}
+  ::-webkit-scrollbar-thumb{background:#d6dbe6;border-radius:99px}
+  ::-webkit-scrollbar-thumb:hover{background:#b0b9cc}
+
+  /* ═══════════════ COMPLETE DARK MODE PALETTE & HOVER FIX ═══════════════ */
+  html.dark{color-scheme:dark}
+  html.dark body{background-color:#0b1220 !important;color:#eef2f9 !important}
+  html.dark .bg-white,
+  html.dark button.bg-white,
+  html.dark div.bg-white,
+  html.dark a.bg-white,
+  html.dark .bg-surface-container-lowest{background-color:#141d2e !important;color:#eef2f9 !important}
+  html.dark .bg-surface{background-color:#0b1220 !important}
+  html.dark .bg-surface-container-low{background-color:#182236 !important}
+  html.dark .bg-surface-container{background-color:#1e2a40 !important}
+  html.dark .bg-surface-container-high{background-color:#25324a !important}
+  html.dark .border-outline-variant{border-color:#2c3a52 !important}
+  
+  /* Text colors in Dark Mode */
+  html.dark .text-on-surface{color:#eef2f9 !important}
+  html.dark .text-on-surface-variant{color:#a7b2c4 !important}
+  html.dark .text-outline{color:#8592a8 !important}
+  html.dark .text-primary{color:#38bdf8 !important}
+  html.dark .bg-primary-container{background-color:#0f2c46 !important}
+  html.dark .text-on-primary-container{color:#bfe0ff !important}
+  html.dark .bg-secondary-container{background-color:#0a3322 !important}
+  html.dark .text-on-secondary-container{color:#8fe9c4 !important}
+  html.dark .bg-error-container{background-color:#3a0d0d !important}
+  html.dark .text-on-error-container{color:#ffb4ab !important}
+  
+  html.dark input,html.dark textarea,html.dark select{background-color:#182236 !important;border-color:#2c3a52 !important;color:#eef2f9 !important}
+  html.dark ::placeholder{color:#6b7789 !important}
+
+  /* Prevent white flashes on hover & mouse-leave in dark mode */
+  html.dark .hover\:bg-surface-container-low:hover{background-color:#1e2a40 !important;color:#ffffff !important}
+  html.dark .hover\:bg-surface-container:hover{background-color:#25324a !important;color:#ffffff !important}
+  html.dark .hover\:bg-surface-container-high:hover{background-color:#2c3a52 !important;color:#ffffff !important}
+  html.dark .hover\:bg-white:hover{background-color:#1a263d !important;color:#ffffff !important}
+  html.dark .hover\:bg-primary-container:hover{background-color:#0f2c46 !important;color:#bfe0ff !important}
+  html.dark .hover\:border-primary:hover{border-color:#38bdf8 !important}
+  html.dark .hover\:border-secondary:hover{border-color:#00875f !important}
+  html.dark .hover\:border-tertiary:hover{border-color:#a15c00 !important}
+
+  /* Nav Active */
+  .nav-item{position:relative;transition:background .15s}
+  .nav-item.active{background:#e0f0ff;color:#0077CC;font-weight:700}
+  html.dark .nav-item.active{background:#0f2c46 !important;color:#38bdf8 !important}
+  .nav-item.active::before{content:"";position:absolute;right:0;top:8px;bottom:8px;width:3px;background:#0077CC;border-radius:4px 0 0 4px}
+
+  /* Typing wave dots */
+  .typing-dot{width:7px;height:7px;border-radius:50%;background:#0077CC;display:inline-block;animation:typingBounce 1.2s infinite ease-in-out}
+  .typing-dot:nth-child(1){animation-delay:0s}
+  .typing-dot:nth-child(2){animation-delay:.2s}
+  .typing-dot:nth-child(3){animation-delay:.4s}
+  @keyframes typingBounce{0%,60%,100%{transform:translateY(0);opacity:.35}30%{transform:translateY(-6px);opacity:1}}
+
+  /* Voice Pulse */
+  .mic-active{animation:micPulse 1s infinite}
+  @keyframes micPulse{0%,100%{box-shadow:0 0 0 0 rgba(186,26,26,.4)}50%{box-shadow:0 0 0 8px rgba(186,26,26,0)}}
+
+  .fade-in{animation:fadeIn .2s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+  .no-scrollbar::-webkit-scrollbar{display:none}
+  .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+</style>
+<script src="js/supabase-js.min.js"></script>
+</head>
+<body class="antialiased">
+
+<!-- Toast Notification -->
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-24 opacity-0 z-[200] bg-on-surface text-white px-5 py-3 rounded-xl shadow-xl text-sm font-semibold pointer-events-none transition-all duration-300"></div>
+
+<!-- App Container with Clean Full-Width Responsive Layout -->
+<div class="flex h-screen w-screen overflow-hidden relative">
+
+  <!-- ═══════════════ 1. RIGHT SIDEBAR (القائمة الرئيسية) ═══════════════ -->
+  <aside id="mainNavSidebar" class="w-72 shrink-0 bg-white border-l border-outline-variant flex flex-col h-full z-50 fixed md:static top-0 right-0">
+    <!-- Header with Fixed Collapse Button -->
+    <div class="p-6 flex items-center justify-between border-b border-outline-variant">
+      <div>
+        <a href="dashboard.html" class="flex items-center gap-2.5 athar-logo-wrapper">
+          <img src="assets/icon.png" alt="أَثَر" class="w-10 h-10 object-contain drop-shadow-sm"/>
+          <img src="assets/logo.png" alt="أَثَر" class="h-7 object-contain dark:hidden"/>
+          <img src="assets/logo-dark.png" alt="أَثَر" class="h-7 object-contain hidden dark:block athar-logo-dark-glow"/>
+        </a>
+        <p class="text-xs text-on-surface-variant mt-0.5 font-medium">نظام التشغيل الأكاديمي</p>
+      </div>
+      <div class="flex items-center gap-1">
+        <button onclick="toggleMainNav()" class="w-8 h-8 rounded-lg hover:bg-surface-container-low flex items-center justify-center text-on-surface transition" title="إخفاء القائمة وتمديد الصفحة"><span class="material-symbols-outlined" style="font-size:20px">menu_open</span></button>
+      </div>
+    </div>
+
+    <div class="p-4">
+      <a href="schedule.html?action=new-task" class="w-full bg-primary text-on-primary font-bold py-2.5 rounded-full flex items-center justify-center gap-1.5 hover:bg-primary-dark transition text-sm shadow-sm">
+        <span class="material-symbols-outlined" style="font-size:18px">add</span> إضافة مهمة جديدة
+      </a>
+    </div>
+
+    <nav class="flex-1 px-4 space-y-1 overflow-y-auto">
+      <p class="text-xs font-bold text-outline px-3 pt-3 pb-1">القائمة الرئيسية</p>
+      <a href="dashboard.html" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined">grid_view</span>لوحة التحكم</a>
+      <a href="schedule.html" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined">calendar_month</span>الجدول الدراسي</a>
+      <a href="dashboard.html" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined text-primary">insights</span>مراجعة الأسبوع</a>
+      <a href="focus.html" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined">timer</span>جلسة تركيز (بومودورو)</a>
+      <a href="exams.html" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined">quiz</span>الاختبارات</a>
+      <a href="settings.html#subjects" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined">menu_book</span>المواد الدراسية</a>
+      
+      <p class="text-xs font-bold text-outline px-3 pt-4 pb-1">ذكاء اصطناعي</p>
+      <a href="assistant.html" class="nav-item active flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-primary hover:bg-surface-container-low"><span class="material-symbols-outlined text-primary">auto_awesome</span>المساعد الذكي (AI)</a>
+    </nav>
+
+    <div id="downloadAppBadge" class="mx-4 mb-3 p-3 rounded-xl bg-primary-container/40 border border-primary/20 flex items-center gap-2.5">
+      <span class="material-symbols-outlined text-primary" style="font-size:20px">android</span>
+      <div class="flex-1 min-w-0">
+        <p class="text-xs font-bold text-on-primary-container">حمّل تطبيق أَثَر</p>
+        <a href="https://github.com/athar3eg/Athar/releases/latest/download/app-debug.apk" class="text-[11px] text-primary font-semibold hover:underline">تحميل مباشر لأندرويد</a>
+      </div>
+    </div>
+
+    <div class="p-4 border-t border-outline-variant space-y-1">
+      <a href="settings.html" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container-low"><span class="material-symbols-outlined">settings</span>الإعدادات</a>
+      <a onclick="logout()" class="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-error hover:bg-error-container/30 transition text-right"><span class="material-symbols-outlined">logout</span>تسجيل الخروج</a>
+    </div>
+  </aside>
+
+  <!-- Overlay for Right Sidebar (Mobile only) -->
+  <div id="mainNavOverlay" onclick="toggleMainNav()" class="hidden fixed inset-0 bg-black/40 z-40 md:hidden"></div>
+
+  <!-- ═══════════════ 2. CENTER: MAIN FULL-WIDTH CHAT ═══════════════ -->
+  <main class="flex-1 flex flex-col min-w-0 h-full overflow-hidden bg-surface">
+
+    <!-- Top Navigation Bar -->
+    <header class="shrink-0 bg-white border-b border-outline-variant px-4 py-3 flex items-center justify-between z-20">
+      <!-- Right Controls: Toggle Main Nav + Title -->
+      <div class="flex items-center gap-3">
+        <button id="topbarMainNavToggle" onclick="toggleMainNav()" class="w-9 h-9 rounded-xl hover:bg-surface-container-low flex items-center justify-center transition text-on-surface md:hidden" title="فتح القائمة الرئيسية">
+          <span class="material-symbols-outlined" style="font-size:22px">menu</span>
+        </button>
+
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-primary-container flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined" style="font-size:20px">psychology</span>
+          </div>
+          <div>
+            <h1 class="font-extrabold text-sm text-on-surface leading-tight">المساعد الذكي (العقل الثاني)</h1>
+            <p class="text-[11px] text-on-surface-variant truncate hidden sm:block" id="agentStatusText">متصل بجدولك وحصصك وموادك الدراسية</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center status pill -->
+      <div class="hidden md:flex items-center">
+        <span id="agentBadge" class="text-xs font-bold bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full flex items-center gap-1.5 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+          <span>جاهز ⚡</span>
+        </span>
+      </div>
+
+      <!-- Left Controls: New Chat + Dark Mode + History Toggle -->
+      <div class="flex items-center gap-1.5">
+        <button onclick="startNewChat()" class="w-9 h-9 rounded-xl hover:bg-surface-container-low flex items-center justify-center transition text-on-surface" title="محادثة جديدة">
+          <span class="material-symbols-outlined" style="font-size:20px">add_comment</span>
+        </button>
+        <button onclick="toggleDarkMode()" class="w-9 h-9 rounded-xl hover:bg-surface-container-low flex items-center justify-center transition text-on-surface" title="تبديل الوضع">
+          <span class="material-symbols-outlined" id="theme-icon-top" style="font-size:20px">dark_mode</span>
+        </button>
+        <button onclick="toggleHistorySidebar()" class="w-9 h-9 rounded-xl hover:bg-surface-container-low flex items-center justify-center transition text-primary font-bold" title="سجل المحادثات">
+          <span class="material-symbols-outlined" style="font-size:22px">history</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Chat Messages Scroll Area (Fully Stretches to fill empty space) -->
+    <div id="chatScrollArea" class="flex-1 overflow-y-auto px-4 sm:px-8 py-6 w-full">
+      <div class="max-w-4xl mx-auto flex flex-col gap-4">
+
+        <!-- Welcome Suggestions Screen -->
+        <div id="suggestions" class="flex flex-col items-center justify-center py-6 sm:py-10 text-center fade-in">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary-container flex items-center justify-center mb-4 relative shadow-sm">
+            <span class="material-symbols-outlined text-primary" style="font-size:36px;font-variation-settings:'FILL' 1">psychology</span>
+            <span class="absolute -bottom-1 -left-1 w-4 h-4 bg-secondary rounded-full border-2 border-white dark:border-[#141d2e]"></span>
+          </div>
+
+          <h2 class="text-xl sm:text-2xl 2xl:text-3xl font-extrabold text-on-surface mb-2">أهلاً بك! أنا أَثَر، عقلك الثاني 🧠</h2>
+          <p class="text-on-surface-variant text-xs sm:text-sm max-w-md mb-6 leading-relaxed">
+            أنا جاهز لترتيب جدول يومك بالكامل (حصص سناتر أوفلاين ومحاضرات منصات أونلاين)، وشرح أي درس، وعمل امتحانات تفاعلية.
+          </p>
+
+          <!-- Hero Action: Routine Interview -->
+          <div class="w-full max-w-2xl mb-3">
+            <button onclick="sendSuggestion('رتّب لي يومي وجدول دروسي أوفلاين وأونلاين')" class="w-full bg-gradient-to-r from-primary to-primary-dark text-white rounded-2xl p-4 sm:p-5 text-right shadow-md hover:shadow-lg hover:scale-[1.01] transition group">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-white" style="font-size:22px">calendar_month</span>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-sm sm:text-base flex items-center gap-1.5">
+                      <span>🎯 رتّب لي يومي وجدول دروسي (أوفلاين وأونلاين)</span>
+                      <span class="text-[10px] bg-white/25 px-2 py-0.5 rounded-full font-semibold">مقترح لك</span>
+                    </h3>
+                    <p class="text-xs text-white/85 mt-0.5 font-normal">يسألك عن مواعيد سناترك ومحاضرات المنصات ويبني لك جدولاً متوازناً فوراً</p>
+                  </div>
+                </div>
+                <span class="material-symbols-outlined text-white group-hover:-translate-x-1 transition hidden sm:block">arrow_back</span>
+              </div>
+            </button>
+          </div>
+
+          <!-- Quick Action Cards Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl w-full text-right">
+            <button onclick="sendSuggestion('اشرح لي قانون فاراداي وهات لي فيديو يوتيوب تعليمي مناسب')" class="bg-white border border-outline-variant rounded-2xl p-3.5 hover:border-primary hover:shadow-sm transition group text-right">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="material-symbols-outlined text-primary" style="font-size:18px">play_circle</span>
+                <span class="font-bold text-xs text-on-surface group-hover:text-primary transition">شرح درس + فيديو يوتيوب</span>
+              </div>
+              <p class="text-[11px] text-on-surface-variant">شرح مبسط لقانون فاراداي مع ترشيح فيديو تعليمي</p>
+            </button>
+
+            <button onclick="sendSuggestion('اعمل لي كويز تفاعلي من 3 أسئلة في الكيمياء واختبرني')" class="bg-white border border-outline-variant rounded-2xl p-3.5 hover:border-secondary hover:shadow-sm transition group text-right">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="material-symbols-outlined text-secondary" style="font-size:18px">quiz</span>
+                <span class="font-bold text-xs text-on-surface group-hover:text-secondary transition">امتحان تفاعلي فوري</span>
+              </div>
+              <p class="text-[11px] text-on-surface-variant">أسئلة اختيار من متعدد مع تصحيح وشرح فوري</p>
+            </button>
+
+            <button onclick="sendSuggestion('ضيف لي مهمة حل 30 مسألة فيزياء بكرة مدتها 45 دقيقة')" class="bg-white border border-outline-variant rounded-2xl p-3.5 hover:border-tertiary hover:shadow-sm transition group text-right">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="material-symbols-outlined text-tertiary" style="font-size:18px">add_task</span>
+                <span class="font-bold text-xs text-on-surface group-hover:text-tertiary transition">تحكم مباشر: إضافة مهمة</span>
+              </div>
+              <p class="text-[11px] text-on-surface-variant">إضافة وتثبيت المهمة في جدولك بضغطة واحدة</p>
+            </button>
+
+            <button onclick="sendSuggestion('بص في جدولي وشوف إيه أنسب حاجة أذاكرها دلوقتي')" class="bg-white border border-outline-variant rounded-2xl p-3.5 hover:border-primary hover:shadow-sm transition group text-right">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="material-symbols-outlined text-primary" style="font-size:18px">tips_and_updates</span>
+                <span class="font-bold text-xs text-on-surface group-hover:text-primary transition">ماذا أذاكر الآن؟</span>
+              </div>
+              <p class="text-[11px] text-on-surface-variant">يحلل أوقاتك ويوصيك بأفضل خطوة للمذاكرة</p>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic Messages Container -->
+        <div id="messages" class="flex flex-col gap-4"></div>
+      </div>
+    </div>
+
+    <!-- Bottom Input Controls -->
+    <div class="shrink-0 bg-white border-t border-outline-variant px-4 sm:px-8 pt-2.5 pb-3 sm:pb-4 z-20">
+      <div class="max-w-4xl mx-auto">
+
+        <!-- Quick Action Chips -->
+        <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
+          <button onclick="sendSuggestion('رتّب لي يومي وجدول دروسي أوفلاين وأونلاين')" class="px-3 py-1 rounded-full bg-primary-container text-primary text-xs font-bold whitespace-nowrap hover:opacity-90 transition shrink-0">
+            🎯 رتّب جدول دروسي
+          </button>
+          <button onclick="sendSuggestion('ماذا أذاكر الآن بناءً على جدولي؟')" class="px-3 py-1 rounded-full bg-surface-container text-on-surface-variant text-xs font-semibold whitespace-nowrap hover:bg-primary-container hover:text-primary transition shrink-0">
+            💡 ماذا أذاكر؟
+          </button>
+          <button onclick="sendSuggestion('فعّل وضع الإنقاذ وأعد توزيع مهامي المتأخرة')" class="px-3 py-1 rounded-full bg-error-container text-on-error-container text-xs font-semibold whitespace-nowrap hover:opacity-90 transition shrink-0">
+            ⚡ وضع الإنقاذ
+          </button>
+          <button onclick="sendSuggestion('اعمل لي اختبار سريع من 3 أسئلة')" class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-xs font-semibold whitespace-nowrap hover:opacity-90 transition shrink-0">
+            📝 كويز سريع
+          </button>
+        </div>
+
+        <!-- Chat Form -->
+        <div class="flex items-end gap-2">
+          <div class="flex-1 flex items-end gap-2 bg-surface-container-low border border-outline-variant rounded-2xl px-3.5 py-2 focus-within:ring-2 focus-within:ring-primary focus-within:border-transparent transition">
+            <textarea id="chatInput" rows="1" placeholder="اكتب طلبك، أو اضغط الميكروفون للتحدث..." class="flex-1 outline-none bg-transparent text-sm resize-none max-h-32 leading-relaxed text-on-surface" oninput="autoResizeTextarea(this)" onkeydown="handleInputKeydown(event)"></textarea>
+            
+            <button id="voiceBtn" onclick="toggleVoice()" class="w-8 h-8 rounded-full flex items-center justify-center text-outline hover:text-primary hover:bg-primary-container transition shrink-0 mb-0.5" title="إدخال صوتي">
+              <span class="material-symbols-outlined" id="voiceIcon" style="font-size:20px">mic</span>
+            </button>
+          </div>
+
+          <!-- Stop Button -->
+          <button id="stopBtn" onclick="stopGeneration()" class="hidden w-10 h-10 rounded-xl bg-error text-white flex items-center justify-center hover:opacity-90 transition shrink-0 shadow-sm" title="إيقاف الرد">
+            <span class="material-symbols-outlined" style="font-size:20px">stop</span>
+          </button>
+
+          <!-- Send Button -->
+          <button id="sendBtn" type="submit" form="chatForm" class="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center hover:bg-primary-dark transition shrink-0 shadow-sm" title="إرسال">
+            <span class="material-symbols-outlined" style="font-size:20px">send</span>
+          </button>
+        </div>
+
+        <form id="chatForm" class="hidden"></form>
+        <p class="text-[10px] text-outline text-center mt-1.5 hidden sm:block">أَثَر يمتلك تحكماً كاملاً في جدولك ومهامك الأكاديمية</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ═══════════════ 3. LEFT SIDEBAR (سجل المحادثات السابقة) ═══════════════ -->
+  <aside id="historySidebar" class="w-72 shrink-0 bg-white border-r border-outline-variant flex flex-col h-full z-50 fixed md:static top-0 left-0 transition-all duration-200 hidden">
+    <div class="p-4 border-b border-outline-variant flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary" style="font-size:20px">history</span>
+        <h3 class="font-bold text-xs sm:text-sm text-on-surface">المحادثات السابقة</h3>
+      </div>
+      <button onclick="toggleHistorySidebar()" class="w-8 h-8 rounded-lg hover:bg-surface-container-low flex items-center justify-center text-on-surface transition" title="إغلاق السجل">
+        <span class="material-symbols-outlined" style="font-size:18px">close</span>
+      </button>
+    </div>
+
+    <div class="p-3">
+      <button onclick="startNewChat()" class="w-full bg-surface-container-high text-on-surface text-xs font-bold py-2.5 rounded-xl flex items-center justify-center gap-1.5 hover:bg-surface-container transition">
+        <span class="material-symbols-outlined" style="font-size:16px">add</span> محادثة جديدة
+      </button>
+    </div>
+
+    <div class="flex-1 overflow-y-auto px-2 pb-2">
+      <p class="text-[10px] font-bold text-outline px-2 pt-1 pb-1">السجل الزمني</p>
+      <div id="sessionsList" class="space-y-1">
+        <!-- Populated via JS -->
+      </div>
+    </div>
+
+    <div class="p-3 border-t border-outline-variant">
+      <button onclick="clearChatHistory()" class="w-full flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-outline hover:text-error transition">
+        <span class="material-symbols-outlined" style="font-size:16px">delete_sweep</span> مسح سجل المحادثات
+      </button>
+    </div>
+  </aside>
+
+  <!-- Overlay for Left Sidebar (Mobile only) -->
+  <div id="historyOverlay" onclick="toggleHistorySidebar()" class="hidden fixed inset-0 bg-black/40 z-40 md:hidden"></div>
+
+</div>
+
+<script src="js/supabase-client.js"></script>
+<script src="js/common.js"></script>
+<script src="js/shared/rescue-engine.js"></script>
+<script src="js/shared/exam-planner.js"></script>
+<script src="js/gemini-agent.js"></script>
+<script src="js/assistant.js"></script>
+<script src="js/motion.js"></script>
+<script>
+  // ── Clean Instant Sidebars Toggles (Zero Glitch / Full Page Stretch) ──
+  function toggleMainNav() {
+    const sidebar = document.getElementById('mainNavSidebar');
+    const overlay = document.getElementById('mainNavOverlay');
+    const topBtn = document.getElementById('topbarMainNavToggle');
+    
+    if (window.innerWidth < 768) {
+      sidebar.classList.toggle('mobile-open');
+      if (overlay) overlay.classList.toggle('hidden');
+    } else {
+      sidebar.classList.toggle('desktop-collapsed');
+      const isCollapsed = sidebar.classList.contains('desktop-collapsed');
+      if (topBtn) {
+        if (isCollapsed) {
+          topBtn.classList.remove('md:hidden');
+        } else {
+          topBtn.classList.add('md:hidden');
+        }
+      }
+    }
+  }
+
+  function toggleHistorySidebar() {
+    const sidebar = document.getElementById('historySidebar');
+    const overlay = document.getElementById('historyOverlay');
+
+    if (window.innerWidth < 768) {
+      sidebar.classList.toggle('mobile-open');
+      if (overlay) overlay.classList.toggle('hidden');
+    } else {
+      sidebar.classList.toggle('hidden');
+    }
+  }
+
+  // ── Theme Switcher ─────────────────────────────────────────────
+  function syncThemeIcons() {
+    const dark = document.documentElement.classList.contains('dark');
+    const el = document.getElementById('theme-icon-top');
+    if (el) el.textContent = dark ? 'light_mode' : 'dark_mode';
+  }
+  function toggleDarkMode() {
+    document.documentElement.classList.toggle('dark');
+    localStorage.setItem('athar-theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    syncThemeIcons();
+  }
+  (function initTheme() {
+    const saved = localStorage.getItem('athar-theme') || localStorage.getItem('madar-theme');
+    if (saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme:dark)').matches))
+      document.documentElement.classList.add('dark');
+    syncThemeIcons();
+  })();
+
+  function autoResizeTextarea(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 128) + 'px';
+  }
+
+  function handleInputKeydown(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      document.getElementById('chatForm').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+    }
+  }
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+

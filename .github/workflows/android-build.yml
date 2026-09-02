@@ -1,0 +1,104 @@
+name: Build Android APK
+
+# يشتغل تلقائي مع كل رفع (push) على main، وكمان يقدر يتشغل يدوي من تبويب Actions
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout المشروع
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: تحديد رقم النسخة
+        id: ver
+        run: echo "version=1.0.${{ github.run_number }}" >> "$GITHUB_OUTPUT"
+
+      - name: تجهيز Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: تجهيز Java (لازم لبناء أندرويد)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: تثبيت الباكدجات
+        run: npm install
+
+      - name: تجهيز حزمة الويب للتطبيق (www bundle)
+        run: node prepare-www.js
+
+      - name: إضافة منصة أندرويد (لو مش موجودة أصلاً)
+        run: |
+          if [ ! -d "android" ]; then
+            npx cap add android
+          fi
+
+      - name: تثبيت أيقونة وشعار التطبيق (App Launcher Icons)
+        run: node setup-android-icons.js
+
+      - name: تفعيل Firebase (نسخ google-services.json وإضافة الـ plugin)
+        run: |
+          if [ -f "firebase/google-services.json" ]; then
+            cp firebase/google-services.json android/app/google-services.json
+          fi
+          # إضافة classpath الخاص بـ Google Services للملف الرئيسي لو مش موجود
+          if ! grep -q "com.google.gms:google-services" android/build.gradle; then
+            sed -i "/dependencies {/a\\        classpath 'com.google.gms:google-services:4.4.2'" android/build.gradle
+          fi
+          # تفعيل الـ plugin في ملف التطبيق لو مش مفعّل
+          if ! grep -q "com.google.gms.google-services" android/app/build.gradle; then
+            echo "apply plugin: 'com.google.gms.google-services'" >> android/app/build.gradle
+          fi
+
+      - name: مزامنة ملفات الموقع مع مشروع أندرويد
+        run: npx cap sync android
+
+      - name: بناء APK (نسخة تجربة Debug)
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: رفع الـ APK كملف تحميل (للمطوّر، من تبويب Actions)
+        uses: actions/upload-artifact@v4
+        with:
+          name: athar-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: إنشاء إصدار (Release) عام برابط تحميل ثابت
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.ver.outputs.version }}
+          name: أَثَر v${{ steps.ver.outputs.version }}
+          files: android/app/build/outputs/apk/debug/app-debug.apk
+          make_latest: true
+
+      - name: تحديث ملف النسخة داخل المشروع
+        run: |
+          cat > version.json << EOF
+          {
+            "version": "${{ steps.ver.outputs.version }}",
+            "apk_url": "https://github.com/athar3eg/Athar/releases/latest/download/app-debug.apk",
+            "released_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          }
+          EOF
+          git config user.name "athar-bot"
+          git config user.email "bot@athar3eg.local"
+          git add version.json
+          git commit -m "📦 إصدار v${{ steps.ver.outputs.version }} [skip ci]" || echo "No changes to commit"
+          git push origin HEAD:main || echo "Push skipped"

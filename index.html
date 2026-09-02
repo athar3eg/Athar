@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>أَثَر | نظام التشغيل الأكاديمي</title>
+<link rel="icon" type="image/png" href="assets/favicon.png"/>
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<style>
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Light.woff') format('woff'); font-weight:300; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Regular.woff') format('woff'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Medium.woff') format('woff'); font-weight:500; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+@font-face { font-family:'Thmanyah Sans'; src:url('fonts/thmanyahsans-Black.woff') format('woff'); font-weight:900; font-display:swap; }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet"/>
+<link rel="stylesheet" href="css/motion.css"/>
+<link rel="stylesheet" href="css/splash.css"/>
+<style>
+  * { font-family: 'Thmanyah Sans', sans-serif; }
+  body, button, input, select, textarea { font-family: 'Thmanyah Sans', sans-serif; }
+  .font-mono, [class*="font-mono"] { font-family: 'JetBrains Mono', monospace !important; }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined' !important; }
+</style>
+<script>!function(){try{var t=localStorage.getItem('athar-theme')||localStorage.getItem('madar-theme');if(t==='dark'||(t===null&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}}();</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Thmanyah Sans', 'sans-serif'], cairo: ['Thmanyah Sans', 'sans-serif'], mono: ['JetBrains Mono','monospace'] },
+        colors: {
+          primary: '#0077CC',
+          'primary-dark': '#005ea3',
+          'on-primary': '#ffffff',
+          'primary-container': '#e0f0ff',
+          'on-primary-container': '#003a5c',
+          secondary: '#00875f',
+          'secondary-container': '#d7f9e9',
+          'on-secondary-container': '#006446',
+          tertiary: '#a15c00',
+          'tertiary-container': '#ffe8c2',
+          'on-tertiary-container': '#7a4500',
+          error: '#ba1a1a',
+          'error-container': '#ffdad6',
+          'on-error-container': '#93000a',
+          surface: '#f7f9fc',
+          'surface-container-lowest': '#ffffff',
+          'surface-container-low': '#f1f4fa',
+          'surface-container': '#e9edf6',
+          'surface-container-high': '#e0e5f0',
+          'on-surface': '#111827',
+          'on-surface-variant': '#4b5566',
+          outline: '#8791a3',
+          'outline-variant': '#d6dbe6',
+        },
+        borderRadius: { sm: '4px', DEFAULT: '8px', md: '12px', lg: '16px', xl: '24px' },
+      }
+    }
+  }
+</script>
+<style>
+  * { font-family: 'Thmanyah Sans', sans-serif; }
+  body, button, input, select, textarea { font-family: 'Thmanyah Sans', sans-serif; }
+  .font-mono, [class*="font-mono"] { font-family: 'JetBrains Mono', monospace !important; }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined' !important; }
+  body{font-family:'Thmanyah Sans', sans-serif;background:#f7f9fc;color:#111827}
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;font-size:20px;line-height:1}
+  .page{display:none}
+  .page.active{display:block}
+  ::-webkit-scrollbar{width:8px;height:8px}
+  ::-webkit-scrollbar-thumb{background:#d6dbe6;border-radius:8px}
+  .toast{transition:all .3s ease}
+  .auth-gradient{background:linear-gradient(135deg,#e0f0ff,#f7f9fc)}
+  .auth-gradient-2{background:linear-gradient(160deg,#e0f0ff,#d7f9e9)}
+
+  /* ---------- DARK MODE ---------- */
+  html.dark{color-scheme:dark}
+  html.dark body{background:#0b1220;color:#e5eaf2}
+  html.dark .bg-white,
+  html.dark .bg-surface-container-lowest{background-color:#141d2e !important}
+  html.dark .bg-white\/80{background-color:rgba(20,29,46,.85) !important}
+  html.dark .bg-white\/70{background-color:rgba(20,29,46,.7) !important}
+  html.dark .bg-surface-container-low{background-color:#182236 !important}
+  html.dark .bg-surface-container{background-color:#1e2a40 !important}
+  html.dark .bg-surface-container-high{background-color:#25324a !important}
+  html.dark .border-outline-variant{border-color:#2c3a52 !important}
+  html.dark .divide-outline-variant>*+*{border-color:#2c3a52 !important}
+  html.dark .text-on-surface{color:#eef2f9 !important}
+  html.dark .text-on-surface-variant{color:#a7b2c4 !important}
+  html.dark .text-outline{color:#8592a8 !important}
+  html.dark .bg-primary-container,
+  html.dark .bg-primary-container\/50,
+  html.dark .bg-primary-container\/40,
+  html.dark .bg-primary-container\/30,
+  html.dark .bg-primary-container\/20{background-color:#0f2c46 !important}
+  html.dark .text-on-primary-container{color:#bfe0ff !important}
+  html.dark .bg-secondary-container,
+  html.dark .bg-secondary-container\/50{background-color:#0a3322 !important}
+  html.dark .text-on-secondary-container{color:#8fe9c4 !important}
+  html.dark .bg-tertiary-container{background-color:#3a2400 !important}
+  html.dark .text-on-tertiary-container{color:#ffd28a !important}
+  html.dark .bg-error-container,
+  html.dark .bg-error-container\/40,
+  html.dark .bg-error-container\/20{background-color:#3a0d0d !important}
+  html.dark .text-on-error-container{color:#ffb4ab !important}
+  html.dark .auth-gradient{background:linear-gradient(135deg,#0f2c46,#0b1220)}
+  html.dark input,html.dark select{background-color:#182236;border-color:#2c3a52;color:#e5eaf2}
+  html.dark ::placeholder{color:#6b7789}
+
+  /* Prevent white flashes on hover in dark mode */
+  html.dark .hover\:bg-surface-container-low:hover,
+  html.dark .hover\:bg-surface-container:hover,
+  html.dark .hover\:bg-surface-container-high:hover,
+  html.dark .hover\:bg-white:hover{background-color:#1e2a40!important;color:#eef2f9!important}
+  html.dark .hover\:bg-primary-container:hover{background-color:#0f2c46!important;color:#bfe0ff!important}
+  html.dark .hover\:bg-secondary-container:hover{background-color:#0a3322!important;color:#8fe9c4!important}
+  html.dark .hover\:border-primary:hover{border-color:#0077CC!important}
+  html.dark .shadow-xl,html.dark .shadow-lg,html.dark .shadow-2xl{box-shadow:0 10px 25px -5px rgba(0,0,0,.5)}
+  html.dark #toast{background:#eef2f9;color:#0b1220}
+</style>
+<script src="js/supabase-js.min.js"></script>
+</head>
+<body class="antialiased">
+
+<!-- ============ Animated Splash / Intro ============ -->
+<div id="atharSplash">
+  <div class="splash-orbit-field">
+    <div class="splash-ring splash-ring--1"></div>
+    <div class="splash-ring splash-ring--2"></div>
+    <div class="splash-ring splash-ring--3"></div>
+    <div class="splash-particle splash-particle--a"></div>
+    <div class="splash-particle splash-particle--b"></div>
+    <div class="splash-particle splash-particle--c"></div>
+    <div class="splash-logo-wrap">
+      <div class="splash-logo-glow"></div>
+      <img src="assets/icon.png" alt="أَثَر" class="splash-icon"/>
+      <div class="splash-wordmark">أَثَر</div>
+      <div class="splash-tagline">نظام التشغيل الأكاديمي</div>
+    </div>
+  </div>
+  <div class="splash-loader"><span></span><span></span><span></span></div>
+</div>
+<script src="js/shared/splash.js"></script>
+
+<!-- ======================= TOAST ======================= -->
+<div id="toast" class="toast fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-24 opacity-0 z-[100] bg-on-surface text-white px-5 py-3 rounded-lg shadow-lg text-sm font-medium"></div>
+
+<!-- ======================= LANDING PAGE ======================= -->
+<section id="page-landing" class="page active">
+  <header class="sticky top-0 z-40 bg-white/80 dark:bg-[#141d2e]/85 backdrop-blur-md border-b border-outline-variant">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5 cursor-pointer athar-logo-wrapper shrink-0" onclick="goTo('landing')">
+        <img src="assets/icon.png" alt="أَثَر" class="w-8 h-8 object-contain drop-shadow-sm"/>
+        <img src="assets/logo.png" alt="أَثَر" class="h-6 object-contain dark:hidden"/>
+        <img src="assets/logo-dark.png" alt="أَثَر" class="h-6 object-contain hidden dark:block athar-logo-dark-glow"/>
+      </div>
+      <nav class="hidden md:flex items-center justify-center gap-8 text-sm font-semibold text-on-surface-variant flex-1 px-4">
+        <a class="hover:text-primary transition py-1 px-2 rounded-lg hover:bg-surface-container-low" href="#features" onclick="smoothScrollToSection(event, 'features')">المميزات</a>
+        <a class="hover:text-primary transition py-1 px-2 rounded-lg hover:bg-surface-container-low" href="#how-it-works" onclick="smoothScrollToSection(event, 'how-it-works')">كيف يعمل؟</a>
+        <a class="hover:text-primary transition py-1 px-2 rounded-lg hover:bg-surface-container-low" href="#about" onclick="smoothScrollToSection(event, 'about')">عن المنصة</a>
+      </nav>
+      <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+        <button onclick="toggleDarkMode()" class="w-9 h-9 rounded-full hover:bg-surface-container-low flex items-center justify-center transition" title="تبديل الوضع"><span class="material-symbols-outlined" id="theme-icon-landing" style="font-size:20px">dark_mode</span></button>
+        <button onclick="goTo('login')" class="text-sm font-semibold text-on-surface-variant hover:text-primary px-3 py-2 transition hidden sm:block">تسجيل الدخول</button>
+        <button onclick="goTo('signup')" class="bg-primary text-on-primary text-sm font-bold px-5 py-2.5 rounded-full hover:bg-primary-dark transition shadow-sm">ابدأ مجاناً</button>
+        <button onclick="toggleLandingMenu()" class="md:hidden w-9 h-9 rounded-full hover:bg-surface-container-low flex items-center justify-center"><span class="material-symbols-outlined">menu</span></button>
+      </div>
+    </div>
+    <div id="landing-mobile-menu" class="hidden md:hidden border-t border-outline-variant px-6 py-4 space-y-3 text-sm font-medium text-on-surface-variant bg-white dark:bg-[#141d2e]">
+      <a class="block hover:text-primary py-1" href="#features" onclick="smoothScrollToSection(event, 'features'); toggleLandingMenu();">المميزات</a>
+      <a class="block hover:text-primary py-1" href="#how-it-works" onclick="smoothScrollToSection(event, 'how-it-works'); toggleLandingMenu();">كيف يعمل؟</a>
+      <a class="block hover:text-primary py-1" href="#about" onclick="smoothScrollToSection(event, 'about'); toggleLandingMenu();">عن المنصة</a>
+      <a onclick="goTo('login'); toggleLandingMenu();" class="block hover:text-primary cursor-pointer font-bold text-primary pt-2 border-t border-outline-variant">تسجيل الدخول</a>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 md:px-10">
+    <div class="text-center pt-20 pb-16 max-w-3xl mx-auto">
+      <span class="inline-block bg-primary-container text-on-primary-container text-xs font-bold px-3.5 py-1.5 rounded-full mb-5">عقلك الثاني الأكاديمي 🧠</span>
+      <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-5">نظّم حياتك الدراسية مع <span class="text-primary">عقلك الثاني</span></h1>
+      <p class="text-lg text-on-surface-variant mb-8 leading-relaxed">أَثَر هو نظام التشغيل والمساعد الأكاديمي الذكي لطلاب الثانوية العامة. خطط جدولك، تتبع امتحاناتك، راجع أخطاءك، وحقق هدفك بهدوء وبدون تشتت.</p>
+      <div class="flex items-center justify-center gap-3.5 flex-wrap">
+        <button onclick="goTo('signup')" class="bg-primary text-on-primary font-bold px-7 py-3.5 rounded-full hover:bg-primary-dark transition flex items-center gap-2 shadow-lg shadow-primary/20">
+          <span>ابدأ مجاناً الآن</span><span class="material-symbols-outlined" style="font-size:18px">arrow_back</span>
+        </button>
+        <button onclick="goTo('login')" class="border border-outline-variant font-semibold px-6 py-3.5 rounded-full hover:bg-surface-container-low transition flex items-center gap-2">
+          <span class="material-symbols-outlined" style="font-size:18px">login</span> لدي حساب بالفعل
+        </button>
+      </div>
+      <a id="landingAppDownload" href="https://github.com/athar3eg/Athar/releases/latest/download/app-debug.apk" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-on-surface-variant hover:text-primary transition app-download-link">
+        <span class="material-symbols-outlined" style="font-size:18px">android</span>
+        حمّل تطبيق أَثَر لأندرويد
+      </a>
+    </div>
+
+    <!-- Preview Card -->
+    <div id="how-it-works" class="rounded-2xl overflow-hidden border border-outline-variant shadow-xl shadow-primary/5 mb-24 scroll-mt-24">
+      <div class="bg-surface-container-high p-6 md:p-12">
+        <div class="bg-white dark:bg-[#141d2e] rounded-xl shadow-2xl p-6 flex flex-col md:flex-row gap-6">
+          <div class="flex-1 space-y-4">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <div class="h-5 w-1/3 bg-surface-container rounded-full"></div>
+              <span class="text-xs bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 px-2.5 py-1 rounded-full font-bold">نشط الآن ⚡</span>
+            </div>
+            <div class="h-24 bg-primary-container/40 dark:bg-primary-container/20 border border-primary/30 rounded-xl p-4 flex flex-col justify-between">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">auto_awesome</span>
+                <span class="text-sm font-bold text-on-primary-container dark:text-sky-300">المساعد الذكي يقترح: جلسة مراجعة فيزياء</span>
+              </div>
+              <span class="text-xs text-on-surface-variant dark:text-gray-300">التركيز الأمثل الآن بناءً على جدول نومك وطاقتك</span>
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+              <div class="h-20 bg-emerald-500/10 dark:bg-emerald-500/20 border border-emerald-500/30 rounded-xl p-3 flex flex-col justify-between text-center">
+                <span class="text-xs font-bold text-emerald-700 dark:text-emerald-300">إنجاز اليوم</span>
+                <span class="text-xl font-extrabold text-emerald-600 dark:text-emerald-400">92%</span>
+              </div>
+              <div class="h-20 bg-amber-500/10 dark:bg-amber-500/20 border border-amber-500/30 rounded-xl p-3 flex flex-col justify-between text-center">
+                <span class="text-xs font-bold text-amber-700 dark:text-amber-300">الامتحان القادم</span>
+                <span class="text-xl font-extrabold text-amber-600 dark:text-amber-400">3 أيام</span>
+              </div>
+              <div class="h-20 bg-sky-500/10 dark:bg-sky-500/20 border border-sky-500/30 rounded-xl p-3 flex flex-col justify-between text-center">
+                <span class="text-xs font-bold text-primary dark:text-sky-300">مهام متبقية</span>
+                <span class="text-xl font-extrabold text-primary dark:text-sky-400">2</span>
+              </div>
+            </div>
+          </div>
+          <div class="w-full md:w-56 space-y-3">
+            <div class="h-10 bg-primary text-white rounded-lg flex items-center justify-center font-bold text-sm shadow-xs">جدول الحصص اليوم</div>
+            <div class="p-3 bg-surface-container dark:bg-[#182236] border border-outline-variant/50 rounded-lg text-xs space-y-1">
+              <p class="font-bold text-on-surface">فيزياء - م. أحمد</p>
+              <p class="text-outline">08:00 ص - سنتر النور</p>
+            </div>
+            <div class="p-3 bg-surface-container dark:bg-[#182236] border border-outline-variant/50 rounded-lg text-xs space-y-1">
+              <p class="font-bold text-on-surface">كيمياء - د. سامح</p>
+              <p class="text-outline">05:00 م - أونلاين</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div id="features" class="text-center mb-12 scroll-mt-24">
+      <h2 class="text-3xl font-extrabold mb-2">كل ما تحتاجه للتفوق في الثانوية</h2>
+      <p class="text-on-surface-variant">أدوات ذكية متكاملة مصممة خصيصاً لطبيعة دراستك وضغط الامتحانات.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-5 mb-8">
+      <div class="border border-outline-variant rounded-2xl p-6 bg-white dark:bg-[#141d2e] hover:shadow-lg transition card-3d">
+        <div class="w-12 h-12 rounded-xl bg-primary-container text-primary flex items-center justify-center mb-4"><span class="material-symbols-outlined" style="font-size:26px">calendar_month</span></div>
+        <h3 class="font-bold text-lg mb-2">الجدول الدراسي الذكي</h3>
+        <p class="text-sm text-on-surface-variant leading-relaxed">تنظيم الحصص الثابتة وجلسات المذاكرة المرنة وتنبيهات مواعيد الدروس والسناتر.</p>
+      </div>
+      <div class="border border-outline-variant rounded-2xl p-6 bg-white dark:bg-[#141d2e] hover:shadow-lg transition card-3d">
+        <div class="w-12 h-12 rounded-xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4"><span class="material-symbols-outlined" style="font-size:26px">auto_awesome</span></div>
+        <h3 class="font-bold text-lg mb-2">المعلم والمساعد الذكي</h3>
+        <p class="text-sm text-on-surface-variant leading-relaxed">اطرح أي سؤال في الفيزياء، الكيمياء، الرياضيات، أو اللغات واحصل على شرح مبسط فوراً.</p>
+      </div>
+      <div class="border border-outline-variant rounded-2xl p-6 bg-white dark:bg-[#141d2e] hover:shadow-lg transition card-3d">
+        <div class="w-12 h-12 rounded-xl bg-red-500/15 text-red-600 dark:text-red-400 flex items-center justify-center mb-4"><span class="material-symbols-outlined" style="font-size:26px">timer</span></div>
+        <h3 class="font-bold text-lg mb-2">جلسات التركيز (Focus Mode)</h3>
+        <p class="text-sm text-on-surface-variant leading-relaxed">مؤقت بومودورو ذكي مخصص للثانوية لحساب ساعات الإنتاجية الفعلية وحفظها.</p>
+      </div>
+    </div>
+
+    <div id="about" class="bg-on-surface text-white rounded-2xl p-8 md:p-10 flex flex-col md:flex-row items-center gap-6 mb-24 scroll-mt-24">
+      <div class="w-16 h-16 rounded-2xl bg-amber-500/20 text-amber-300 flex items-center justify-center shrink-0"><span class="material-symbols-outlined" style="font-size:32px">bookmark</span></div>
+      <div class="flex-1">
+        <h3 class="font-bold text-xl mb-1.5">نظام إدارة الامتحانات والمراجعة المتباعدة</h3>
+        <p class="text-sm text-gray-300 leading-relaxed">عد تنازلي دقيق لامتحاناتك، وتتبع مراحل الاستعداد من الفهم الأولي وحل التمارين حتى المراجعة النهائية لضمان الدرجة النهائية.</p>
+      </div>
+      <button onclick="goTo('signup')" class="bg-primary text-on-primary font-bold px-6 py-3 rounded-full hover:bg-primary-dark transition shrink-0 whitespace-nowrap">جرّب المنصة الآن</button>
+    </div>
+
+    <div class="text-center pb-24">
+      <h2 class="text-2xl md:text-3xl font-extrabold mb-4">مستعد تبدأ رحلة التفوق؟</h2>
+      <p class="text-on-surface-variant mb-6">أنشئ حسابك خلال أقل من دقيقة وابدأ في تنظيم دراستك.</p>
+      <button onclick="goTo('signup')" class="bg-primary text-on-primary font-bold px-8 py-3.5 rounded-full hover:bg-primary-dark transition shadow-lg shadow-primary/20">ابدأ رحلتك مع أَثَر مجاناً</button>
+    </div>
+  </main>
+  <footer class="border-t border-outline-variant py-8 bg-white dark:bg-[#141d2e]">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-5 text-sm text-on-surface-variant">
+      <div class="flex items-center gap-2.5 athar-logo-wrapper">
+        <img src="assets/icon.png" alt="أَثَر" class="w-8 h-8 object-contain drop-shadow-sm"/>
+        <img src="assets/logo.png" alt="أَثَر" class="h-6 object-contain dark:hidden"/>
+        <img src="assets/logo-dark.png" alt="أَثَر" class="h-6 object-contain hidden dark:block athar-logo-dark-glow"/>
+      </div>
+      <div class="text-center">
+        <span>صُمم وطُوّر بكل 💙 بواسطة </span>
+        <button onclick="openDeveloperSocialModal()" class="font-extrabold text-primary hover:text-primary-dark inline-flex items-center gap-1 mx-1 bg-primary-container dark:bg-primary/20 text-on-primary-container dark:text-sky-300 px-3 py-1 rounded-full transition hover:scale-105" title="تواصل مع سيف الشيخ">
+          <span>سيف الشيخ (Saif_Elsheikh)</span>
+          <span class="material-symbols-outlined" style="font-size:16px">account_circle</span>
+        </button>
+      </div>
+      <span class="text-xs text-outline">© 2026 أَثَر — جميع الحقوق محفوظة.</span>
+    </div>
+  </footer>
+</section>
+
+<!-- ======================= LOGIN PAGE ======================= -->
+<section id="page-login" class="page">
+  <div class="min-h-screen flex items-center justify-center p-6 auth-gradient relative">
+    <div class="absolute top-5 left-5 flex items-center gap-2">
+      <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full bg-white/80 dark:bg-white/10 flex items-center justify-center shadow-sm hover:scale-105 transition"><span class="material-symbols-outlined" id="theme-icon-login">dark_mode</span></button>
+      <button onclick="goTo('landing')" class="w-10 h-10 rounded-full bg-white/80 dark:bg-white/10 flex items-center justify-center shadow-sm hover:scale-105 transition" title="الرئيسية"><span class="material-symbols-outlined">home</span></button>
+    </div>
+    
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border border-outline-variant">
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center gap-2.5 mb-2">
+          <img src="assets/icon.png" alt="أَثَر" class="w-11 h-11 object-contain"/>
+          <img src="assets/logo.png" alt="أَثَر" class="h-8 object-contain dark:hidden"/>
+          <img src="assets/logo-dark.png" alt="أَثَر" class="h-8 object-contain hidden dark:block"/>
+        </div>
+        <p class="text-on-surface-variant text-sm mt-1">مرحباً بعودتك إلى نظامك الأكاديمي</p>
+      </div>
+
+      <div id="loginError" class="hidden mb-4 p-3 rounded-lg bg-error-container text-on-error-container text-xs font-semibold"></div>
+
+      <form id="loginForm" class="space-y-5">
+        <div>
+          <label class="text-xs sm:text-sm font-bold text-on-surface block mb-1">البريد الإلكتروني أو رقم الهاتف</label>
+          <div class="relative">
+            <input type="text" id="loginEmail" required placeholder="student@school.edu أو 01xxxxxxxxx" class="w-full border border-outline-variant rounded-lg py-3 px-4 pl-11 focus:outline-none focus:ring-2 focus:ring-primary text-sm" dir="ltr"/>
+            <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline">mail</span>
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="text-xs sm:text-sm font-bold text-on-surface">كلمة المرور</label>
+            <a onclick="goTo('reset')" class="text-xs text-primary font-semibold hover:underline cursor-pointer">نسيت كلمة المرور؟</a>
+          </div>
+          <div class="relative">
+            <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full border border-outline-variant rounded-lg py-3 px-4 pl-11 focus:outline-none focus:ring-2 focus:ring-primary text-sm"/>
+            <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline">lock</span>
+          </div>
+        </div>
+        <button type="submit" id="loginBtn" class="w-full bg-primary text-on-primary font-bold py-3 rounded-full hover:bg-primary-dark transition flex items-center justify-center gap-2 shadow-sm">
+          <span>تسجيل الدخول</span><span class="material-symbols-outlined" style="font-size:18px">arrow_back</span>
+        </button>
+      </form>
+
+      <div class="flex items-center gap-3 my-6"><div class="h-px bg-outline-variant flex-1"></div><span class="text-xs text-outline">أو</span><div class="h-px bg-outline-variant flex-1"></div></div>
+      <p class="text-center text-sm text-on-surface-variant">ليس لديك حساب؟ <a onclick="goTo('signup')" class="text-primary font-bold cursor-pointer hover:underline">إنشاء حساب جديد</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= SIGNUP PAGE ======================= -->
+<section id="page-signup" class="page">
+  <div class="min-h-screen flex items-center justify-center p-4 relative auth-gradient">
+    <div class="absolute top-5 left-5 flex items-center gap-2 z-10">
+      <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full bg-white/80 dark:bg-white/10 flex items-center justify-center shadow-sm hover:scale-105 transition"><span class="material-symbols-outlined" id="theme-icon-signup">dark_mode</span></button>
+      <button onclick="goTo('landing')" class="w-10 h-10 rounded-full bg-white/80 dark:bg-white/10 flex items-center justify-center shadow-sm hover:scale-105 transition" title="الرئيسية"><span class="material-symbols-outlined">home</span></button>
+    </div>
+
+    <div class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden shadow-xl border border-outline-variant bg-white">
+      <div class="p-10 flex-col justify-between auth-gradient-2 hidden md:flex">
+        <div class="bg-white rounded-2xl shadow-lg p-6 aspect-square flex flex-col items-center justify-center text-center">
+          <img src="assets/icon.png" alt="أَثَر" class="w-24 h-24 object-contain mb-3"/>
+          <img src="assets/logo.png" alt="أَثَر" class="h-8 object-contain mb-1"/>
+          <p class="text-xs text-on-surface-variant mt-1">نظام التشغيل الأكاديمي لطلاب الثانوية</p>
+        </div>
+        <div class="bg-white/80 backdrop-blur rounded-xl p-5 mt-6 border border-white/40">
+          <h3 class="font-bold text-base mb-1 text-on-surface">العقل الهادئ والمنظم</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">أَثَر يوفر لك بيئة دراسية خالية من التشتت، تدير كل تفاصيل موادك ومواعيدك بهدوء وثقة.</p>
+        </div>
+      </div>
+
+      <div class="p-8 md:p-10 bg-white">
+        <span class="text-2xl font-extrabold text-primary">إنشاء حساب جديد</span>
+        <p class="text-on-surface-variant text-xs mt-1 mb-6">ابدأ رحلتك لتنظيم وقتك والتفوق الدراسي.</p>
+
+        <div id="signupError" class="hidden mb-4 p-3 rounded-lg bg-error-container text-on-error-container text-xs font-semibold"></div>
+
+        <form id="signupForm" class="space-y-4">
+          <div>
+            <label class="text-xs sm:text-sm font-bold text-on-surface block mb-1">الاسم بالكامل</label>
+            <input type="text" id="signupName" required placeholder="أحمد محمد" class="w-full border border-outline-variant rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-primary text-sm"/>
+          </div>
+          <div>
+            <label class="text-xs sm:text-sm font-bold text-on-surface block mb-1">البريد الإلكتروني</label>
+            <input type="email" id="signupEmail" required placeholder="student@example.com" class="w-full border border-outline-variant rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-primary text-sm"/>
+          </div>
+          <div>
+            <label class="text-xs sm:text-sm font-bold text-on-surface block mb-1">رقم الهاتف</label>
+            <input type="tel" id="signupPhone" required placeholder="01xxxxxxxxx" class="w-full border border-outline-variant rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-primary text-sm" dir="ltr"/>
+            <p class="text-[11px] text-on-surface-variant mt-1">هنستخدم رقمك بس لإرسال تذكيرات دراسية وامتحانات مهمة. مش هيتشارك مع أي طرف تالت.</p>
+          </div>
+          <div>
+            <label class="text-xs sm:text-sm font-bold text-on-surface block mb-1">كلمة المرور</label>
+            <input type="password" id="signupPassword" required minlength="6" placeholder="6 أحرف على الأقل" class="w-full border border-outline-variant rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-primary text-sm"/>
+          </div>
+          <div class="flex items-start gap-2 pt-1">
+            <input type="checkbox" id="signupConsent" required class="mt-1 w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary cursor-pointer shrink-0"/>
+            <label for="signupConsent" class="text-xs text-on-surface-variant cursor-pointer leading-relaxed">
+              أوافق على <a href="privacy.html" target="_blank" class="text-primary font-bold hover:underline">سياسة الخصوصية وشروط الاستخدام</a>
+            </label>
+          </div>
+          <button type="submit" id="signupBtn" class="w-full bg-primary text-on-primary font-bold py-3 rounded-full hover:bg-primary-dark transition flex items-center justify-center gap-2 !mt-6 shadow-sm">
+            <span>تسجيل الحساب</span><span class="material-symbols-outlined" style="font-size:18px">arrow_back</span>
+          </button>
+        </form>
+        <p class="text-center text-sm text-on-surface-variant mt-5">لديك حساب بالفعل؟ <a onclick="goTo('login')" class="text-primary font-bold cursor-pointer hover:underline">تسجيل الدخول</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= RESET PASSWORD PAGE (SUPABASE) ======================= -->
+<section id="page-reset" class="page">
+  <div class="min-h-screen flex items-center justify-center p-6 auth-gradient relative">
+    <div class="absolute top-5 left-5 flex items-center gap-2">
+      <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full bg-white/80 dark:bg-white/10 flex items-center justify-center shadow-sm"><span class="material-symbols-outlined" id="theme-icon-reset">dark_mode</span></button>
+      <button onclick="goTo('landing')" class="w-10 h-10 rounded-full bg-white/80 dark:bg-white/10 flex items-center justify-center shadow-sm" title="الرئيسية"><span class="material-symbols-outlined">home</span></button>
+    </div>
+    
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border border-outline-variant">
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 rounded-2xl bg-primary-container text-primary mx-auto flex items-center justify-center mb-3">
+          <span class="material-symbols-outlined" style="font-size:32px">lock_reset</span>
+        </div>
+        <h2 class="text-2xl font-extrabold text-on-surface">استعادة كلمة المرور</h2>
+        <p class="text-on-surface-variant text-xs mt-1">اكتب بريدك الإلكتروني وسنرسل لك رابطاً آمناً لإعادة تعيين كلمة المرور فوراً.</p>
+      </div>
+
+      <div id="resetError" class="hidden mb-4 p-3 rounded-lg bg-error-container text-on-error-container text-xs font-semibold"></div>
+
+      <form id="resetForm" class="space-y-4">
+        <div>
+          <label class="text-xs sm:text-sm font-bold text-on-surface block mb-1">البريد الإلكتروني</label>
+          <div class="relative">
+            <input type="email" id="resetEmail" required placeholder="student@example.com" class="w-full border border-outline-variant rounded-lg py-3 px-4 pl-11 focus:outline-none focus:ring-2 focus:ring-primary text-sm"/>
+            <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline">mail</span>
+          </div>
+        </div>
+        <button type="submit" id="resetBtn" class="w-full bg-primary text-on-primary font-bold py-3 rounded-full hover:bg-primary-dark transition flex items-center justify-center gap-2 shadow-sm">
+          <span>إرسال رابط الاستعادة</span><span class="material-symbols-outlined" style="font-size:18px">send</span>
+        </button>
+      </form>
+      <p class="text-center text-sm text-on-surface-variant mt-5"><a onclick="goTo('login')" class="text-primary font-bold cursor-pointer hover:underline">رجوع لتسجيل الدخول</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= SET NEW PASSWORD PAGE (SUPABASE) ======================= -->
+<section id="page-new-password" class="page">
+  <div class="min-h-screen flex items-center justify-center p-6 auth-gradient relative">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border border-outline-variant">
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 rounded-2xl bg-secondary-container text-secondary mx-auto flex items-center justify-center mb-3">
+          <span class="material-symbols-outlined" style="font-size:32px">key</span>
+        </div>
+        <h2 class="text-2xl font-extrabold text-on-surface">تعيين كلمة المرور الجديدة</h2>
+        <p class="text-on-surface-variant text-xs mt-1">اكتب كلمة المرور الجديدة لحسابك لتسجيل الدخول بها.</p>
+      </div>
+
+      <div id="newPassError" class="hidden mb-4 p-3 rounded-lg bg-error-container text-on-error-container text-xs font-semibold"></div>
+
+      <form id="newPassForm" class="space-y-4">
+        <div>
+          <label class="text-xs sm:text-sm font-bold text-on-surface block mb-1">كلمة المرور الجديدة</label>
+          <div class="relative">
+            <input type="password" id="newPassInput" required minlength="6" placeholder="••••••••" class="w-full border border-outline-variant rounded-lg py-3 px-4 pl-11 focus:outline-none focus:ring-2 focus:ring-primary text-sm"/>
+            <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline">lock</span>
+          </div>
+        </div>
+        <div>
+          <label class="text-xs sm:text-sm font-bold text-on-surface block mb-1">تأكيد كلمة المرور</label>
+          <div class="relative">
+            <input type="password" id="confirmPassInput" required minlength="6" placeholder="••••••••" class="w-full border border-outline-variant rounded-lg py-3 px-4 pl-11 focus:outline-none focus:ring-2 focus:ring-primary text-sm"/>
+            <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline">lock_clock</span>
+          </div>
+        </div>
+        <button type="submit" id="saveNewPassBtn" class="w-full bg-primary text-on-primary font-bold py-3 rounded-full hover:bg-primary-dark transition flex items-center justify-center gap-2 shadow-sm">
+          <span>حفظ وتعيين كلمة المرور</span><span class="material-symbols-outlined" style="font-size:18px">check_circle</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script src="js/supabase-client.js"></script>
+<script src="js/common.js"></script>
+<script>
+  function goTo(page){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    const target = document.getElementById('page-'+page);
+    if(target) target.classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function toggleLandingMenu(){
+    document.getElementById('landing-mobile-menu').classList.toggle('hidden');
+  }
+
+  function smoothScrollToSection(e, id) {
+    if (e) e.preventDefault();
+    const el = document.getElementById(id);
+    if (!el) return;
+    const headerHeight = document.querySelector('header')?.offsetHeight || 64;
+    const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+    const offsetPosition = elementPosition - headerHeight - 20;
+    window.scrollTo({
+      top: Math.max(0, offsetPosition),
+      behavior: 'smooth'
+    });
+  }
+
+  /* ---------- DARK MODE ---------- */
+  function syncThemeIcons(){
+    const isDark = document.documentElement.classList.contains('dark');
+    ['theme-icon-landing','theme-icon-login','theme-icon-signup','theme-icon-reset'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.textContent = isDark ? 'light_mode' : 'dark_mode';
+    });
+  }
+  function toggleDarkMode(){
+    document.documentElement.classList.toggle('dark');
+    const isDark = document.documentElement.classList.contains('dark');
+    localStorage.setItem('athar-theme', isDark ? 'dark' : 'light');
+    syncThemeIcons();
+  }
+  (function initTheme(){
+    const saved = localStorage.getItem('athar-theme') || localStorage.getItem('madar-theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if(saved === 'dark' || (!saved && prefersDark)){
+      document.documentElement.classList.add('dark');
+    }
+    syncThemeIcons();
+  })();
+
+  let toastTimer;
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.remove('translate-y-24','opacity-0');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>{ t.classList.add('translate-y-24','opacity-0'); }, 2500);
+  }
+
+  function showError(elementId, msg){
+    const el = document.getElementById(elementId);
+    if(el){
+      el.textContent = msg;
+      el.classList.remove('hidden');
+    }
+  }
+  function hideErrors(){
+    ['loginError','signupError','resetError'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.classList.add('hidden');
+    });
+  }
+
+  function withTimeout(promise, ms = 15000) {
+    return Promise.race([
+      promise,
+      new Promise((_, reject) => setTimeout(() => reject(new Error("الاتصال بطيء جدًا — تأكد من الإنترنت وحاول تاني")), ms))
+    ]);
+  }
+
+  // فحص الجلسة الحالية
+  (async function checkSession() {
+    try {
+      const { data: { session } } = await withTimeout(sb.auth.getSession(), 8000);
+      if (session) {
+        const profile = await withTimeout(getMyProfile(session.user.id), 8000);
+        window.location.href = (profile && profile.onboarding_completed) ? "dashboard.html" : "onboarding.html";
+        return; // الصفحة هتتنقل، السبلاش هيفضل ظاهر لحد ما الصفحة الجديدة تحمّل
+      }
+    } catch (err) {
+      console.error("checkSession error:", err);
+    }
+    if (typeof hideAtharSplash === "function") hideAtharSplash();
+  })();
+
+  // تسجيل الدخول
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    hideErrors();
+    const btn = document.getElementById("loginBtn");
+    btn.disabled = true;
+    btn.innerHTML = `<span>جاري الدخول...</span>`;
+
+    try {
+      const identifier = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value;
+
+      let email = identifier;
+      // لو المستخدم كتب رقم تليفون بدل الإيميل، نجيب الإيميل المرتبط بيه أولاً
+      if (/^01[0-2,5]{1}[0-9]{8}$/.test(identifier)) {
+        const { data: resolvedEmail, error: lookupErr } = await withTimeout(sb.rpc("get_email_by_phone", { p_phone: identifier }));
+        if (lookupErr || !resolvedEmail) {
+          showError("loginError", "البريد الإلكتروني أو كلمة المرور غير صحيحة");
+          return;
+        }
+        email = resolvedEmail;
+      }
+
+      const { data, error } = await withTimeout(sb.auth.signInWithPassword({ email, password }));
+
+      if (error) {
+        showError("loginError", error.message.includes("Invalid") ? "البريد الإلكتروني أو كلمة المرور غير صحيحة" : error.message);
+        return;
+      }
+
+      const profile = await withTimeout(getMyProfile(data.user.id));
+      window.location.href = (profile && profile.onboarding_completed) ? "dashboard.html" : "onboarding.html";
+
+    } catch (err) {
+      console.error("Login error:", err);
+      showError("loginError", err.message || "حدث خطأ أثناء تسجيل الدخول، يرجى المحاولة ثانية");
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = `<span>تسجيل الدخول</span><span class="material-symbols-outlined" style="font-size:18px">arrow_back</span>`;
+    }
+  });
+
+  // إنشاء الحساب
+  document.getElementById("signupForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    hideErrors();
+    const btn = document.getElementById("signupBtn");
+    btn.disabled = true;
+    btn.innerHTML = `<span>جاري إنشاء الحساب...</span>`;
+
+    try {
+      const name = document.getElementById("signupName").value.trim();
+      const email = document.getElementById("signupEmail").value.trim();
+      const password = document.getElementById("signupPassword").value;
+      const phone = document.getElementById("signupPhone")?.value.trim() || "";
+
+      if (!phone) {
+        showError("signupError", "رقم الهاتف مطلوب");
+        return;
+      }
+      if (!/^01[0-2,5]{1}[0-9]{8}$/.test(phone)) {
+        showError("signupError", "رقم الهاتف غير صحيح (يجب أن يبدأ بـ 01 ويتكون من 11 رقماً)");
+        return;
+      }
+
+      const { data, error } = await withTimeout(sb.auth.signUp({
+        email, password,
+        options: { data: { full_name: name, phone: phone } }
+      }));
+
+      if (error) {
+        showError("signupError", error.message.includes("already registered") ? "هذا البريد مسجل بالفعل" : error.message);
+        return;
+      }
+
+      if (!data.session) {
+        showToast("تم إرسال رابط تأكيد إلى بريدك الإلكتروني ✉️");
+        goTo('login');
+        return;
+      }
+
+      window.location.href = "onboarding.html";
+
+    } catch (err) {
+      console.error("Signup error:", err);
+      showError("signupError", err.message || "حدث خطأ أثناء إنشاء الحساب");
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = `<span>تسجيل الحساب</span><span class="material-symbols-outlined" style="font-size:18px">arrow_back</span>`;
+    }
+  });
+
+  // ═════════════════════════════════════════════════════════════════════
+  // استعادة كلمة المرور عبر كود التحقق المجاني (Google Apps Script OTP)
+  // ═════════════════════════════════════════════════════════════════════
+  let currentResetEmail = "";
+
+  // ═════════════════════════════════════════════════════════════════════
+  // استعادة كلمة المرور عبر Supabase (Magic Reset Link)
+  // ═════════════════════════════════════════════════════════════════════
+  
+  // 1. إرسال رابط الاستعادة
+  document.getElementById("resetForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    hideErrors();
+    const btn = document.getElementById("resetBtn");
+    btn.disabled = true;
+    btn.innerHTML = `<span>جاري إرسال الرابط...</span>`;
+
+    try {
+      const email = document.getElementById("resetEmail").value.trim().toLowerCase();
+      
+      // إرسال رابط إعادة التعيين مع تحديد الرابط الحالي للعودة إليه
+      const redirectUrl = window.location.origin + window.location.pathname;
+      const { data, error } = await sb.auth.resetPasswordForEmail(email, {
+        redirectTo: redirectUrl
+      });
+
+      if (error) {
+        showError("resetError", error.message || "حدث خطأ أثناء إرسال الرابط");
+        return;
+      }
+
+      showToast("تم إرسال رابط الاستعادة إلى بريدك الإلكتروني بنجاح! تفقد بريدك الوارد ✉️");
+      goTo('login');
+
+    } catch (err) {
+      console.error("Reset error:", err);
+      showError("resetError", "تعذر إرسال الرابط، يرجى التأكد من البريد والمحاولة ثانية");
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = `<span>إرسال رابط الاستعادة</span><span class="material-symbols-outlined" style="font-size:18px">send</span>`;
+    }
+  });
+
+  // 2. استقبال حدث استعادة كلمة المرور عند الضغط على الرابط في الإيميل
+  sb.auth.onAuthStateChange(async (event, session) => {
+    if (event === "PASSWORD_RECOVERY") {
+      goTo("new-password");
+      showToast("يرجى كتابة كلمة المرور الجديدة لحسابك 🔑");
+    }
+  });
+
+  // التحقق من الرابط في حال كان يحتوي على type=recovery
+  if (window.location.hash.includes("type=recovery") || window.location.search.includes("type=recovery")) {
+    goTo("new-password");
+  }
+
+  // 3. حفظ كلمة المرور الجديدة في Supabase
+  document.getElementById("newPassForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    hideErrors();
+    const btn = document.getElementById("saveNewPassBtn");
+    const newPass = document.getElementById("newPassInput").value;
+    const confirmPass = document.getElementById("confirmPassInput").value;
+
+    if (newPass !== confirmPass) {
+      showError("newPassError", "كلمتا المرور غير متطابقتين");
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = `<span>جاري حفظ كلمة المرور...</span>`;
+
+    try {
+      const { data, error } = await sb.auth.updateUser({ password: newPass });
+      if (error) {
+        showError("newPassError", error.message || "فشل تحديث كلمة المرور");
+        return;
+      }
+
+      showToast("تم تحديث كلمة المرور بنجاح! 🎉 جاري تحويلك...");
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 1200);
+
+    } catch (err) {
+      console.error("Update password error:", err);
+      showError("newPassError", "حدث خطأ أثناء حفظ كلمة المرور الجديدة");
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = `<span>حفظ وتعيين كلمة المرور</span><span class="material-symbols-outlined" style="font-size:18px">check_circle</span>`;
+    }
+  });
+</script>
+<script src="js/motion.js"></script>
+</body>
+</html>
+
+
+
